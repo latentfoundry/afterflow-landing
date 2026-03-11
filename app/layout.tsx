@@ -46,7 +46,8 @@ const strawford = localFont({
 
 export const metadata: Metadata = {
   title: "Afterflow",
-  description: "Afterflow",
+  description:
+    "Simulate how customers, employees, regulators, media, and investors may react before you commit to a response.",
 };
 
 export default function RootLayout({

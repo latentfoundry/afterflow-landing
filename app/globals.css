@@ -12,9 +12,304 @@
   --font-mono: var(--font-strawford);
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-strawford), sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #000000;
+  color: #ffffff;
+}
+
+.proof-panel {
+  background:
+    radial-gradient(circle at 54% 42%, rgba(124, 58, 237, 0.12), transparent 24%),
+    radial-gradient(circle at 50% 62%, rgba(220, 38, 38, 0.12), transparent 26%),
+    radial-gradient(circle at 80% 46%, rgba(79, 70, 229, 0.12), transparent 18%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+}
+
+.proof-panel-grid,
+.proof-panel-glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+.proof-panel-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 68px 68px;
+  opacity: 0.14;
+  mask-image: radial-gradient(circle at center, black 44%, transparent 100%);
+}
+
+.proof-panel-glow {
+  background:
+    radial-gradient(circle at 55% 38%, rgba(147, 51, 234, 0.2), transparent 18%),
+    radial-gradient(circle at 50% 62%, rgba(239, 68, 68, 0.16), transparent 22%);
+  opacity: 0.9;
+}
+
+.proof-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.proof-node-trigger {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.proof-node-trigger:focus-visible {
+  outline: none;
+}
+
+.proof-node-shell {
+  position: relative;
+  width: var(--node-size);
+  height: var(--node-size);
+  animation: proof-float 7s ease-in-out infinite;
+  animation-delay: var(--node-delay, 0s);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.proof-node-glow {
+  position: absolute;
+  inset: -16%;
+  border-radius: 9999px;
+  background: var(--node-glow);
+  filter: blur(22px);
+}
+
+.proof-node-ring {
+  position: absolute;
+  border: 1px solid var(--node-ring);
+  border-radius: 9999px;
+}
+
+.proof-node-ring--outer {
+  inset: -14%;
+  opacity: 0.42;
+}
+
+.proof-node-ring--mid {
+  inset: -4%;
+  opacity: 0.32;
+}
+
+.proof-node-ring--inner {
+  inset: 14%;
+  opacity: 0.55;
+}
+
+.proof-node-core {
+  position: absolute;
+  inset: 18%;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  background: var(--node-color);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+.proof-node-core span {
+  font-size: calc(var(--node-size) * 0.2);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.proof-node-orbit {
+  position: absolute;
+  inset: 0;
+}
+
+.proof-node-orbit--outer {
+  animation: proof-spin 22s linear infinite;
+}
+
+.proof-node-orbit--inner {
+  animation: proof-spin-reverse 16s linear infinite;
+}
+
+.proof-orbit-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 9999px;
+  background: var(--node-dot);
+  box-shadow: 0 0 16px var(--node-dot);
+  animation: proof-breathe 3.8s ease-in-out infinite;
+  transform: var(--dot-transform);
+}
+
+.proof-node-trigger:hover .proof-node-shell,
+.proof-node--active .proof-node-shell {
+  filter: saturate(1.08);
+}
+
+.proof-node--active {
+  z-index: 3;
+}
+
+.proof-node-trigger:hover .proof-node-core,
+.proof-node--active .proof-node-core {
+  transform: scale(1.03);
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.12),
+    0 0 28px var(--node-glow);
+}
+
+.proof-node-trigger:focus-visible .proof-node-core {
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.18),
+    0 0 0 8px rgba(255, 255, 255, 0.08),
+    0 0 28px var(--node-glow);
+}
+
+.proof-node--active .proof-node-glow {
+  opacity: 1;
+}
+
+.proof-edge {
+  position: absolute;
+  height: 2px;
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.proof-edge-line,
+.proof-edge-pulse {
+  position: absolute;
+}
+
+.proof-edge-line {
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--edge-color) 45%,
+    transparent 100%
+  );
+  opacity: 0.24;
+}
+
+.proof-edge-pulse {
+  top: 50%;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: var(--edge-color);
+  box-shadow: 0 0 16px var(--edge-color);
+  transform: translateY(-50%);
+  animation: proof-edge-travel 4.8s linear infinite;
+}
+
+.proof-bar-fill {
+  animation: proof-bar-glow 4.2s ease-in-out infinite;
+}
+
+@keyframes proof-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes proof-spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes proof-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes proof-breathe {
+  0%,
+  100% {
+    opacity: 0.58;
+    transform: var(--dot-transform, none) scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: var(--dot-transform, none) scale(1.08);
+  }
+}
+
+@keyframes proof-edge-travel {
+  0% {
+    transform: translate(0, -50%) scale(0.9);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(100% - 12px), -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes proof-bar-glow {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proof-node-shell,
+  .proof-node-orbit--outer,
+  .proof-node-orbit--inner,
+  .proof-orbit-dot,
+  .proof-edge-pulse,
+  .proof-bar-fill {
+    animation: none;
+  }
 }
