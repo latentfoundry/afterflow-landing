@@ -98,7 +98,11 @@ body {
   height: var(--node-size);
   animation: proof-float 7s ease-in-out infinite;
   animation-delay: var(--node-delay, 0s);
-  transition: transform 180ms ease, filter 180ms ease;
+  transition:
+    width 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 180ms ease,
+    filter 180ms ease;
 }
 
 .proof-node-glow {
@@ -237,6 +241,11 @@ body {
 
 .proof-bar-fill {
   animation: proof-bar-glow 4.2s ease-in-out infinite;
+  transition: width 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.proof-event-card {
+  animation: proof-event-in 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes proof-spin {
@@ -303,13 +312,25 @@ body {
   }
 }
 
+@keyframes proof-event-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .proof-node-shell,
   .proof-node-orbit--outer,
   .proof-node-orbit--inner,
   .proof-orbit-dot,
   .proof-edge-pulse,
-  .proof-bar-fill {
+  .proof-bar-fill,
+  .proof-event-card {
     animation: none;
   }
 }

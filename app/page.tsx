@@ -1,5 +1,18 @@
 import { ProofPanel } from "./components/proof-panel";
 
+function GitHubIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="currentColor"
+    >
+      <path d="M12 1.5a10.5 10.5 0 0 0-3.32 20.46c.53.1.72-.23.72-.5v-1.95c-2.93.64-3.54-1.24-3.54-1.24-.48-1.2-1.16-1.52-1.16-1.52-.95-.65.07-.64.07-.64 1.05.08 1.61 1.08 1.61 1.08.94 1.6 2.45 1.14 3.05.87.1-.68.37-1.14.67-1.4-2.34-.27-4.8-1.17-4.8-5.22 0-1.15.41-2.08 1.08-2.81-.1-.27-.47-1.37.1-2.85 0 0 .88-.28 2.89 1.07a9.96 9.96 0 0 1 5.26 0c2-1.35 2.88-1.07 2.88-1.07.58 1.48.22 2.58.1 2.85.68.73 1.08 1.66 1.08 2.81 0 4.05-2.47 4.95-4.82 5.21.38.33.72.97.72 1.96v2.91c0 .28.19.61.73.5A10.5 10.5 0 0 0 12 1.5Z" />
+    </svg>
+  );
+}
+
 const steps = [
   {
     number: "01",
@@ -26,12 +39,23 @@ export default function Home() {
           <p className="text-sm font-medium uppercase tracking-[0.28em] text-black">
             Afterflow
           </p>
-          <a
-            href="#request-access"
-            className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/55 transition-colors hover:text-black"
-          >
-            Request Access
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/latentfoundry/afterflow"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="View Afterflow on GitHub"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-black/60 transition-colors hover:border-black/20 hover:text-black"
+            >
+              <GitHubIcon />
+            </a>
+            <a
+              href="#request-access"
+              className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/55 transition-colors hover:text-black"
+            >
+              Enterprise Access
+            </a>
+          </div>
         </header>
 
         <section className="flex min-h-[68vh] flex-col items-center justify-center border-b border-black/10 py-20 text-center lg:min-h-[76vh]">
@@ -51,7 +75,7 @@ export default function Home() {
                 href="#request-access"
                 className="inline-flex min-w-60 items-center justify-center bg-black px-6 py-4 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
               >
-                Request Early Access
+                Request Enterprise Access
               </a>
             </div>
           </div>
@@ -117,14 +141,14 @@ export default function Home() {
         >
           <div className="space-y-5">
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
-              Early Access
+              Enterprise Access
             </p>
             <h2 className="max-w-3xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
               For crisis, legal, risk, and communications teams.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/56 sm:text-2xl sm:leading-10">
-              Founding partners get early access and direct input on the
-              product.
+              Founding partners get early access, secure deployment, and direct
+              input on the product.
             </p>
           </div>
 
@@ -133,10 +157,10 @@ export default function Home() {
               href="#top"
               className="flex min-h-16 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
             >
-              Request Access
+              Request Enterprise Access
             </a>
             <p className="text-center text-sm leading-6 text-black/42">
-              Limited early partner slots.
+              Managed infrastructure, security, and support.
             </p>
           </div>
         </section>
