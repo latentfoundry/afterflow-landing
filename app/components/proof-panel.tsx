@@ -1035,6 +1035,12 @@ function DecisionBriefModal({
 }
 
 function PreviewNetwork({ option }: { option: DecisionOption }) {
+  const previewLabelFontSize = 18;
+  const previewLabelLineHeight = 24;
+  const previewLabelGap = 34;
+  const previewHorizontalPadding = 72;
+  const previewVerticalPadding = 64;
+
   const wrapLabel = (label: string) => {
     const words = label.split(" ");
     const lines: string[] = [];
@@ -1058,15 +1064,64 @@ function PreviewNetwork({ option }: { option: DecisionOption }) {
     return lines;
   };
 
-  const nodesById = Object.fromEntries(
-    option.previewNodes.map((node) => [node.id, node]),
+  const renderedNodes = option.previewNodes.map((node) => {
+    const lines = wrapLabel(node.label);
+    const cx = node.x * 10;
+    const cy = node.y * 6.2;
+    const r = node.muted ? 50 : 64;
+    const longestLine = lines.reduce(
+      (maxWidth, line) => Math.max(maxWidth, line.length),
+      0,
+    );
+    const labelHalfWidth = Math.max(
+      r,
+      (longestLine * previewLabelFontSize * 0.56) / 2,
+    );
+
+    return {
+      ...node,
+      lines,
+      cx,
+      cy,
+      r,
+      labelY: cy + r + previewLabelGap,
+      labelHalfWidth,
+      labelHeight:
+        previewLabelFontSize + (Math.max(lines.length, 1) - 1) * previewLabelLineHeight,
+    };
+  });
+
+  const graphBounds = renderedNodes.reduce(
+    (bounds, node) => ({
+      minX: Math.min(bounds.minX, node.cx - Math.max(node.r, node.labelHalfWidth)),
+      maxX: Math.max(bounds.maxX, node.cx + Math.max(node.r, node.labelHalfWidth)),
+      minY: Math.min(bounds.minY, node.cy - node.r),
+      maxY: Math.max(bounds.maxY, node.labelY + node.labelHeight),
+    }),
+    {
+      minX: Number.POSITIVE_INFINITY,
+      maxX: Number.NEGATIVE_INFINITY,
+      minY: Number.POSITIVE_INFINITY,
+      maxY: Number.NEGATIVE_INFINITY,
+    },
   );
 
+  const nodesById = Object.fromEntries(
+    renderedNodes.map((node) => [node.id, node]),
+  );
+
+  const viewBox = [
+    graphBounds.minX - previewHorizontalPadding,
+    graphBounds.minY - previewVerticalPadding,
+    graphBounds.maxX - graphBounds.minX + previewHorizontalPadding * 2,
+    graphBounds.maxY - graphBounds.minY + previewVerticalPadding * 2,
+  ].join(" ");
+
   return (
-    <div className="relative">
+    <div className="relative h-full min-h-[280px] w-full lg:min-h-[410px] xl:min-h-[385px]">
       <svg
-        className="h-[210px] w-full sm:h-[225px] lg:h-[240px]"
-        viewBox="0 0 1000 620"
+        className="h-full min-h-[280px] w-full lg:min-h-[410px] xl:min-h-[385px]"
+        viewBox={viewBox}
         preserveAspectRatio="xMidYMid meet"
       >
         {option.previewEdges.map(([fromId, toId]) => {
@@ -1080,45 +1135,40 @@ function PreviewNetwork({ option }: { option: DecisionOption }) {
           return (
             <line
               key={`${fromId}-${toId}`}
-              x1={from.x * 10}
-              y1={from.y * 6.2}
-              x2={to.x * 10}
-              y2={to.y * 6.2}
+              x1={from.cx}
+              y1={from.cy}
+              x2={to.cx}
+              y2={to.cy}
               stroke="rgba(255,255,255,0.18)"
-              strokeWidth="4"
-              strokeDasharray="16 16"
+              strokeWidth="5"
+              strokeDasharray="18 18"
             />
           );
         })}
-        {option.previewNodes.map((node) => {
-          const lines = wrapLabel(node.label);
-          const cx = node.x * 10;
-          const cy = node.y * 6.2;
-          const r = node.muted ? 44 : 52;
-
+        {renderedNodes.map((node) => {
           return (
             <g key={node.id}>
               <circle
-                cx={cx}
-                cy={cy}
-                r={r}
+                cx={node.cx}
+                cy={node.cy}
+                r={node.r}
                 fill={node.muted ? "rgba(15,23,42,0.32)" : `${node.color}22`}
                 stroke={node.muted ? "rgba(255,255,255,0.16)" : node.color}
-                strokeWidth="3"
+                strokeWidth="3.5"
               />
               <text
-                x={cx}
-                y={cy + r + 34}
+                x={node.cx}
+                y={node.labelY}
                 textAnchor="middle"
                 fill={node.muted ? "rgba(255,255,255,0.62)" : "rgba(255,255,255,0.86)"}
-                fontSize="15"
+                fontSize={previewLabelFontSize}
                 fontWeight="500"
               >
-                {lines.map((line, index) => (
+                {node.lines.map((line, index) => (
                   <tspan
                     key={`${node.id}-${line}`}
-                    x={cx}
-                    dy={index === 0 ? 0 : 20}
+                    x={node.cx}
+                    dy={index === 0 ? 0 : previewLabelLineHeight}
                   >
                     {line}
                   </tspan>
@@ -1148,14 +1198,14 @@ function DecisionPreviewModal({
   const isSelected = currentDecisionId === option.id;
 
   return (
-    <div className="absolute inset-0 z-50 overflow-y-auto bg-black/72 p-2 backdrop-blur-sm sm:p-3">
-      <div className="mx-auto w-full max-w-[1040px] overflow-hidden rounded-[24px] border border-[#26345f] bg-[#050c18] shadow-[0_32px_90px_rgba(0,0,0,0.45)]">
-        <div className="flex items-start justify-between gap-4 border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(127,29,29,0.28),rgba(2,6,23,0.04)_55%)] px-4 py-3 sm:px-6">
+    <div className="absolute inset-0 z-50 overflow-y-auto bg-black/72 p-2 backdrop-blur-sm sm:p-3 xl:overflow-hidden xl:p-2">
+      <div className="mx-auto w-full max-w-[1080px] overflow-hidden rounded-[24px] border border-[#26345f] bg-[#050c18] shadow-[0_32px_90px_rgba(0,0,0,0.45)] xl:flex xl:h-full xl:flex-col">
+        <div className="flex items-start justify-between gap-4 border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(127,29,29,0.28),rgba(2,6,23,0.04)_55%)] px-4 py-3 sm:px-6 xl:px-5 xl:py-2.5">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-rose-300/90">
               Decision Preview
             </p>
-            <p className="mt-1.5 text-lg font-medium tracking-[-0.04em] text-white sm:text-[24px] sm:leading-[1.08]">
+            <p className="mt-1.5 text-lg font-medium tracking-[-0.04em] text-white sm:text-[24px] sm:leading-[1.08] xl:text-[22px]">
               {option.previewTitle}
             </p>
           </div>
@@ -1168,19 +1218,19 @@ function DecisionPreviewModal({
           </button>
         </div>
 
-        <div className="p-3 sm:p-4">
-          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_208px]">
-            <div className="rounded-[22px] border border-white/8 bg-black/22 p-3 sm:p-4">
+        <div className="p-3 sm:p-4 xl:flex-1 xl:min-h-0 xl:p-3">
+          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_208px] xl:h-full xl:grid-cols-[minmax(0,1fr)_224px]">
+            <div className="flex rounded-[22px] border border-white/8 bg-black/22 p-3 sm:p-4 xl:min-h-0 xl:p-3">
               <PreviewNetwork option={option} />
             </div>
 
-            <div className="space-y-2">
-              <div className="rounded-[18px] border border-white/10 bg-[#071229] p-3">
+            <div className="space-y-2 xl:flex xl:min-h-0 xl:flex-col">
+              <div className="rounded-[18px] border border-white/10 bg-[#071229] p-3 xl:p-2.5">
                 <p className="text-[10px] font-medium uppercase tracking-[0.32em] text-white/35">
                   Projected Overall Health
                 </p>
                 <div className="mt-2 flex items-end gap-2">
-                  <span className="text-[32px] font-black tracking-[-0.06em] text-yellow-300">
+                  <span className="text-[32px] font-black tracking-[-0.06em] text-yellow-300 xl:text-[30px]">
                     {option.projectedHealth}
                   </span>
                   <span className={`pb-0.5 text-sm font-medium ${option.projectedDeltaClass}`}>
@@ -1189,18 +1239,18 @@ function DecisionPreviewModal({
                 </div>
               </div>
 
-              <div className="rounded-[18px] border border-white/10 bg-[#071229] p-3">
+              <div className="rounded-[18px] border border-white/10 bg-[#071229] p-3 xl:flex-1 xl:p-2.5">
                 <p className="text-[10px] font-medium uppercase tracking-[0.32em] text-white/35">
                   Projected Outcome
                 </p>
-                <p className="mt-2 text-[12px] leading-5 text-white/72">
+                <p className="mt-2 text-[12px] leading-5 text-white/72 xl:text-[11px] xl:leading-[1.55]">
                   {option.projectedOutcome}
                 </p>
-                <div className="mt-3 space-y-1.5 border-t border-white/8 pt-3">
+                <div className="mt-3 space-y-1.5 border-t border-white/8 pt-3 xl:mt-2.5 xl:space-y-1 xl:pt-2.5">
                   {option.rippleEffects.map((effect) => (
                     <p
                       key={effect}
-                      className="text-[12px] leading-5 text-white/66"
+                      className="text-[12px] leading-5 text-white/66 xl:text-[11px] xl:leading-[1.55]"
                     >
                       {effect}
                     </p>
@@ -1208,18 +1258,18 @@ function DecisionPreviewModal({
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 xl:mt-auto xl:gap-1.5">
                 <button
                   type="button"
                   onClick={onBack}
-                  className="inline-flex min-w-20 items-center justify-center rounded-[12px] border border-white/12 px-3 py-2 text-sm font-medium text-white/68 transition-colors hover:border-white/20 hover:text-white"
+                  className="inline-flex min-w-20 items-center justify-center rounded-[12px] border border-white/12 px-3 py-2 text-sm font-medium text-white/68 transition-colors hover:border-white/20 hover:text-white xl:px-3 xl:py-1.5 xl:text-[13px]"
                 >
                   Back
                 </button>
                 <button
                   type="button"
                   onClick={() => onChoose(option.id)}
-                  className={`inline-flex min-w-24 items-center justify-center rounded-[12px] border px-3 py-2 text-sm font-medium transition-colors ${
+                  className={`inline-flex min-w-24 items-center justify-center rounded-[12px] border px-3 py-2 text-sm font-medium transition-colors xl:px-3 xl:py-1.5 xl:text-[13px] ${
                     isSelected
                       ? "border-emerald-500/45 bg-emerald-500/10 text-emerald-200"
                       : "border-rose-500/35 bg-rose-500/8 text-rose-200 hover:border-rose-400/55 hover:bg-rose-500/12"
@@ -1303,13 +1353,13 @@ export function ProofPanel() {
   }, [activeState.metrics]);
 
   useEffect(() => {
-    setVisibleEvents([]);
-
     const nextEvents = activeState.events.slice(0, 4);
 
     const timeouts = nextEvents.map((event, index) =>
       window.setTimeout(() => {
-        setVisibleEvents((current) => [...current, event].slice(-4));
+        setVisibleEvents((current) =>
+          index === 0 ? [event] : [...current, event].slice(-4),
+        );
       }, index * 260),
     );
 
@@ -1402,23 +1452,30 @@ export function ProofPanel() {
             ))}
 
             {activeNode ? (
-              <div className="absolute inset-y-4 right-4 z-30 hidden w-[272px] max-w-[calc(100%-32px)] items-start lg:flex">
-                <CohortDetailCard
-                  node={activeNode}
-                  onClose={() => setSelectedNodeId(null)}
+              <>
+                <button
+                  type="button"
+                  aria-label="Close cohort details"
+                  onClick={() => setSelectedNodeId(null)}
+                  className="absolute inset-0 z-20 bg-[#020202]/72 backdrop-blur-[2px] lg:hidden"
                 />
-              </div>
+                <div className="absolute inset-x-3 bottom-3 top-14 z-30 flex items-start lg:hidden">
+                  <div className="mx-auto w-full max-w-[420px]">
+                    <CohortDetailCard
+                      node={activeNode}
+                      onClose={() => setSelectedNodeId(null)}
+                    />
+                  </div>
+                </div>
+                <div className="absolute inset-y-4 right-4 z-30 hidden w-[272px] max-w-[calc(100%-32px)] items-start lg:flex">
+                  <CohortDetailCard
+                    node={activeNode}
+                    onClose={() => setSelectedNodeId(null)}
+                  />
+                </div>
+              </>
             ) : null}
           </div>
-
-          {activeNode ? (
-            <div className="border-b border-white/10 bg-[#020202] p-4 lg:hidden">
-              <CohortDetailCard
-                node={activeNode}
-                onClose={() => setSelectedNodeId(null)}
-              />
-            </div>
-          ) : null}
 
           <div className="bg-[#020202] xl:flex xl:min-h-0 xl:flex-col">
             <div className="border-b border-white/10 px-6 py-5">
