@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_TELEMETRY_DISABLED: "1"
+      NEXT_PUBLIC_REQUEST_ACCESS_ENDPOINT: ${{ vars.NEXT_PUBLIC_REQUEST_ACCESS_ENDPOINT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

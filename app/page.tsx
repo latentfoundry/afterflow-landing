@@ -1,4 +1,5 @@
 import { ProofPanel } from "./components/proof-panel";
+import { RequestAccessForm } from "./components/request-access-form";
 
 function GitHubIcon() {
   return (
@@ -137,7 +138,7 @@ export default function Home() {
 
         <section
           id="request-access"
-          className="grid gap-8 py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end lg:gap-16 lg:py-20"
+          className="grid gap-8 py-16 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start lg:gap-16 lg:py-20"
         >
           <div className="space-y-5">
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
@@ -152,17 +153,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="space-y-4">
-            <a
-              href="#top"
-              className="flex min-h-16 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
-            >
-              Request Enterprise Access
-            </a>
-            <p className="text-center text-sm leading-6 text-black/42">
-              Managed infrastructure, security, and support.
-            </p>
-          </div>
+          <RequestAccessForm />
         </section>
       </main>
     </div>
