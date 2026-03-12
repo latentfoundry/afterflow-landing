@@ -190,7 +190,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
                 href="/"
                 className="inline-flex min-h-14 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
               >
-                Back To Landing
+                Back
               </Link>
             </div>
           </div>
