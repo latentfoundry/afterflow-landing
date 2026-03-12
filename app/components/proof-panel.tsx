@@ -957,78 +957,78 @@ function DecisionBriefModal({
   onChoose: (id: DecisionId) => void;
 }) {
   return (
-    <div className="absolute inset-0 z-50 overflow-y-auto bg-black/72 p-3 backdrop-blur-sm sm:p-4">
+    <div className="absolute inset-0 z-50 flex flex-col justify-end overflow-y-auto bg-black/72 p-3 backdrop-blur-sm sm:p-4 lg:block">
       <div className="mx-auto w-full max-w-[980px] overflow-hidden rounded-[24px] border border-[#26345f] bg-[#071229] shadow-[0_32px_90px_rgba(0,0,0,0.45)]">
-        <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-[linear-gradient(180deg,rgba(127,29,29,0.22),rgba(2,6,23,0))] px-5 py-4 sm:px-8">
-          <div>
-            <p className="text-[12px] font-medium uppercase tracking-[0.26em] text-rose-300">
-              End of Day 1 Brief
-            </p>
+          <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-[linear-gradient(180deg,rgba(127,29,29,0.22),rgba(2,6,23,0))] px-5 py-4 sm:px-8">
+            <div>
+              <p className="text-[12px] font-medium uppercase tracking-[0.26em] text-rose-300">
+                End of Day 1 Brief
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <p className="hidden text-[11px] font-medium uppercase tracking-[0.32em] text-white/35 sm:block">
+                Decision Required
+              </p>
+              <button
+                type="button"
+                onClick={onClose}
+                className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/35 transition-colors hover:text-white"
+              >
+                Close
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <p className="hidden text-[11px] font-medium uppercase tracking-[0.32em] text-white/35 sm:block">
-              Decision Required
+
+          <div className="px-5 py-5 sm:px-8 sm:py-7">
+            <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/32">
+              Situation Report
             </p>
-            <button
-              type="button"
-              onClick={onClose}
-              className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/35 transition-colors hover:text-white"
-            >
-              Close
-            </button>
-          </div>
-        </div>
+            <p className="mt-3 max-w-4xl text-lg font-medium leading-tight tracking-[-0.04em] text-white sm:text-[26px] sm:leading-[1.2]">
+              {decisionPrompt}
+            </p>
 
-        <div className="px-5 py-5 sm:px-8 sm:py-7">
-          <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/32">
-            Situation Report
-          </p>
-          <p className="mt-3 max-w-4xl text-lg font-medium leading-tight tracking-[-0.04em] text-white sm:text-[26px] sm:leading-[1.2]">
-            {decisionPrompt}
-          </p>
+            <div className="mt-5 space-y-3">
+              {decisionOptionList.map((option) => {
+                const isSelected = currentDecisionId === option.id;
 
-          <div className="mt-5 space-y-3">
-            {decisionOptionList.map((option) => {
-              const isSelected = currentDecisionId === option.id;
+                return (
+                  <div
+                    key={option.id}
+                    className={`rounded-[20px] border p-4 sm:p-5 ${
+                      isSelected
+                        ? "border-white/18 bg-[#08172f]"
+                        : "border-white/10 bg-[#051024]"
+                    }`}
+                  >
+                    <p className="text-base font-medium tracking-[-0.03em] text-white sm:text-[20px] sm:leading-[1.22]">
+                      {option.title}
+                    </p>
 
-              return (
-                <div
-                  key={option.id}
-                  className={`rounded-[20px] border p-4 sm:p-5 ${
-                    isSelected
-                      ? "border-white/18 bg-[#08172f]"
-                      : "border-white/10 bg-[#051024]"
-                  }`}
-                >
-                  <p className="text-base font-medium tracking-[-0.03em] text-white sm:text-[20px] sm:leading-[1.22]">
-                    {option.title}
-                  </p>
-
-                  <div className="mt-4 flex flex-wrap gap-2.5">
-                    <button
-                      type="button"
-                      onClick={() => onPreview(option.id)}
-                      className="inline-flex min-w-24 items-center justify-center rounded-[12px] border border-sky-500/40 bg-sky-500/8 px-3.5 py-2.5 text-sm font-medium text-sky-200 transition-colors hover:border-sky-400/55 hover:bg-sky-500/12"
-                    >
-                      Preview
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => onChoose(option.id)}
-                      className={`inline-flex min-w-24 items-center justify-center rounded-[12px] border px-3.5 py-2.5 text-sm font-medium transition-colors ${
-                        isSelected
-                          ? "border-emerald-500/45 bg-emerald-500/10 text-emerald-200"
-                          : "border-rose-500/35 bg-rose-500/8 text-rose-200 hover:border-rose-400/55 hover:bg-rose-500/12"
-                      }`}
-                    >
-                      {isSelected ? "Selected" : "Choose"}
-                    </button>
+                    <div className="mt-4 flex flex-wrap gap-2.5">
+                      <button
+                        type="button"
+                        onClick={() => onPreview(option.id)}
+                        className="inline-flex min-w-24 items-center justify-center rounded-[12px] border border-sky-500/40 bg-sky-500/8 px-3.5 py-2.5 text-sm font-medium text-sky-200 transition-colors hover:border-sky-400/55 hover:bg-sky-500/12"
+                      >
+                        Preview
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onChoose(option.id)}
+                        className={`inline-flex min-w-24 items-center justify-center rounded-[12px] border px-3.5 py-2.5 text-sm font-medium transition-colors ${
+                          isSelected
+                            ? "border-emerald-500/45 bg-emerald-500/10 text-emerald-200"
+                            : "border-rose-500/35 bg-rose-500/8 text-rose-200 hover:border-rose-400/55 hover:bg-rose-500/12"
+                        }`}
+                      >
+                        {isSelected ? "Selected" : "Choose"}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
       </div>
     </div>
   );
@@ -1198,89 +1198,89 @@ function DecisionPreviewModal({
   const isSelected = currentDecisionId === option.id;
 
   return (
-    <div className="absolute inset-0 z-50 overflow-y-auto bg-black/72 p-2 backdrop-blur-sm sm:p-3 xl:overflow-hidden xl:p-2">
+    <div className="absolute inset-0 z-50 flex flex-col justify-end overflow-y-auto bg-black/72 p-2 backdrop-blur-sm sm:p-3 xl:block xl:overflow-hidden xl:p-2">
       <div className="mx-auto w-full max-w-[1080px] overflow-hidden rounded-[24px] border border-[#26345f] bg-[#050c18] shadow-[0_32px_90px_rgba(0,0,0,0.45)] xl:flex xl:h-full xl:flex-col">
-        <div className="flex items-start justify-between gap-4 border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(127,29,29,0.28),rgba(2,6,23,0.04)_55%)] px-4 py-3 sm:px-6 xl:px-5 xl:py-2.5">
-          <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-rose-300/90">
-              Decision Preview
-            </p>
-            <p className="mt-1.5 text-lg font-medium tracking-[-0.04em] text-white sm:text-[24px] sm:leading-[1.08] xl:text-[22px]">
-              {option.previewTitle}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="mt-1 text-[10px] font-medium uppercase tracking-[0.28em] text-white/35 transition-colors hover:text-white"
-          >
-            Close
-          </button>
-        </div>
-
-        <div className="p-3 sm:p-4 xl:flex-1 xl:min-h-0 xl:p-3">
-          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_208px] xl:h-full xl:grid-cols-[minmax(0,1fr)_224px]">
-            <div className="flex rounded-[22px] border border-white/8 bg-black/22 p-3 sm:p-4 xl:min-h-0 xl:p-3">
-              <PreviewNetwork option={option} />
+          <div className="flex items-start justify-between gap-4 border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(127,29,29,0.28),rgba(2,6,23,0.04)_55%)] px-4 py-3 sm:px-6 xl:px-5 xl:py-2.5">
+            <div>
+              <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-rose-300/90">
+                Decision Preview
+              </p>
+              <p className="mt-1.5 text-lg font-medium tracking-[-0.04em] text-white sm:text-[24px] sm:leading-[1.08] xl:text-[22px]">
+                {option.previewTitle}
+              </p>
             </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="mt-1 text-[10px] font-medium uppercase tracking-[0.28em] text-white/35 transition-colors hover:text-white"
+            >
+              Close
+            </button>
+          </div>
 
-            <div className="space-y-2 xl:flex xl:min-h-0 xl:flex-col">
-              <div className="rounded-[18px] border border-white/10 bg-[#071229] p-3 xl:p-2.5">
-                <p className="text-[10px] font-medium uppercase tracking-[0.32em] text-white/35">
-                  Projected Overall Health
-                </p>
-                <div className="mt-2 flex items-end gap-2">
-                  <span className="text-[32px] font-black tracking-[-0.06em] text-yellow-300 xl:text-[30px]">
-                    {option.projectedHealth}
-                  </span>
-                  <span className={`pb-0.5 text-sm font-medium ${option.projectedDeltaClass}`}>
-                    {option.projectedDelta}
-                  </span>
+          <div className="p-3 sm:p-4 xl:flex-1 xl:min-h-0 xl:p-3">
+            <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_208px] xl:h-full xl:grid-cols-[minmax(0,1fr)_224px]">
+              <div className="flex rounded-[22px] border border-white/8 bg-black/22 p-3 sm:p-4 xl:min-h-0 xl:p-3">
+                <PreviewNetwork option={option} />
+              </div>
+
+              <div className="space-y-2 xl:flex xl:min-h-0 xl:flex-col">
+                <div className="rounded-[18px] border border-white/10 bg-[#071229] p-3 xl:p-2.5">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.32em] text-white/35">
+                    Projected Overall Health
+                  </p>
+                  <div className="mt-2 flex items-end gap-2">
+                    <span className="text-[32px] font-black tracking-[-0.06em] text-yellow-300 xl:text-[30px]">
+                      {option.projectedHealth}
+                    </span>
+                    <span className={`pb-0.5 text-sm font-medium ${option.projectedDeltaClass}`}>
+                      {option.projectedDelta}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="rounded-[18px] border border-white/10 bg-[#071229] p-3 xl:flex-1 xl:p-2.5">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.32em] text-white/35">
+                    Projected Outcome
+                  </p>
+                  <p className="mt-2 text-[12px] leading-5 text-white/72 xl:text-[11px] xl:leading-[1.55]">
+                    {option.projectedOutcome}
+                  </p>
+                  <div className="mt-3 space-y-1.5 border-t border-white/8 pt-3 xl:mt-2.5 xl:space-y-1 xl:pt-2.5">
+                    {option.rippleEffects.map((effect) => (
+                      <p
+                        key={effect}
+                        className="text-[12px] leading-5 text-white/66 xl:text-[11px] xl:leading-[1.55]"
+                      >
+                        {effect}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 xl:mt-auto xl:gap-1.5">
+                  <button
+                    type="button"
+                    onClick={onBack}
+                    className="inline-flex min-w-20 items-center justify-center rounded-[12px] border border-white/12 px-3 py-2 text-sm font-medium text-white/68 transition-colors hover:border-white/20 hover:text-white xl:px-3 xl:py-1.5 xl:text-[13px]"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onChoose(option.id)}
+                    className={`inline-flex min-w-24 items-center justify-center rounded-[12px] border px-3 py-2 text-sm font-medium transition-colors xl:px-3 xl:py-1.5 xl:text-[13px] ${
+                      isSelected
+                        ? "border-emerald-500/45 bg-emerald-500/10 text-emerald-200"
+                        : "border-rose-500/35 bg-rose-500/8 text-rose-200 hover:border-rose-400/55 hover:bg-rose-500/12"
+                    }`}
+                  >
+                    {isSelected ? "Selected Path" : "Choose Path"}
+                  </button>
                 </div>
               </div>
-
-              <div className="rounded-[18px] border border-white/10 bg-[#071229] p-3 xl:flex-1 xl:p-2.5">
-                <p className="text-[10px] font-medium uppercase tracking-[0.32em] text-white/35">
-                  Projected Outcome
-                </p>
-                <p className="mt-2 text-[12px] leading-5 text-white/72 xl:text-[11px] xl:leading-[1.55]">
-                  {option.projectedOutcome}
-                </p>
-                <div className="mt-3 space-y-1.5 border-t border-white/8 pt-3 xl:mt-2.5 xl:space-y-1 xl:pt-2.5">
-                  {option.rippleEffects.map((effect) => (
-                    <p
-                      key={effect}
-                      className="text-[12px] leading-5 text-white/66 xl:text-[11px] xl:leading-[1.55]"
-                    >
-                      {effect}
-                    </p>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-2 xl:mt-auto xl:gap-1.5">
-                <button
-                  type="button"
-                  onClick={onBack}
-                  className="inline-flex min-w-20 items-center justify-center rounded-[12px] border border-white/12 px-3 py-2 text-sm font-medium text-white/68 transition-colors hover:border-white/20 hover:text-white xl:px-3 xl:py-1.5 xl:text-[13px]"
-                >
-                  Back
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onChoose(option.id)}
-                  className={`inline-flex min-w-24 items-center justify-center rounded-[12px] border px-3 py-2 text-sm font-medium transition-colors xl:px-3 xl:py-1.5 xl:text-[13px] ${
-                    isSelected
-                      ? "border-emerald-500/45 bg-emerald-500/10 text-emerald-200"
-                      : "border-rose-500/35 bg-rose-500/8 text-rose-200 hover:border-rose-400/55 hover:bg-rose-500/12"
-                  }`}
-                >
-                  {isSelected ? "Selected Path" : "Choose Path"}
-                </button>
-              </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   );
