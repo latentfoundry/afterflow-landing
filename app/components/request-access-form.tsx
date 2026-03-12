@@ -4,6 +4,8 @@ import { useId, useState, useTransition } from "react";
 
 const requestAccessEndpoint =
   process.env.NEXT_PUBLIC_REQUEST_ACCESS_ENDPOINT?.trim() ?? "";
+const appsScriptWebAppPattern =
+  /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/(?:exec|dev)\/?$/;
 
 const teamOptions = [
   "Communications",
@@ -43,6 +45,10 @@ function getEmptyState(): FormState {
 }
 
 export function RequestAccessForm() {
+  return <RequestAccessFormInner source="request-access-page" />;
+}
+
+export function RequestAccessFormInner({ source }: { source: string }) {
   const honeypotId = useId();
   const [formState, setFormState] = useState<FormState>(getEmptyState);
   const [stepIndex, setStepIndex] = useState(0);
@@ -56,6 +62,8 @@ export function RequestAccessForm() {
   const isEmailValid = emailPattern.test(formState.email.trim());
   const isLastStep = stepIndex === totalSteps - 1;
   const canAdvance = currentStep !== "email" || isEmailValid;
+  const hasEndpoint = requestAccessEndpoint.length > 0;
+  const hasValidEndpoint = appsScriptWebAppPattern.test(requestAccessEndpoint);
 
   const updateField = (field: keyof FormState, value: string) => {
     setFormState((current) => ({
@@ -95,9 +103,16 @@ export function RequestAccessForm() {
       return;
     }
 
-    if (!requestAccessEndpoint) {
+    if (!hasEndpoint) {
       setSubmitError(
         "This form is not configured yet. Add NEXT_PUBLIC_REQUEST_ACCESS_ENDPOINT before deploying.",
+      );
+      return;
+    }
+
+    if (!hasValidEndpoint) {
+      setSubmitError(
+        "The request endpoint is not a deployed Apps Script web app URL. Use the /macros/s/.../exec URL, not a library URL.",
       );
       return;
     }
@@ -123,7 +138,7 @@ export function RequestAccessForm() {
             honeypot: formState.honeypot.trim(),
             note: formState.note.trim(),
             pageUrl: typeof window !== "undefined" ? window.location.href : "",
-            source: "landing-request-access",
+            source,
             startedAt: new Date(startedAt).toISOString(),
             submittedAt: new Date(submittedAt).toISOString(),
             team: formState.team,
@@ -149,7 +164,7 @@ export function RequestAccessForm() {
 
   if (submitted) {
     return (
-      <div className="overflow-hidden rounded-[26px] border border-black/10 bg-black text-[#f3efe8]">
+      <div className="overflow-hidden border border-black bg-black text-[#f3efe8]">
         <div className="border-b border-white/10 px-5 py-4 sm:px-6">
           <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/38">
             Request Received
@@ -185,7 +200,7 @@ export function RequestAccessForm() {
   }
 
   return (
-    <div className="overflow-hidden rounded-[26px] border border-black/10 bg-black text-[#f3efe8] shadow-[0_24px_80px_rgba(0,0,0,0.12)]">
+    <div className="overflow-hidden border border-black bg-black text-[#f3efe8] shadow-[0_24px_80px_rgba(0,0,0,0.12)]">
       <div className="border-b border-white/10 px-5 py-4 sm:px-6">
         <div className="flex items-center justify-between gap-4">
           <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/38">

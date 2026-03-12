@@ -1,5 +1,5 @@
+import Link from "next/link";
 import { ProofPanel } from "./components/proof-panel";
-import { RequestAccessForm } from "./components/request-access-form";
 
 function GitHubIcon() {
   return (
@@ -50,12 +50,12 @@ export default function Home() {
             >
               <GitHubIcon />
             </a>
-            <a
-              href="#request-access"
+            <Link
+              href="/request-access"
               className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/55 transition-colors hover:text-black"
             >
               Enterprise Access
-            </a>
+            </Link>
           </div>
         </header>
 
@@ -72,12 +72,12 @@ export default function Home() {
               investors may react before you commit to a response.
             </p>
             <div className="flex flex-col items-center">
-              <a
-                href="#request-access"
+              <Link
+                href="/request-access"
                 className="inline-flex min-w-60 items-center justify-center bg-black px-6 py-4 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
               >
                 Request Enterprise Access
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -138,7 +138,7 @@ export default function Home() {
 
         <section
           id="request-access"
-          className="grid gap-8 py-16 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start lg:gap-16 lg:py-20"
+          className="grid gap-8 py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end lg:gap-16 lg:py-20"
         >
           <div className="space-y-5">
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
@@ -153,7 +153,17 @@ export default function Home() {
             </p>
           </div>
 
-          <RequestAccessForm />
+          <div className="space-y-4">
+            <Link
+              href="/request-access"
+              className="flex min-h-16 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
+            >
+              Request Enterprise Access
+            </Link>
+            <p className="text-center text-sm leading-6 text-black/42">
+              One required field. The rest is optional.
+            </p>
+          </div>
         </section>
       </main>
     </div>
