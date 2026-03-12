@@ -1,21 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useId, useState, useTransition } from "react";
 
 const requestAccessEndpoint =
   process.env.NEXT_PUBLIC_REQUEST_ACCESS_ENDPOINT?.trim() ?? "";
 const appsScriptWebAppPattern =
   /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/(?:exec|dev)\/?$/;
-
-const teamOptions = [
-  "Communications",
-  "Legal",
-  "Risk",
-  "Security",
-  "Executive",
-  "Operations",
-  "Other",
-] as const;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const totalSteps = 4;
@@ -33,6 +24,31 @@ type FormState = {
 
 const stepOrder: StepKey[] = ["email", "identity", "team", "note"];
 
+const stepContent: Record<
+  StepKey,
+  {
+    description: string;
+    prompt: string;
+  }
+> = {
+  email: {
+    description: "",
+    prompt: "What is your work email?",
+  },
+  identity: {
+    description: "",
+    prompt: "What is your name?",
+  },
+  team: {
+    description: "",
+    prompt: "Which industry or sector are you in?",
+  },
+  note: {
+    description: "",
+    prompt: "Anything else you'd like to add?",
+  },
+};
+
 function getEmptyState(): FormState {
   return {
     company: "",
@@ -42,10 +58,6 @@ function getEmptyState(): FormState {
     note: "",
     team: "",
   };
-}
-
-export function RequestAccessForm() {
-  return <RequestAccessFormInner source="request-access-page" />;
 }
 
 export function RequestAccessFormInner({ source }: { source: string }) {
@@ -85,14 +97,6 @@ export function RequestAccessFormInner({ source }: { source: string }) {
 
     setSubmitError("");
     setStepIndex((current) => Math.min(current + 1, totalSteps - 1));
-  };
-
-  const resetForm = () => {
-    setFormState(getEmptyState());
-    setStepIndex(0);
-    setEmailTouched(false);
-    setSubmitError("");
-    setSubmitted(false);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -153,7 +157,8 @@ export function RequestAccessFormInner({ source }: { source: string }) {
   };
 
   const progress = ((stepIndex + 1) / totalSteps) * 100;
-  const cardLabel =
+  const currentContent = stepContent[currentStep];
+  const stepLabel =
     currentStep === "email"
       ? "Step 1 of 4"
       : currentStep === "identity"
@@ -164,222 +169,213 @@ export function RequestAccessFormInner({ source }: { source: string }) {
 
   if (submitted) {
     return (
-      <div className="overflow-hidden border border-black bg-black text-[#f3efe8]">
-        <div className="border-b border-white/10 px-5 py-4 sm:px-6">
-          <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/38">
-            Request Received
-          </p>
-        </div>
-        <div className="space-y-5 px-5 py-6 sm:px-6">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-emerald-400/24 bg-emerald-400/10 text-sm font-medium text-emerald-200">
-            OK
+      <div className="w-full border border-black/10 bg-[#ece8e1] shadow-[0_18px_45px_rgba(0,0,0,0.05)]">
+        <div className="px-6 py-8 sm:px-8 sm:py-10">
+          <div className="flex items-center justify-between gap-4 text-[11px] font-medium uppercase tracking-[0.32em] text-black/35">
+            <p>Enterprise Access</p>
+            <p>Submitted</p>
           </div>
-          <div className="space-y-3">
-            <p className="text-3xl font-black leading-none tracking-[-0.05em] text-white">
-              You are in.
-            </p>
-            <p className="text-base leading-7 text-white/68">
-              Thanks. We read every request personally and follow up directly if there is
-              a fit.
-            </p>
-            <p className="text-sm leading-6 text-white/42">
-              No confidential incident details were needed here, which is exactly how this
-              should work.
-            </p>
+          <div className="mt-4 h-px bg-black/10" />
+          <div className="space-y-8 py-10 sm:py-14">
+            <div className="space-y-5">
+              <p className="max-w-5xl text-[clamp(2.5rem,6vw,4.75rem)] font-black leading-[0.92] tracking-[-0.08em] text-black">
+                Thank you.
+              </p>
+              <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
+                We will reach out shortly.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 border-t border-black/10 pt-8">
+              <Link
+                href="/"
+                className="inline-flex min-h-14 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
+              >
+                Back To Landing
+              </Link>
+            </div>
           </div>
-          <button
-            type="button"
-            onClick={resetForm}
-            className="inline-flex min-h-12 items-center justify-center border border-white/12 px-4 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:border-white/24 hover:bg-white/5"
-          >
-            Submit Another
-          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="overflow-hidden border border-black bg-black text-[#f3efe8] shadow-[0_24px_80px_rgba(0,0,0,0.12)]">
-      <div className="border-b border-white/10 px-5 py-4 sm:px-6">
-        <div className="flex items-center justify-between gap-4">
-          <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/38">
-            {cardLabel}
-          </p>
-          <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/24">
-            One required field
-          </p>
+    <div className="w-full border border-black/10 bg-[#ece8e1] shadow-[0_18px_45px_rgba(0,0,0,0.05)]">
+      <div className="px-6 py-8 sm:px-8 sm:py-10">
+        <div className="flex items-center justify-between gap-4 text-[11px] font-medium uppercase tracking-[0.32em] text-black/35">
+          <p>Enterprise Access</p>
+          <p>{stepLabel}</p>
         </div>
-        <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/10">
+        <div className="mt-4 h-1 overflow-hidden bg-black/10">
           <div
-            className="h-full rounded-full bg-[#f7b0c1] transition-[width] duration-300 ease-out"
+            className="h-full bg-black transition-[width] duration-300 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-6 px-5 py-6 sm:px-6">
-        {currentStep === "email" ? (
-          <div className="space-y-4">
-            <div className="space-y-3">
-              <p className="text-3xl font-black leading-none tracking-[-0.05em] text-white">
-                What is the best work email to reach you on?
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-10 pb-2 pt-10 sm:pb-4 sm:pt-14 lg:pt-12">
+            <div className="max-w-5xl space-y-5">
+              <p className="text-[clamp(2.5rem,6vw,4.75rem)] font-black leading-[0.92] tracking-[-0.08em] text-black">
+                {currentContent.prompt}
               </p>
-              <p className="max-w-md text-sm leading-6 text-white/45">
-                This is the only required field. Everything else is optional.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <input
-                autoFocus
-                type="email"
-                inputMode="email"
-                autoComplete="email"
-                value={formState.email}
-                onBlur={() => setEmailTouched(true)}
-                onChange={(event) => updateField("email", event.target.value)}
-                placeholder="you@company.com"
-                className="min-h-14 w-full border border-white/12 bg-white/4 px-4 text-base text-white outline-none transition-colors placeholder:text-white/28 focus:border-[#f7b0c1]/55"
-              />
-              {emailTouched && !isEmailValid ? (
-                <p className="text-sm leading-6 text-rose-200">
-                  Enter a valid email so we have a way to follow up.
+              {currentContent.description ? (
+                <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
+                  {currentContent.description}
                 </p>
               ) : null}
             </div>
-          </div>
-        ) : null}
 
-        {currentStep === "identity" ? (
-          <div className="space-y-4">
-            <div className="space-y-3">
-              <p className="text-3xl font-black leading-none tracking-[-0.05em] text-white">
-                What should we call you?
-              </p>
-              <p className="max-w-md text-sm leading-6 text-white/45">
-                First name and company are both optional, but they make the follow-up easier.
-              </p>
-            </div>
-            <div className="space-y-3">
-              <input
-                autoFocus
-                type="text"
-                autoComplete="given-name"
-                value={formState.firstName}
-                onChange={(event) => updateField("firstName", event.target.value)}
-                placeholder="First name"
-                className="min-h-14 w-full border border-white/12 bg-white/4 px-4 text-base text-white outline-none transition-colors placeholder:text-white/28 focus:border-[#f7b0c1]/55"
-              />
-              <input
-                type="text"
-                autoComplete="organization"
-                value={formState.company}
-                onChange={(event) => updateField("company", event.target.value)}
-                placeholder="Company"
-                className="min-h-14 w-full border border-white/12 bg-white/4 px-4 text-base text-white outline-none transition-colors placeholder:text-white/28 focus:border-[#f7b0c1]/55"
-              />
-            </div>
-          </div>
-        ) : null}
+            {currentStep === "email" ? (
+              <div className="max-w-[760px] space-y-3">
+                <label
+                  htmlFor="request-access-email"
+                  className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/35"
+                >
+                  Work Email *
+                </label>
+                <input
+                  id="request-access-email"
+                  autoFocus
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  value={formState.email}
+                  name="email"
+                  onBlur={() => setEmailTouched(true)}
+                  onChange={(event) => updateField("email", event.target.value)}
+                  placeholder="jane@acme.com"
+                  className="min-h-20 w-full border border-black/18 bg-[#f4f0ea] px-5 text-[clamp(1.5rem,3vw,2.15rem)] tracking-[-0.04em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+                />
+                {emailTouched && !isEmailValid ? (
+                  <p className="text-sm leading-6 text-rose-700">
+                    Enter a valid email so we know where to reply.
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
 
-        {currentStep === "team" ? (
-          <div className="space-y-4">
-            <div className="space-y-3">
-              <p className="text-3xl font-black leading-none tracking-[-0.05em] text-white">
-                Which team are you closest to?
-              </p>
-              <p className="max-w-md text-sm leading-6 text-white/45">
-                Optional. This just helps us pattern-match who is finding this useful.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {teamOptions.map((team) => {
-                const isActive = formState.team === team;
-
-                return (
-                  <button
-                    key={team}
-                    type="button"
-                    onClick={() => updateField("team", isActive ? "" : team)}
-                    className={`inline-flex min-h-11 items-center justify-center border px-4 text-sm font-medium transition-colors ${
-                      isActive
-                        ? "border-[#f7b0c1] bg-[#f7b0c1]/14 text-white"
-                        : "border-white/12 bg-white/4 text-white/72 hover:border-white/20 hover:text-white"
-                    }`}
+            {currentStep === "identity" ? (
+              <div className="grid max-w-[960px] gap-5 sm:grid-cols-2">
+                <div className="space-y-3">
+                  <label
+                    htmlFor="request-access-name"
+                    className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/35"
                   >
-                    {team}
-                  </button>
-                );
-              })}
+                    Name
+                  </label>
+                  <input
+                    id="request-access-name"
+                    autoFocus
+                    type="text"
+                    autoComplete="name"
+                    value={formState.firstName}
+                    name="name"
+                    onChange={(event) => updateField("firstName", event.target.value)}
+                    placeholder="Jane Doe"
+                    className="min-h-20 w-full border border-black/18 bg-[#f4f0ea] px-5 text-[clamp(1.5rem,3vw,2.15rem)] tracking-[-0.04em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <label
+                    htmlFor="request-access-company"
+                    className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/35"
+                  >
+                    Company
+                  </label>
+                  <input
+                    id="request-access-company"
+                    type="text"
+                    autoComplete="organization"
+                    value={formState.company}
+                    name="company"
+                    onChange={(event) => updateField("company", event.target.value)}
+                    placeholder="ACME Corporation"
+                    className="min-h-20 w-full border border-black/18 bg-[#f4f0ea] px-5 text-[clamp(1.5rem,3vw,2.15rem)] tracking-[-0.04em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+                  />
+                </div>
+              </div>
+            ) : null}
+
+            {currentStep === "team" ? (
+              <div className="max-w-[760px] space-y-3">
+                <label
+                  htmlFor="request-access-sector"
+                  className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/35"
+                >
+                  Industry / Sector
+                </label>
+                <input
+                  id="request-access-sector"
+                  autoFocus
+                  type="text"
+                  autoComplete="organization-title"
+                  value={formState.team}
+                  name="industry"
+                  onChange={(event) => updateField("team", event.target.value)}
+                  placeholder="Financial services"
+                  className="min-h-20 w-full border border-black/18 bg-[#f4f0ea] px-5 text-[clamp(1.5rem,3vw,2.15rem)] tracking-[-0.04em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+                />
+              </div>
+            ) : null}
+
+            {currentStep === "note" ? (
+              <div className="max-w-[920px] space-y-3">
+                <label
+                  htmlFor="request-access-note"
+                  className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/35"
+                >
+                  Additional Information
+                </label>
+                <textarea
+                  id="request-access-note"
+                  autoFocus
+                  rows={5}
+                  maxLength={280}
+                  value={formState.note}
+                  name="note"
+                  onChange={(event) => updateField("note", event.target.value)}
+                  placeholder="Share anything else you would like us to know about your company, timing, or how you might use Afterflow."
+                  className="w-full resize-none border border-black/18 bg-[#f4f0ea] px-5 py-5 text-[clamp(1.1rem,2vw,1.45rem)] leading-8 tracking-[-0.03em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+                />
+              </div>
+            ) : null}
+
+            <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">
+              <label htmlFor={honeypotId}>Website</label>
+              <input
+                id={honeypotId}
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={formState.honeypot}
+                onChange={(event) => updateField("honeypot", event.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-wrap items-center gap-4 border-t border-black/10 pt-8">
+              {stepIndex > 0 ? (
+                <button
+                  type="button"
+                  onClick={goBack}
+                  className="inline-flex min-h-14 items-center justify-center border border-black/12 px-6 text-sm font-medium uppercase tracking-[0.18em] text-black/72 transition-colors hover:border-black/24 hover:text-black"
+                >
+                  Back
+                </button>
+              ) : null}
+              <button
+                type="submit"
+                disabled={isPending}
+                className="inline-flex min-h-14 min-w-40 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88 disabled:cursor-wait disabled:bg-black/72"
+              >
+                {isPending ? "Submitting" : isLastStep ? "Submit" : "Continue"}
+              </button>
+              {submitError ? (
+                <p className="text-sm leading-6 text-rose-700">{submitError}</p>
+              ) : null}
             </div>
           </div>
-        ) : null}
-
-        {currentStep === "note" ? (
-          <div className="space-y-4">
-            <div className="space-y-3">
-              <p className="text-3xl font-black leading-none tracking-[-0.05em] text-white">
-                Anything helpful to know before we reach out?
-              </p>
-              <p className="max-w-md text-sm leading-6 text-white/45">
-                Optional. One line is enough. Please do not include confidential incident
-                details.
-              </p>
-            </div>
-            <textarea
-              autoFocus
-              rows={4}
-              maxLength={280}
-              value={formState.note}
-              onChange={(event) => updateField("note", event.target.value)}
-              placeholder="We are exploring this for incident comms and executive decision rehearsals."
-              className="w-full resize-none border border-white/12 bg-white/4 px-4 py-3 text-base leading-7 text-white outline-none transition-colors placeholder:text-white/28 focus:border-[#f7b0c1]/55"
-            />
-            <p className="text-right text-[11px] font-medium uppercase tracking-[0.28em] text-white/24">
-              {formState.note.length}/280
-            </p>
-          </div>
-        ) : null}
-
-        <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">
-          <label htmlFor={honeypotId}>Website</label>
-          <input
-            id={honeypotId}
-            type="text"
-            tabIndex={-1}
-            autoComplete="off"
-            value={formState.honeypot}
-            onChange={(event) => updateField("honeypot", event.target.value)}
-          />
-        </div>
-
-        {submitError ? (
-          <p className="text-sm leading-6 text-rose-200">{submitError}</p>
-        ) : (
-          <p className="text-sm leading-6 text-white/34">
-            We only ask for enough information to contact you back.
-          </p>
-        )}
-
-        <div className="flex flex-wrap items-center gap-3">
-          {stepIndex > 0 ? (
-            <button
-              type="button"
-              onClick={goBack}
-              className="inline-flex min-h-12 items-center justify-center border border-white/12 px-4 text-sm font-medium uppercase tracking-[0.18em] text-white/72 transition-colors hover:border-white/24 hover:text-white"
-            >
-              Back
-            </button>
-          ) : null}
-          <button
-            type="submit"
-            disabled={isPending}
-            className="inline-flex min-h-12 min-w-40 items-center justify-center bg-[#f3efe8] px-5 text-sm font-medium uppercase tracking-[0.18em] text-black transition-colors hover:bg-white disabled:cursor-wait disabled:bg-[#f3efe8]/75"
-          >
-            {isPending ? "Submitting" : isLastStep ? "Request Access" : "Continue"}
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

@@ -161,7 +161,7 @@ export default function Home() {
               Request Enterprise Access
             </Link>
             <p className="text-center text-sm leading-6 text-black/42">
-              One required field. The rest is optional.
+              We review every founding partner request personally.
             </p>
           </div>
         </section>
