@@ -36,6 +36,6 @@ export const logoUrl = new URL(
 
 export const siteName = "Afterflow";
 export const siteTitle =
-  "Afterflow | AI Decision Simulation Platform for Critical Decisions";
+  "Afterflow | AI Decision Simulation for Enterprise Teams";
 export const siteDescription =
-  "Afterflow is an AI decision simulation platform that helps companies test critical decisions in a realistic virtual environment, showing how stakeholders, markets, media, regulators, and operations may react before those decisions are made in the real world.";
+  "Test critical decisions before you make them. Afterflow simulates how stakeholders, media, regulators, markets, and operations may react.";
