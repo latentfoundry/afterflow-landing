@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ProofPanel } from "./components/proof-panel";
+import { ProofPanelShell } from "./components/proof-panel-shell";
+import { SiteLogo } from "./components/site-logo";
 
 function GitHubIcon() {
   return (
@@ -37,9 +38,7 @@ export default function Home() {
     <div id="top" className="min-h-screen bg-[#e7e3dd] text-black">
       <main className="mx-auto max-w-7xl px-6 pb-16 pt-6 sm:px-10 lg:px-14">
         <header className="flex items-center justify-between border-b border-black/10 pb-4">
-          <p className="text-sm font-medium uppercase tracking-[0.28em] text-black">
-            Afterflow
-          </p>
+          <SiteLogo />
           <div className="flex items-center gap-3">
             <a
               href="https://github.com/latentfoundry/afterflow"
@@ -61,12 +60,18 @@ export default function Home() {
 
         <section className="flex min-h-[68vh] flex-col items-center justify-center border-b border-black/10 py-20 text-center lg:min-h-[76vh]">
           <div className="space-y-8">
-            <h1 className="text-[clamp(4.5rem,17vw,11rem)] font-black leading-none tracking-[-0.09em]">
-              Afterflow
-            </h1>
-            <p className="mx-auto max-w-4xl text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-5xl">
-              Test a critical decision before you make it.
+            <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
+              AI Decision Simulation Platform
             </p>
+            <p
+              aria-hidden="true"
+              className="text-[clamp(4.5rem,17vw,11rem)] font-black leading-none tracking-[-0.09em]"
+            >
+              Afterflow
+            </p>
+            <h1 className="mx-auto max-w-4xl text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-5xl">
+              Test a critical decision before you make it.
+            </h1>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-black/58 sm:text-xl">
               Simulate how customers, employees, regulators, media, and
               investors may react before you commit to a response.
@@ -117,7 +122,9 @@ export default function Home() {
             </p>
           </div>
 
-          <ProofPanel />
+          <div data-nosnippet>
+            <ProofPanelShell />
+          </div>
 
           <div className="mt-12 grid gap-px overflow-hidden border border-white/10 bg-white/10 lg:grid-cols-3">
             {steps.map((step) => (

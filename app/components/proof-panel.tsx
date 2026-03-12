@@ -1395,7 +1395,10 @@ export function ProofPanel() {
 
   return (
     <>
-      <div className="relative mt-12 overflow-hidden border border-white/10 bg-[#020202] xl:h-[520px]">
+      <div
+        data-nosnippet
+        className="relative mt-12 overflow-hidden border border-white/10 bg-[#020202] xl:h-[520px]"
+      >
         <div className="grid xl:h-full xl:grid-cols-[280px_minmax(0,1fr)_320px]">
           <div className="hidden min-h-0 border-r border-white/10 bg-[#020202] xl:flex xl:flex-col">
             <div className="border-b border-white/10 px-6 py-5">

@@ -9,6 +9,9 @@ const appsScriptWebAppPattern =
   /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/(?:exec|dev)\/?$/;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const formulaPrefixPattern = /^[=+\-@]/;
+const submitThrottleKey = "afterflow-request-access-last-submit";
+const submitThrottleMs = 60_000;
 const totalSteps = 4;
 
 type StepKey = "email" | "identity" | "team" | "note";
@@ -58,6 +61,39 @@ function getEmptyState(): FormState {
     note: "",
     team: "",
   };
+}
+
+function sanitizeSingleLine(value: string) {
+  const normalized = value.replace(/\u0000/g, "").replace(/\s+/g, " ").trim();
+
+  return formulaPrefixPattern.test(normalized)
+    ? `\u200B${normalized}`
+    : normalized;
+}
+
+function sanitizeMultiline(value: string) {
+  const normalized = value
+    .replace(/\u0000/g, "")
+    .replace(/\r\n/g, "\n")
+    .trim();
+
+  return formulaPrefixPattern.test(normalized.trimStart())
+    ? `\u200B${normalized}`
+    : normalized;
+}
+
+function getLastSubmitAt() {
+  if (typeof window === "undefined") {
+    return 0;
+  }
+
+  try {
+    const storedValue = window.localStorage.getItem(submitThrottleKey);
+    const parsedValue = Number(storedValue || "0");
+    return Number.isFinite(parsedValue) ? parsedValue : 0;
+  } catch {
+    return 0;
+  }
 }
 
 export function RequestAccessFormInner({ source }: { source: string }) {
@@ -121,11 +157,31 @@ export function RequestAccessFormInner({ source }: { source: string }) {
       return;
     }
 
+    const lastSubmitAt = getLastSubmitAt();
+    if (Date.now() - lastSubmitAt < submitThrottleMs) {
+      setSubmitError("Please wait a minute before sending another request.");
+      return;
+    }
+
     startTransition(async () => {
       setSubmitError("");
 
       try {
         const submittedAt = Date.now();
+        const payload = {
+          company: sanitizeSingleLine(formState.company),
+          durationMs: submittedAt - startedAt,
+          email: sanitizeSingleLine(formState.email),
+          firstName: sanitizeSingleLine(formState.firstName),
+          formVersion: 1,
+          honeypot: formState.honeypot.trim(),
+          note: sanitizeMultiline(formState.note),
+          pageUrl: typeof window !== "undefined" ? window.location.href : "",
+          source,
+          startedAt: new Date(startedAt).toISOString(),
+          submittedAt: new Date(submittedAt).toISOString(),
+          team: sanitizeSingleLine(formState.team),
+        };
 
         await fetch(requestAccessEndpoint, {
           method: "POST",
@@ -133,22 +189,16 @@ export function RequestAccessFormInner({ source }: { source: string }) {
           headers: {
             "Content-Type": "text/plain;charset=utf-8",
           },
-          body: JSON.stringify({
-            company: formState.company.trim(),
-            durationMs: submittedAt - startedAt,
-            email: formState.email.trim(),
-            firstName: formState.firstName.trim(),
-            formVersion: 1,
-            honeypot: formState.honeypot.trim(),
-            note: formState.note.trim(),
-            pageUrl: typeof window !== "undefined" ? window.location.href : "",
-            source,
-            startedAt: new Date(startedAt).toISOString(),
-            submittedAt: new Date(submittedAt).toISOString(),
-            team: formState.team,
-          }),
+          body: JSON.stringify(payload),
         });
 
+        if (typeof window !== "undefined") {
+          try {
+            window.localStorage.setItem(submitThrottleKey, String(submittedAt));
+          } catch {
+            // Ignore storage failures so the submission flow still completes.
+          }
+        }
         setSubmitted(true);
       } catch {
         setSubmitError("We could not send that just now. Please try again.");
@@ -238,6 +288,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
                   autoFocus
                   type="email"
                   inputMode="email"
+                  maxLength={254}
                   autoComplete="email"
                   value={formState.email}
                   name="email"
@@ -267,6 +318,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
                     id="request-access-name"
                     autoFocus
                     type="text"
+                    maxLength={80}
                     autoComplete="name"
                     value={formState.firstName}
                     name="name"
@@ -285,6 +337,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
                   <input
                     id="request-access-company"
                     type="text"
+                    maxLength={120}
                     autoComplete="organization"
                     value={formState.company}
                     name="company"
@@ -308,6 +361,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
                   id="request-access-sector"
                   autoFocus
                   type="text"
+                  maxLength={80}
                   autoComplete="organization-title"
                   value={formState.team}
                   name="industry"
