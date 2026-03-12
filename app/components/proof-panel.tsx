@@ -1462,8 +1462,8 @@ export function ProofPanel() {
                   onClick={() => setSelectedNodeId(null)}
                   className="absolute inset-0 z-20 bg-[#020202]/72 backdrop-blur-[2px] lg:hidden"
                 />
-                <div className="absolute inset-x-3 bottom-3 top-14 z-30 flex items-start lg:hidden">
-                  <div className="mx-auto w-full max-w-[420px]">
+                <div className="absolute inset-x-3 bottom-14 top-4 z-30 flex items-start justify-center sm:bottom-6 sm:top-6 lg:hidden">
+                  <div className="h-full w-full max-w-[420px]">
                     <CohortDetailCard
                       node={activeNode}
                       onClose={() => setSelectedNodeId(null)}
