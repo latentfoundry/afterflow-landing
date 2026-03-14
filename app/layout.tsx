@@ -145,6 +145,15 @@ export default function RootLayout({
       url: siteRootUrl,
       description: siteDescription,
     },
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: siteName,
+      url: siteRootUrl,
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      description: siteDescription,
+    },
   ];
 
   return (

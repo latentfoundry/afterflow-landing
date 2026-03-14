@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { siteRootPath } from "../lib/site";
 
-function AfterflowMark({ className }: { className?: string }) {
+export function AfterflowMark({ className }: { className?: string }) {
   return (
     <svg
       aria-hidden="true"
@@ -18,7 +19,7 @@ function AfterflowMark({ className }: { className?: string }) {
 export function SiteLogo() {
   return (
     <Link
-      href="/"
+      href={siteRootPath}
       aria-label="Go to Afterflow home"
       className="inline-flex items-center text-black transition-opacity hover:opacity-78"
     >

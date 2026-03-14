@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useId, useState, useTransition } from "react";
+import { siteRootPath } from "../lib/site";
 
 const requestAccessEndpoint =
   process.env.NEXT_PUBLIC_REQUEST_ACCESS_ENDPOINT?.trim() ?? "";
@@ -36,7 +37,7 @@ const stepContent: Record<
 > = {
   email: {
     description: "",
-    prompt: "What is your work email?",
+    prompt: "Enter your work email",
   },
   identity: {
     description: "",
@@ -100,7 +101,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
   const honeypotId = useId();
   const [formState, setFormState] = useState<FormState>(getEmptyState);
   const [stepIndex, setStepIndex] = useState(0);
-  const [emailTouched, setEmailTouched] = useState(false);
+  const [showEmailError, setShowEmailError] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [startedAt] = useState(() => Date.now());
@@ -127,10 +128,11 @@ export function RequestAccessFormInner({ source }: { source: string }) {
 
   const goForward = () => {
     if (!canAdvance) {
-      setEmailTouched(true);
+      setShowEmailError(true);
       return;
     }
 
+    setShowEmailError(false);
     setSubmitError("");
     setStepIndex((current) => Math.min(current + 1, totalSteps - 1));
   };
@@ -237,7 +239,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
             </div>
             <div className="flex flex-wrap items-center gap-3 border-t border-black/10 pt-8">
               <Link
-                href="/"
+                href={siteRootPath}
                 className="inline-flex min-h-14 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
               >
                 Back
@@ -292,13 +294,21 @@ export function RequestAccessFormInner({ source }: { source: string }) {
                   autoComplete="email"
                   value={formState.email}
                   name="email"
-                  onBlur={() => setEmailTouched(true)}
                   onChange={(event) => updateField("email", event.target.value)}
                   placeholder="jane@acme.com"
+                  aria-invalid={showEmailError && !isEmailValid}
+                  aria-describedby={
+                    showEmailError && !isEmailValid
+                      ? "request-access-email-error"
+                      : undefined
+                  }
                   className="min-h-20 w-full border border-black/18 bg-[#f4f0ea] px-5 text-[clamp(1.5rem,3vw,2.15rem)] tracking-[-0.04em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
                 />
-                {emailTouched && !isEmailValid ? (
-                  <p className="text-sm leading-6 text-rose-700">
+                {showEmailError && !isEmailValid ? (
+                  <p
+                    id="request-access-email-error"
+                    className="text-sm leading-6 text-rose-700"
+                  >
                     Enter a valid email so we know where to reply.
                   </p>
                 ) : null}
