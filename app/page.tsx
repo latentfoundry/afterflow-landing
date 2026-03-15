@@ -94,7 +94,7 @@ export default function Home() {
             <div className="flex justify-center">
               <Link
                 href={howItWorksPath}
-                className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/68 transition-colors hover:text-white"
+                className="inline-flex min-h-12 items-center justify-center bg-white px-5 text-[11px] font-medium uppercase tracking-[0.24em] text-black transition-opacity hover:opacity-80"
               >
                 See how Afterflow works
               </Link>
