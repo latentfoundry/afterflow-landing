@@ -574,14 +574,13 @@ export default function HowItWorksPage() {
               </p>
               <h1 className="max-w-5xl text-[clamp(3rem,6.6vw,6.35rem)] font-black leading-[0.92] tracking-[-0.08em] text-black">
                 Build the world.
-                <span className="block whitespace-nowrap text-black/52">
-                  Test the paths.
+                <span className="block text-black/52">
+                  Rehearse the decision.
                 </span>
               </h1>
               <p className="max-w-[36.5rem] text-lg leading-8 text-black/60 sm:text-2xl sm:leading-10">
-                Afterflow grounds the simulation in company context, shows how
-                cohorts behave, and compares decision paths before teams
-                commit.
+                Most teams can test a response. Afterflow tests how the
+                environment around a decision reacts before teams commit.
               </p>
               <div>
                 <Link
@@ -694,10 +693,12 @@ export default function HowItWorksPage() {
           </p>
           <div className="space-y-6">
             <h2 className="max-w-5xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-              Four layers drive the runtime.
+              More than a single agent.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-              Context ingest, world building, cohort swarms, and orchestration.
+              Afterflow builds the world model, instantiates stakeholder
+              swarms, and simulates how signals propagate before a team
+              commits.
             </p>
           </div>
         </section>
