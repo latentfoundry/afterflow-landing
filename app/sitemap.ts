@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { howItWorksUrl, siteRootUrl } from "./lib/site";
+import { howItWorksUrl, siteRootUrl, useCasesUrl } from "./lib/site";
 
 export const dynamic = "force-static";
 
@@ -13,6 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: howItWorksUrl,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: useCasesUrl,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,

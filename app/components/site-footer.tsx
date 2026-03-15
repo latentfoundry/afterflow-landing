@@ -4,6 +4,7 @@ import {
   privacyPath,
   siteRootPath,
   termsPath,
+  useCasesPath,
 } from "../lib/site";
 import { AfterflowMark } from "./site-logo";
 
@@ -33,6 +34,12 @@ export function SiteFooter() {
             className="text-black/52 transition-colors hover:text-black"
           >
             How It Works
+          </Link>
+          <Link
+            href={useCasesPath}
+            className="text-black/52 transition-colors hover:text-black"
+          >
+            Use Cases
           </Link>
           <Link
             href={privacyPath}

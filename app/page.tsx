@@ -1,24 +1,58 @@
 import Link from "next/link";
+import { InsightCarousel } from "./components/insight-carousel";
 import { ProofPanelShell } from "./components/proof-panel-shell";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
-import { howItWorksPath, requestAccessPath, siteRootPath } from "./lib/site";
+import {
+  howItWorksPath,
+  requestAccessPath,
+  siteRootPath,
+  useCasesPath,
+} from "./lib/site";
 
 const steps = [
   {
     number: "01",
-    title: "Model the context",
-    body: "Ground the simulation in the situation, the history, and the constraints that matter.",
+    title: "Build the simulation",
+    body: "Ground the run in internal documents, prior incidents, stakeholder groups, and the constraints that define the situation.",
   },
   {
     number: "02",
-    title: "Run the decision",
-    body: "Test a path and see likely reactions, tradeoffs, and second-order effects.",
+    title: "Simulate stakeholder reactions",
+    body: "See likely regulator response, media narrative, customer sentiment, support load, and operational impact before a team commits.",
   },
   {
     number: "03",
-    title: "Compare the paths",
-    body: "Adjust the inputs, compare outcomes, and rerun as the situation changes.",
+    title: "Test alternative strategies",
+    body: "Compare options like disclosing now, delaying, pausing, escalating, or rerouting and see how the downstream outcomes diverge.",
+  },
+];
+
+const exampleDecisions = [
+  "Announcing layoffs",
+  "Responding to a breach",
+  "Raising prices",
+  "Suspending a vendor",
+  "Launching a product",
+  "Entering a new market",
+];
+
+const decisionScenarios = [
+  {
+    title: "Product launches",
+    body: "Model how customers, partners, media, and internal teams respond before a launch narrative hardens in public.",
+  },
+  {
+    title: "Incident response",
+    body: "Simulate disclosure timing, containment choices, and escalation paths before pressure compounds across customers and regulators.",
+  },
+  {
+    title: "Pricing changes",
+    body: "Pressure-test churn risk, support load, customer sentiment, and revenue confidence before the market reacts.",
+  },
+  {
+    title: "Market entry",
+    body: "Model likely regulator response, competitive pressure, and operational strain before committing to expansion.",
   },
 ];
 
@@ -40,12 +74,35 @@ export default function Home() {
               Afterflow
             </p>
             <h1 className="mx-auto max-w-4xl text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-5xl">
-              Test critical decisions before you make them.
+              Simulate the consequences before your company commits.
             </h1>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-black/58 sm:text-xl">
-              See how customers, teams, and regulators may respond to
-              high-stakes decisions before you commit.
+              Run high-stakes decisions through Afterflow before they become
+              public, operational, or regulatory reality.
             </p>
+            <div className="mx-auto w-full max-w-[30rem]">
+              <div className="hero-decision-pill rounded-full border px-5 py-3 text-black/60 shadow-[0_16px_34px_rgba(0,0,0,0.06)]">
+                <p className="sr-only">
+                  Example decisions include announcing layoffs, responding to a
+                  breach, raising prices, suspending a vendor, launching a
+                  product, and entering a new market.
+                </p>
+                <div
+                  aria-hidden="true"
+                  className="hero-decision-rotator relative mx-auto flex h-[1.2em] max-w-[24rem] items-center justify-center overflow-hidden text-center text-[10px] font-medium uppercase tracking-[0.18em] sm:text-[11px]"
+                >
+                  {exampleDecisions.map((decision, index) => (
+                    <span
+                      key={decision}
+                      className="hero-decision-rotator-item absolute inset-x-0 flex items-center justify-center whitespace-nowrap"
+                      style={{ animationDelay: `${index * 2.8}s` }}
+                    >
+                      {decision}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
             <div className="flex flex-col items-center">
               <Link
                 href={requestAccessPath}
@@ -59,7 +116,38 @@ export default function Home() {
 
         <section className="grid gap-8 border-b border-black/10 py-16 lg:grid-cols-[170px_minmax(0,1fr)] lg:gap-16 lg:py-20">
           <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
-            The Problem
+            Use Cases
+          </p>
+          <div className="space-y-8">
+            <div className="space-y-5">
+              <h2 className="max-w-4xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
+                Decisions teams simulate with Afterflow.
+              </h2>
+              <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
+                Afterflow gives teams a place to pressure-test high-stakes
+                decisions before they become public, operational, or
+                regulatory reality.
+              </p>
+            </div>
+
+            <div className="w-full max-w-[44rem]">
+              <InsightCarousel label="Example Range" items={decisionScenarios} />
+            </div>
+
+            <div>
+              <Link
+                href={useCasesPath}
+                className="inline-flex min-h-12 items-center justify-center bg-black px-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white transition-colors hover:bg-black/88"
+              >
+                See all use cases
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid gap-8 border-b border-black/10 py-16 lg:grid-cols-[170px_minmax(0,1fr)] lg:gap-16 lg:py-20">
+          <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
+            Why It Matters
           </p>
           <div className="space-y-6">
             <h2 className="max-w-4xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
@@ -69,9 +157,9 @@ export default function Home() {
               </span>
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-              In launches, outages, and policy changes, the first-order impact
-              is obvious. Afterflow helps teams see the second-order effects
-              before they commit.
+              The first-order impact is usually obvious. What teams miss is how
+              the next decision changes customers, employees, regulators,
+              markets, and operations.
             </p>
           </div>
         </section>
@@ -99,6 +187,10 @@ export default function Home() {
                 See how Afterflow works
               </Link>
             </div>
+            <p className="mx-auto max-w-3xl text-sm leading-7 text-white/40 sm:text-base">
+              Outputs include reaction timelines, stakeholder graphs, system
+              health, and path comparison.
+            </p>
           </div>
 
           <div data-nosnippet>
@@ -134,8 +226,8 @@ export default function Home() {
               Start with one real decision.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/56 sm:text-2xl sm:leading-10">
-              Founding partners get early access, secure deployment, and direct
-              input on the product.
+              Founding partners get early access, secure deployment, and
+              direct input on the product.
             </p>
           </div>
 

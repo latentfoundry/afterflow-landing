@@ -38,6 +38,34 @@ body {
   color: #ffffff;
 }
 
+.hero-decision-rotator-item {
+  opacity: 0;
+  animation: hero-decision-cycle 16.8s cubic-bezier(0.22, 1, 0.36, 1)
+    infinite;
+}
+
+.hero-decision-pill {
+  border-color: rgba(0, 0, 0, 0.1);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(241, 202, 123, 0.24),
+      rgba(115, 176, 255, 0.16),
+      rgba(172, 106, 214, 0.14)
+    ),
+    rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(10px);
+}
+
+.hero-decision-pill-dot {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), transparent 38%),
+    linear-gradient(180deg, #f2c976, #8db2ff 55%, #c893ec);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 0 14px rgba(143, 178, 255, 0.32);
+}
+
 .proof-panel {
   background:
     radial-gradient(circle at 54% 42%, rgba(124, 58, 237, 0.12), transparent 24%),
@@ -323,7 +351,38 @@ body {
   }
 }
 
+@keyframes hero-decision-cycle {
+  0% {
+    opacity: 0;
+    transform: translateY(55%);
+  }
+  5%,
+  13% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  18%,
+  100% {
+    opacity: 0;
+    transform: translateY(-55%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .hero-decision-rotator-item {
+    animation: none;
+    opacity: 0;
+    transform: none;
+  }
+
+  .hero-decision-pill-dot {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+
+  .hero-decision-rotator-item:first-child {
+    opacity: 1;
+  }
+
   .proof-node-shell,
   .proof-node-orbit--outer,
   .proof-node-orbit--inner,

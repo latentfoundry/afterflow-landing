@@ -24,6 +24,8 @@ export const howItWorksPath = basePath
   ? `${basePath}/how-it-works/`
   : "/how-it-works/";
 export const howItWorksUrl = new URL(howItWorksPath, siteOrigin).toString();
+export const useCasesPath = basePath ? `${basePath}/use-cases/` : "/use-cases/";
+export const useCasesUrl = new URL(useCasesPath, siteOrigin).toString();
 export const privacyPath = basePath ? `${basePath}/privacy/` : "/privacy/";
 export const privacyUrl = new URL(privacyPath, siteOrigin).toString();
 export const termsPath = basePath ? `${basePath}/terms/` : "/terms/";
@@ -44,6 +46,6 @@ export const logoUrl = new URL(
 
 export const siteName = "Afterflow";
 export const siteTitle =
-  "Afterflow | AI Decision Simulation Platform for Organizations";
+  "Afterflow | AI Decision Simulation for Enterprise Teams";
 export const siteDescription =
-  "Afterflow is an AI decision simulation platform for organizations. Test high-stakes decisions before you commit, model likely stakeholder reactions, and see second-order effects before they become surprises.";
+  "Afterflow is AI decision simulation for enterprise teams. Model stakeholder reactions, compare alternative strategies, and see likely second-order effects before teams commit.";

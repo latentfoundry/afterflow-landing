@@ -6,6 +6,7 @@ import {
   howItWorksPath,
   requestAccessPath,
   siteRootPath,
+  useCasesPath,
 } from "../lib/site";
 import { SiteLogo } from "./site-logo";
 
@@ -52,6 +53,7 @@ function MenuIcon({ open }: { open: boolean }) {
 const menuItems = [
   { href: siteRootPath, label: "Home" },
   { href: howItWorksPath, label: "How It Works" },
+  { href: useCasesPath, label: "Use Cases" },
 ];
 
 function isCurrentPath(currentPath: string | undefined, href: string) {

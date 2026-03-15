@@ -6,13 +6,14 @@ import {
   ogImagePath,
   requestAccessPath,
   siteRootUrl,
+  useCasesPath,
 } from "../lib/site";
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
 
 const pageTitle = "How Afterflow Works | AI Decision Simulation Platform";
 const pageDescription =
-  "How Afterflow works: company context, world models, cohort swarms, stochastic simulations, and decision-path comparison for organizations.";
+  "How Afterflow works: build a simulation of the situation, model stakeholder swarms, simulate reactions, and compare alternative strategies before teams commit.";
 
 type IconKind =
   | "ingest"
@@ -481,23 +482,23 @@ const runtimeCapabilities = [
 const pipeline = [
   {
     icon: "ingest" as const,
-    title: "Context ingest",
-    body: "Connect whatever defines the operating environment: internal systems, databases, APIs, uploaded documents, or live web sources. Afterflow normalizes it, embeds it, and uses it to ground the simulation in company context.",
+    title: "Build the situation",
+    body: "Pull in the documents, connected systems, prior incidents, stakeholder groups, and operating constraints that define the environment teams are actually navigating.",
   },
   {
     icon: "world" as const,
-    title: "World builder",
-    body: "The world builder maps grounded context into actors, incentives, constraints, and timelines. It is also the layer that can be tuned against historical decisions and incidents over time.",
+    title: "Generate stakeholder swarms",
+    body: "The world builder turns that context into editable stakeholder swarms across customers, employees, regulators, partners, leadership, media, and the public.",
   },
   {
     icon: "swarm" as const,
-    title: "Cohort swarms",
-    body: "The planner extrapolates editable cohorts from the world model and instantiates each cohort as a swarm. Every agent carries its own persona, persistent memory, state, and available actions.",
+    title: "Simulate stakeholder reactions",
+    body: "The orchestration layer advances time and shows how each decision changes regulator response, media coverage, customer sentiment, support load, and operational pressure.",
   },
   {
     icon: "orchestrate" as const,
-    title: "Decision propagation",
-    body: "The orchestrator advances time and routes signals across cohorts. Each decision is tested with multiple stochastic simulations run in parallel, then the outcomes are averaged into a more stable estimate. Cohorts can run on dedicated models when needed.",
+    title: "Test alternative strategies",
+    body: "Run options like disclose now, delay, pause a launch, suspend a vendor, or escalate internally. Multiple stochastic runs are averaged so teams compare more stable outcomes, not a single trajectory.",
   },
 ];
 
@@ -579,15 +580,22 @@ export default function HowItWorksPage() {
                 </span>
               </h1>
               <p className="max-w-[36.5rem] text-lg leading-8 text-black/60 sm:text-2xl sm:leading-10">
-                Most teams can test a response. Afterflow tests how the
-                environment around a decision reacts before teams commit.
+                Most teams still pressure-test decisions with docs, meetings,
+                and instinct. Afterflow lets them rehearse how the environment
+                around a decision reacts before they commit.
               </p>
-              <div>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
                   href={requestAccessPath}
                   className="inline-flex min-h-14 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
                 >
                   Request Enterprise Access
+                </Link>
+                <Link
+                  href={useCasesPath}
+                  className="inline-flex min-h-14 items-center justify-center border border-black/10 px-6 text-sm font-medium uppercase tracking-[0.18em] text-black/66 transition-colors hover:border-black/20 hover:text-black"
+                >
+                  Browse Use Cases
                 </Link>
               </div>
             </div>
@@ -696,9 +704,9 @@ export default function HowItWorksPage() {
               More than a single agent.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-              Afterflow builds the world model, instantiates stakeholder
-              swarms, and simulates how signals propagate before a team
-              commits.
+              Afterflow builds a simulation of the situation, instantiates
+              stakeholder swarms, and lets teams compare alternative strategies
+              before they become public, operational, or regulatory reality.
             </p>
           </div>
         </section>
@@ -764,8 +772,9 @@ export default function HowItWorksPage() {
               Start with one real decision.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/56 sm:text-2xl sm:leading-10">
-              Founding partners get early access, secure deployment, and direct
-              input on the product.
+              Founding partners help shape simulation models, stakeholder
+              agents, real-world scenarios, and integrations. They get early
+              access, secure deployment options, and direct product influence.
             </p>
           </div>
 
