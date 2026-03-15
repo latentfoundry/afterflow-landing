@@ -488,12 +488,12 @@ const pipeline = [
   {
     icon: "world" as const,
     title: "Generate stakeholder swarms",
-    body: "The world builder turns that context into editable stakeholder swarms across customers, employees, regulators, partners, leadership, media, and the public.",
+    body: "The world builder turns that context into editable stakeholder swarms across customers, employees, regulators, partners, leadership, media, and the public. Each swarm is made up of simulated individuals, not one aggregated persona.",
   },
   {
     icon: "swarm" as const,
     title: "Simulate stakeholder reactions",
-    body: "The orchestration layer advances time and shows how each decision changes regulator response, media coverage, customer sentiment, support load, and operational pressure.",
+    body: "The orchestration layer advances time and lets those individuals react, influence one another, and change state as a decision propagates through the environment.",
   },
   {
     icon: "orchestrate" as const,
@@ -581,8 +581,8 @@ export default function HowItWorksPage() {
               </h1>
               <p className="max-w-[36.5rem] text-lg leading-8 text-black/60 sm:text-2xl sm:leading-10">
                 Most teams still pressure-test decisions with docs, meetings,
-                and instinct. Afterflow lets them rehearse how the environment
-                around a decision reacts before they commit.
+                and instinct. Afterflow lets them rehearse how an environment
+                of interacting stakeholders reacts before they commit.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
@@ -641,8 +641,8 @@ export default function HowItWorksPage() {
                       World model
                     </h3>
                     <p className="mt-3 text-sm leading-6 text-white/56">
-                      Actors, constraints, state, and timelines grounded in
-                      company context.
+                      Individual actors, constraints, state, and timelines
+                      grounded in company context.
                     </p>
 
                     <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
@@ -704,9 +704,10 @@ export default function HowItWorksPage() {
               More than a single agent.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-              Afterflow builds a simulation of the situation, instantiates
-              stakeholder swarms, and lets teams compare alternative strategies
-              before they become public, operational, or regulatory reality.
+              Afterflow does not simulate one responder. It simulates the
+              surrounding environment at the level of individual actors. Each
+              stakeholder group is represented as a swarm of simulated
+              individuals with memory, state, and agency.
             </p>
           </div>
         </section>

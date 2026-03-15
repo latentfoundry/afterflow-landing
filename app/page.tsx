@@ -19,7 +19,7 @@ const steps = [
   {
     number: "02",
     title: "Simulate stakeholder reactions",
-    body: "See likely regulator response, media narrative, customer sentiment, support load, and operational impact before a team commits.",
+    body: "See how individual actors across regulators, media, customers, and internal teams react, and where support load or operational pressure starts to build.",
   },
   {
     number: "03",
