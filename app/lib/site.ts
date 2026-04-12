@@ -48,4 +48,4 @@ export const siteName = "Afterflow";
 export const siteTitle =
   "Afterflow | AI Decision Simulation for Enterprise Teams";
 export const siteDescription =
-  "Afterflow is AI decision simulation for enterprise teams. Model stakeholder reactions, compare alternative strategies, and see likely second-order effects before teams commit.";
+  "Run your next decision before you make it. Afterflow helps enterprise teams compare reactions, pressure points, and second-order effects before they commit.";

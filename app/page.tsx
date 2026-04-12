@@ -13,18 +13,18 @@ import {
 const steps = [
   {
     number: "01",
-    title: "Build the simulation",
-    body: "Ground the run in internal documents, prior incidents, stakeholder groups, and the constraints that define the situation.",
+    title: "Give us the context",
+    body: "Docs, systems, stakeholders, and constraints.",
   },
   {
     number: "02",
-    title: "Simulate stakeholder reactions",
-    body: "See how individual actors across regulators, media, customers, and internal teams react, and where support load or operational pressure starts to build.",
+    title: "We build the environment",
+    body: "A working model of your company and the forces around it.",
   },
   {
     number: "03",
-    title: "Test alternative strategies",
-    body: "Compare options like disclosing now, delaying, pausing, escalating, or rerouting and see how the downstream outcomes diverge.",
+    title: "Compare the outcomes",
+    body: "See reactions, pressure points, and second-order effects.",
   },
 ];
 
@@ -65,7 +65,7 @@ export default function Home() {
         <section className="flex min-h-[68vh] flex-col items-center justify-center border-b border-black/10 py-20 text-center lg:min-h-[76vh]">
           <div className="space-y-8">
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
-              AI Decision Simulation Platform
+              Enterprise Decision Simulation
             </p>
             <p
               aria-hidden="true"
@@ -74,11 +74,11 @@ export default function Home() {
               Afterflow
             </p>
             <h1 className="mx-auto max-w-4xl text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-5xl">
-              Simulate the consequences before your company commits.
+              Run your next decision before you make it.
             </h1>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-black/58 sm:text-xl">
-              Run high-stakes decisions through Afterflow before they become
-              public, operational, or regulatory reality.
+              See how customers, employees, and regulators react before you
+              commit.
             </p>
             <div className="mx-auto w-full max-w-[30rem]">
               <div className="hero-decision-pill rounded-full border px-5 py-3 text-black/60 shadow-[0_16px_34px_rgba(0,0,0,0.06)]">
@@ -170,14 +170,14 @@ export default function Home() {
               How It Works
             </p>
             <h2 className="mx-auto max-w-5xl text-4xl font-black leading-none tracking-[-0.06em] sm:text-6xl lg:text-7xl">
-              Model the situation.
+              Give us the context.
               <span className="block text-white/42">
                 See what happens next.
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-white/52 sm:text-2xl sm:leading-10">
-              Afterflow turns your context into a simulation you can test,
-              compare, and rerun.
+              Afterflow turns your context into a decision simulation you can
+              run, compare, and rerun.
             </p>
             <div className="flex justify-center">
               <Link

@@ -13,7 +13,7 @@ import { SiteHeader } from "../components/site-header";
 
 const pageTitle = "How Afterflow Works | AI Decision Simulation Platform";
 const pageDescription =
-  "How Afterflow works: build a simulation of the situation, model stakeholder swarms, simulate reactions, and compare alternative strategies before teams commit.";
+  "How Afterflow works: give Afterflow the context, build the environment, run the decision, and compare paths before teams commit.";
 
 type IconKind =
   | "ingest"
@@ -482,23 +482,23 @@ const runtimeCapabilities = [
 const pipeline = [
   {
     icon: "ingest" as const,
-    title: "Build the situation",
-    body: "Pull in the documents, connected systems, prior incidents, stakeholder groups, and operating constraints that define the environment teams are actually navigating.",
+    title: "Ingest the context",
+    body: "Pull in the documents, systems, stakeholders, and constraints that define the decision.",
   },
   {
     icon: "world" as const,
-    title: "Generate stakeholder swarms",
-    body: "The world builder turns that context into editable stakeholder swarms across customers, employees, regulators, partners, leadership, media, and the public. Each swarm is made up of simulated individuals, not one aggregated persona.",
+    title: "Build the environment",
+    body: "Afterflow turns that context into a working model of your company, its stakeholders, and the pressures around it.",
   },
   {
     icon: "swarm" as const,
-    title: "Simulate stakeholder reactions",
-    body: "The orchestration layer advances time and lets those individuals react, influence one another, and change state as a decision propagates through the environment.",
+    title: "Run the decision",
+    body: "The simulation advances time and shows how people and systems react as the decision moves through the environment.",
   },
   {
     icon: "orchestrate" as const,
-    title: "Test alternative strategies",
-    body: "Run options like disclose now, delay, pause a launch, suspend a vendor, or escalate internally. Multiple stochastic runs are averaged so teams compare more stable outcomes, not a single trajectory.",
+    title: "Compare the paths",
+    body: "Test options side by side and see where outcomes diverge before you commit.",
   },
 ];
 
@@ -574,15 +574,15 @@ export default function HowItWorksPage() {
                 How Afterflow Works
               </p>
               <h1 className="max-w-5xl text-[clamp(3rem,6.6vw,6.35rem)] font-black leading-[0.92] tracking-[-0.08em] text-black">
-                Build the world.
+                Give us the situation.
                 <span className="block text-black/52">
-                  Rehearse the decision.
+                  Run the decision.
                 </span>
               </h1>
               <p className="max-w-[36.5rem] text-lg leading-8 text-black/60 sm:text-2xl sm:leading-10">
-                Most teams still pressure-test decisions with docs, meetings,
-                and instinct. Afterflow lets them rehearse how an environment
-                of interacting stakeholders reacts before they commit.
+                Most teams still make high-stakes decisions with docs,
+                meetings, and instinct. Afterflow lets them run the decision
+                first.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
@@ -701,13 +701,13 @@ export default function HowItWorksPage() {
           </p>
           <div className="space-y-6">
             <h2 className="max-w-5xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-              More than a single agent.
+              Not one agent.
+              <span className="block text-black/56">A whole environment.</span>
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-              Afterflow does not simulate one responder. It simulates the
-              surrounding environment at the level of individual actors. Each
-              stakeholder group is represented as a swarm of simulated
-              individuals with memory, state, and agency.
+              Afterflow does not model one responder. It models the surrounding
+              environment at the level of individual actors with memory, state,
+              and agency.
             </p>
           </div>
         </section>
