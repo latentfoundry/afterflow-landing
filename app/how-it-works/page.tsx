@@ -11,9 +11,9 @@ import {
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
 
-const pageTitle = "How Afterflow Works | AI Decision Simulation Platform";
+const pageTitle = "How Afterflow Works | Operational Decision Simulation";
 const pageDescription =
-  "How Afterflow works: give Afterflow the context, build the environment, run the decision, and compare paths before teams commit.";
+  "How Afterflow works: connect context, build the world model, dry-run the rollout, and compare failure paths before launch.";
 
 type IconKind =
   | "ingest"
@@ -458,7 +458,7 @@ const reportOutputs = [
 
 const runtimeCapabilities = [
   {
-    label: "Cohort swarms",
+    label: "Role-based runs",
     icon: "cohort" as const,
     tint: "border-[#5b4217] bg-[#231a10] text-[#f0d8b4]",
   },
@@ -492,8 +492,8 @@ const pipeline = [
   },
   {
     icon: "swarm" as const,
-    title: "Run the decision",
-    body: "The simulation advances time and shows how people and systems react as the decision moves through the environment.",
+    title: "Dry-run the rollout",
+    body: "The simulation advances time and shows how failure paths move through the operating environment.",
   },
   {
     icon: "orchestrate" as const,
@@ -581,7 +581,7 @@ export default function HowItWorksPage() {
               </h1>
               <p className="max-w-[36.5rem] text-lg leading-8 text-black/60 sm:text-2xl sm:leading-10">
                 Most teams still make high-stakes decisions with docs,
-                meetings, and instinct. Afterflow lets them run the decision
+                meetings, and instinct. Afterflow lets them dry-run the rollout
                 first.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -706,8 +706,8 @@ export default function HowItWorksPage() {
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
               Afterflow does not model one responder. It models the surrounding
-              environment at the level of individual actors with memory, state,
-              and agency.
+              environment at the level of roles, dependencies, state, and
+              second-order effects.
             </p>
           </div>
         </section>

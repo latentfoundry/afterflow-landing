@@ -13,46 +13,45 @@ import {
 const steps = [
   {
     number: "01",
-    title: "Give us the context",
-    body: "Docs, systems, stakeholders, and constraints.",
+    title: "Connect context",
+    body: "Plans, systems, owners, and constraints.",
   },
   {
     number: "02",
-    title: "We build the environment",
-    body: "A working model of your company and the forces around it.",
+    title: "Model the rollout",
+    body: "A working map of dependencies and fallback paths.",
   },
   {
     number: "03",
-    title: "Compare the outcomes",
-    body: "See reactions, pressure points, and second-order effects.",
+    title: "Rank the paths",
+    body: "See failure paths, evidence, and mitigations.",
   },
 ];
 
 const exampleDecisions = [
-  "Announcing layoffs",
-  "Responding to a breach",
-  "Raising prices",
-  "Suspending a vendor",
-  "Launching a product",
-  "Entering a new market",
+  "Platform migration",
+  "AI rollout",
+  "Policy rollout",
+  "Vendor migration",
+  "Incident response",
 ];
 
 const decisionScenarios = [
   {
-    title: "Product launches",
-    body: "Model how customers, partners, media, and internal teams respond before a launch narrative hardens in public.",
+    title: "Platform migrations",
+    body: "Find access failures, rollback gaps, and overloaded fallback teams before cutover.",
   },
   {
-    title: "Incident response",
-    body: "Simulate disclosure timing, containment choices, and escalation paths before pressure compounds across customers and regulators.",
+    title: "AI rollout risk",
+    body: "Pressure-test governance, controls, adoption paths, and operational ownership before deployment.",
   },
   {
-    title: "Pricing changes",
-    body: "Pressure-test churn risk, support load, customer sentiment, and revenue confidence before the market reacts.",
+    title: "Policy rollouts",
+    body: "See where a new process creates second-order effects across teams, customers, and controls.",
   },
   {
-    title: "Market entry",
-    body: "Model likely regulator response, competitive pressure, and operational strain before committing to expansion.",
+    title: "Vendor migrations",
+    body: "Map handoffs, ownership gaps, fallback paths, and service risk before switching systems.",
   },
 ];
 
@@ -65,7 +64,7 @@ export default function Home() {
         <section className="flex min-h-[68vh] flex-col items-center justify-center border-b border-black/10 py-20 text-center lg:min-h-[76vh]">
           <div className="space-y-8">
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
-              Enterprise Decision Simulation
+              Operational Decision Simulation
             </p>
             <p
               aria-hidden="true"
@@ -74,18 +73,17 @@ export default function Home() {
               Afterflow
             </p>
             <h1 className="mx-auto max-w-4xl text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-5xl">
-              Run your next decision before you make it.
+              Dry-run critical rollouts before they go live.
             </h1>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-black/58 sm:text-xl">
-              See how customers, employees, and regulators react before you
-              commit.
+              Afterflow shows the second-order effects of critical rollouts
+              before production does.
             </p>
             <div className="mx-auto w-full max-w-[30rem]">
               <div className="hero-decision-pill rounded-full border px-5 py-3 text-black/60 shadow-[0_16px_34px_rgba(0,0,0,0.06)]">
                 <p className="sr-only">
-                  Example decisions include announcing layoffs, responding to a
-                  breach, raising prices, suspending a vendor, launching a
-                  product, and entering a new market.
+                  Example rollouts include platform migrations, AI rollouts,
+                  policy rollouts, vendor migrations, and incident response.
                 </p>
                 <div
                   aria-hidden="true"
@@ -121,12 +119,11 @@ export default function Home() {
           <div className="space-y-8">
             <div className="space-y-5">
               <h2 className="max-w-4xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-                Decisions teams simulate with Afterflow.
+                Critical changes teams dry-run with Afterflow.
               </h2>
               <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-                Afterflow gives teams a place to pressure-test high-stakes
-                decisions before they become public, operational, or
-                regulatory reality.
+                Pressure-test major operational changes before they become
+                production, customer, or regulatory reality.
               </p>
             </div>
 
@@ -151,15 +148,14 @@ export default function Home() {
           </p>
           <div className="space-y-6">
             <h2 className="max-w-4xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-              The event is not the hard part.
+              Plans look fine in review.
               <span className="block text-black/56">
-                The next decision is.
+                Production finds the hidden dependencies.
               </span>
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-              The first-order impact is usually obvious. What teams miss is how
-              the next decision changes customers, employees, regulators,
-              markets, and operations.
+              Afterflow moves that discovery earlier, before teams are forced
+              into war rooms, escalations, and reactive fixes.
             </p>
           </div>
         </section>
@@ -172,12 +168,12 @@ export default function Home() {
             <h2 className="mx-auto max-w-5xl text-4xl font-black leading-none tracking-[-0.06em] sm:text-6xl lg:text-7xl">
               Give us the context.
               <span className="block text-white/42">
-                See what happens next.
+                See what breaks next.
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-white/52 sm:text-2xl sm:leading-10">
-              Afterflow turns your context into a decision simulation you can
-              run, compare, and rerun.
+              Afterflow turns operating context into ranked failure paths,
+              evidence, and mitigations.
             </p>
             <div className="flex justify-center">
               <Link
@@ -188,8 +184,8 @@ export default function Home() {
               </Link>
             </div>
             <p className="mx-auto max-w-3xl text-sm leading-7 text-white/40 sm:text-base">
-              Outputs include reaction timelines, stakeholder graphs, system
-              health, and path comparison.
+              Outputs include dependency graphs, launch checkpoints, evidence
+              strength, and path comparison.
             </p>
           </div>
 

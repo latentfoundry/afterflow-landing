@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useEffectEvent, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type InsightItem = {
   title: string;
@@ -37,7 +37,7 @@ export function InsightCarousel({
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const moveBy = useEffectEvent((direction: number) => {
+  const moveBy = useCallback((direction: number) => {
     setActiveIndex((current) => {
       const next = current + direction;
 
@@ -47,7 +47,7 @@ export function InsightCarousel({
 
       return next % items.length;
     });
-  });
+  }, [items.length]);
 
   useEffect(() => {
     const timer = window.setInterval(() => {

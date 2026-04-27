@@ -9,7 +9,7 @@ import {
 } from "react";
 
 type NodeId = "gov" | "pub" | "co" | "emp";
-type DecisionId = "disclose" | "internal";
+type DecisionId = "mitigate" | "launch";
 
 type ProofEvent = {
   type: string;
@@ -82,9 +82,9 @@ type DecisionOption = {
 const baseNodes: ProofNodeData[] = [
   {
     id: "gov",
-    code: "GOV",
-    group: "Government",
-    label: "Federal Government",
+    code: "RISK",
+    group: "Risk / Compliance",
+    label: "Risk & Compliance",
     className: "left-[48%] top-[20%]",
     size: 126,
     color: "#7c3aed",
@@ -93,22 +93,22 @@ const baseNodes: ProofNodeData[] = [
     dot: "rgba(139, 92, 246, 0.82)",
     delay: "0s",
     narrative:
-      "Pressure rises when the company cannot explain customer impact clearly, but a concrete remediation plan slows escalation.",
+      "Regulatory exposure rises when customer impact appears before the team can show evidence of tested controls.",
     stats: [
       {
-        label: "Sentiment",
-        value: "-0.18",
+        label: "Evidence",
+        value: "0.38",
         width: "38%",
         bar: "#3b82f6",
       },
       {
-        label: "Activation",
+        label: "Pressure",
         value: "0.76",
         width: "76%",
         bar: "#f59e0b",
       },
       {
-        label: "Trust in company",
+        label: "Resilience",
         value: "0.27",
         width: "27%",
         bar: "#14b8a6",
@@ -117,8 +117,8 @@ const baseNodes: ProofNodeData[] = [
   },
   {
     id: "pub",
-    code: "PUB",
-    group: "Public",
+    code: "CUST",
+    group: "Customers",
     label: "Affected Customers",
     className: "left-[40%] top-[62%]",
     size: 160,
@@ -128,22 +128,22 @@ const baseNodes: ProofNodeData[] = [
     dot: "rgba(248, 113, 113, 0.82)",
     delay: "-1.8s",
     narrative:
-      "Customers end the day angry, but the stronger response path starts rebuilding trust if support and facts improve quickly.",
+      "Access failures become expensive when customers are routed into manual support without enough capacity.",
     stats: [
       {
-        label: "Sentiment",
-        value: "-0.06",
+        label: "Evidence",
+        value: "0.44",
         width: "44%",
         bar: "#3b82f6",
       },
       {
-        label: "Activation",
+        label: "Pressure",
         value: "0.84",
         width: "84%",
         bar: "#f59e0b",
       },
       {
-        label: "Trust in company",
+        label: "Resilience",
         value: "0.31",
         width: "31%",
         bar: "#14b8a6",
@@ -152,9 +152,9 @@ const baseNodes: ProofNodeData[] = [
   },
   {
     id: "co",
-    code: "CO",
-    group: "Company",
-    label: "Leadership",
+    code: "CORE",
+    group: "Platform",
+    label: "Core Platform",
     className: "left-[77%] top-[44%]",
     size: 84,
     color: "#4f46e5",
@@ -163,22 +163,22 @@ const baseNodes: ProofNodeData[] = [
     dot: "rgba(129, 140, 248, 0.72)",
     delay: "-0.8s",
     narrative:
-      "Leadership performs best when the external statement and customer action plan move together, not in separate waves.",
+      "The platform path is fragile when authentication, mobile access, and rollback dependencies are not rehearsed together.",
     stats: [
       {
-        label: "Sentiment",
-        value: "0.12",
+        label: "Evidence",
+        value: "0.58",
         width: "58%",
         bar: "#3b82f6",
       },
       {
-        label: "Activation",
+        label: "Pressure",
         value: "0.63",
         width: "63%",
         bar: "#f59e0b",
       },
       {
-        label: "Trust in company",
+        label: "Resilience",
         value: "0.52",
         width: "52%",
         bar: "#14b8a6",
@@ -187,9 +187,9 @@ const baseNodes: ProofNodeData[] = [
   },
   {
     id: "emp",
-    code: "EMP",
-    group: "Employees",
-    label: "Employees",
+    code: "OPS",
+    group: "Operations",
+    label: "Support Operations",
     className: "left-[73%] top-[84%]",
     size: 96,
     color: "#0f766e",
@@ -198,22 +198,22 @@ const baseNodes: ProofNodeData[] = [
     dot: "rgba(45, 212, 191, 0.72)",
     delay: "-2.6s",
     narrative:
-      "Employees stay steadier when internal guidance arrives early and matches what the public hears later in the cycle.",
+      "Support stays steadier when surge staffing and ownership are assigned before launch.",
     stats: [
       {
-        label: "Sentiment",
-        value: "0.08",
+        label: "Evidence",
+        value: "0.54",
         width: "54%",
         bar: "#3b82f6",
       },
       {
-        label: "Activation",
+        label: "Pressure",
         value: "0.58",
         width: "58%",
         bar: "#f59e0b",
       },
       {
-        label: "Trust in company",
+        label: "Resilience",
         value: "0.49",
         width: "49%",
         bar: "#14b8a6",
@@ -232,32 +232,32 @@ function buildNodes(
 }
 
 const baselineState: ProofState = {
-  decisionNote: "Decision required.",
+  decisionNote: "Run setup: weekend platform migration, first-week risk horizon.",
   events: [
     {
-      type: "Forum",
-      text: "If passport or licence numbers are in this, people are going to panic. Tell us what was exposed and what support is available.",
+      type: "Risk",
+      text: "Migration plan lists rollback as available, but no end-to-end rehearsal is attached.",
       colorClass: "text-emerald-400",
     },
     {
-      type: "Breaking",
-      text: "Coverage shifts from the breach itself to whether leadership waited too long to explain the likely scope.",
+      type: "Ops",
+      text: "Account-access failures route into call centre and branch fallback.",
       colorClass: "text-red-400",
     },
     {
-      type: "Official",
-      text: "Regulators ask when the company will disclose likely impact and customer protections.",
+      type: "Support",
+      text: "Weekend support plan covers normal volume; no surge model found.",
       colorClass: "text-sky-400",
     },
     {
-      type: "Forum",
-      text: "People are trying to work out whether they need to replace IDs tonight or wait for another update.",
+      type: "Compliance",
+      text: "Customer-impacting downtime triggers notification and executive review thresholds.",
       colorClass: "text-emerald-400",
     },
   ],
   metrics: [
     {
-      label: "Overall health",
+      label: "Launch confidence",
       value: "56",
       delta: "-2",
       width: "56%",
@@ -265,23 +265,23 @@ const baselineState: ProofState = {
       deltaClass: "text-red-400",
     },
     {
-      label: "Public awareness",
+      label: "Access failure risk",
       value: "68",
       delta: "+4",
       width: "68%",
       bar: "#fb923c",
-      deltaClass: "text-emerald-400",
+      deltaClass: "text-red-400",
     },
     {
-      label: "Regulatory pressure",
+      label: "Regulatory exposure",
       value: "63",
       delta: "+6",
       width: "63%",
       bar: "#8b5cf6",
-      deltaClass: "text-emerald-400",
+      deltaClass: "text-red-400",
     },
     {
-      label: "Internal stability",
+      label: "Support readiness",
       value: "60",
       delta: "-3",
       width: "60%",
@@ -293,37 +293,37 @@ const baselineState: ProofState = {
 };
 
 const decisionOptions: Record<DecisionId, DecisionOption> = {
-  disclose: {
-    id: "disclose",
-    title: "Disclose the likely scope publicly tonight",
-    previewTitle: "Preview: disclose publicly tonight",
-    projectedHealth: "64",
-    projectedDelta: "+8",
+  mitigate: {
+    id: "mitigate",
+    title: "Rehearse rollback and add support surge",
+    previewTitle: "Preview: rehearse rollback first",
+    projectedHealth: "72",
+    projectedDelta: "+16",
     projectedDeltaClass: "text-emerald-400",
     projectedOutcome:
-      "Early disclosure raises scrutiny immediately but keeps the story focused on remediation instead of concealment.",
+      "The rollout stays high-pressure, but the critical second-order path weakens before customers feel it.",
     rippleEffects: [
-      "Customers get a concrete action path earlier.",
-      "Regulators push for follow-up detail, not a cover-up inquiry.",
+      "Rollback risk drops because the fallback path is tested end to end before launch.",
+      "Support remains the fallback, but capacity and ownership are already assigned.",
     ],
     previewNodes: [
       {
         id: "left",
-        label: "Scope disclosed",
+        label: "Rollback rehearsal",
         x: 14,
         y: 55,
         color: "#f59e0b",
       },
       {
         id: "center",
-        label: "Remediation narrative forms",
+        label: "Access path tested",
         x: 38,
         y: 50,
         color: "#f59e0b",
       },
       {
         id: "top",
-        label: "Regulators request follow-up",
+        label: "Evidence pack ready",
         x: 58,
         y: 28,
         color: "#475569",
@@ -331,7 +331,7 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
       },
       {
         id: "bottom",
-        label: "Support demand spikes",
+        label: "Support surge live",
         x: 58,
         y: 72,
         color: "#475569",
@@ -339,7 +339,7 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
       },
       {
         id: "right",
-        label: "Trust stabilizes",
+        label: "Failure path weakens",
         x: 80,
         y: 50,
         color: "#10b981",
@@ -353,64 +353,65 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
       ["bottom", "right"],
     ],
     state: {
-      decisionNote: "Current path: disclose the likely scope publicly tonight.",
+      decisionNote:
+        "Current path: rehearse rollback and add support surge before cutover.",
       events: [
         {
-          type: "Forum",
-          text: "They finally said something. Now tell us whether document numbers are involved and what we need to replace.",
+          type: "Ops",
+          text: "Rollback rehearsal exposes an authentication dependency before go-live.",
           colorClass: "text-emerald-400",
         },
         {
-          type: "Forum",
-          text: "If support is coming, say when and how. People need concrete instructions tonight.",
+          type: "Support",
+          text: "72-hour surge plan absorbs the first wave of account-access failures.",
           colorClass: "text-emerald-400",
         },
         {
-          type: "Breaking",
-          text: "Disclosure pushes the incident into national coverage, but the narrative stays on remediation speed.",
+          type: "Risk",
+          text: "Evidence pack now shows tested rollback, named owners, and customer communications.",
           colorClass: "text-red-400",
         },
         {
-          type: "Official",
-          text: "Government services request customer-level detail and timelines for the next update.",
+          type: "Compliance",
+          text: "Regulatory update shifts from uncertainty to mitigation plan.",
           colorClass: "text-sky-400",
         },
         {
-          type: "Forum",
-          text: "At least we know what they are doing. The silence path would have been worse.",
+          type: "Customers",
+          text: "Access issues still appear, but manual fallback has capacity and a named owner.",
           colorClass: "text-emerald-400",
         },
       ],
       metrics: [
         {
-          label: "Overall health",
-          value: "64",
-          delta: "+8",
-          width: "64%",
+          label: "Launch confidence",
+          value: "72",
+          delta: "+16",
+          width: "72%",
           bar: "#facc15",
           deltaClass: "text-emerald-400",
         },
         {
-          label: "Public awareness",
-          value: "72",
-          delta: "+8",
-          width: "72%",
+          label: "Access failure risk",
+          value: "48",
+          delta: "-20",
+          width: "48%",
           bar: "#fb923c",
           deltaClass: "text-emerald-400",
         },
         {
-          label: "Regulatory pressure",
-          value: "57",
-          delta: "-6",
-          width: "57%",
+          label: "Regulatory exposure",
+          value: "51",
+          delta: "-12",
+          width: "51%",
           bar: "#8b5cf6",
           deltaClass: "text-emerald-400",
         },
         {
-          label: "Internal stability",
-          value: "66",
-          delta: "+6",
-          width: "66%",
+          label: "Support readiness",
+          value: "76",
+          delta: "+16",
+          width: "76%",
           bar: "#14b8a6",
           deltaClass: "text-emerald-400",
         },
@@ -419,24 +420,24 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
         gov: {
           size: 118,
           narrative:
-            "Government pressure remains high, but earlier disclosure shifts the focus toward remediation and follow-up detail.",
+            "Risk stays visible, but the team can point to tested controls, named owners, and launch communications.",
           stats: [
             {
-              label: "Sentiment",
-              value: "-0.04",
-              width: "46%",
+              label: "Evidence",
+              value: "0.68",
+              width: "68%",
               bar: "#3b82f6",
             },
             {
-              label: "Activation",
-              value: "0.62",
-              width: "62%",
+              label: "Pressure",
+              value: "0.54",
+              width: "54%",
               bar: "#f59e0b",
             },
             {
-              label: "Trust in company",
-              value: "0.39",
-              width: "39%",
+              label: "Resilience",
+              value: "0.57",
+              width: "57%",
               bar: "#14b8a6",
             },
           ],
@@ -444,24 +445,24 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
         pub: {
           size: 148,
           narrative:
-            "Customers remain affected, but earlier disclosure and clear support steps slow the worst narrative spiral.",
+            "Customers can still hit access issues, but the fallback path has enough capacity to avoid a support spiral.",
           stats: [
             {
-              label: "Sentiment",
-              value: "-0.02",
-              width: "48%",
+              label: "Evidence",
+              value: "0.62",
+              width: "62%",
               bar: "#3b82f6",
             },
             {
-              label: "Activation",
-              value: "0.72",
-              width: "72%",
+              label: "Pressure",
+              value: "0.58",
+              width: "58%",
               bar: "#f59e0b",
             },
             {
-              label: "Trust in company",
-              value: "0.44",
-              width: "44%",
+              label: "Resilience",
+              value: "0.60",
+              width: "60%",
               bar: "#14b8a6",
             },
           ],
@@ -469,24 +470,24 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
         co: {
           size: 92,
           narrative:
-            "Leadership keeps more room to maneuver when disclosure and customer action arrive in the same wave.",
+            "The platform path becomes more resilient once rollback, authentication, and mobile access are tested together.",
           stats: [
             {
-              label: "Sentiment",
-              value: "0.18",
-              width: "61%",
+              label: "Evidence",
+              value: "0.74",
+              width: "74%",
               bar: "#3b82f6",
             },
             {
-              label: "Activation",
-              value: "0.60",
-              width: "60%",
+              label: "Pressure",
+              value: "0.55",
+              width: "55%",
               bar: "#f59e0b",
             },
             {
-              label: "Trust in company",
-              value: "0.61",
-              width: "61%",
+              label: "Resilience",
+              value: "0.70",
+              width: "70%",
               bar: "#14b8a6",
             },
           ],
@@ -494,24 +495,24 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
         emp: {
           size: 106,
           narrative:
-            "Employees stabilize faster once internal guidance matches the public notice and the customer remediation plan.",
+            "Support operations stabilize once surge capacity, branch fallback, and escalation ownership are planned together.",
           stats: [
             {
-              label: "Sentiment",
-              value: "0.12",
-              width: "58%",
+              label: "Evidence",
+              value: "0.69",
+              width: "69%",
               bar: "#3b82f6",
             },
             {
-              label: "Activation",
+              label: "Pressure",
               value: "0.52",
               width: "52%",
               bar: "#f59e0b",
             },
             {
-              label: "Trust in company",
-              value: "0.58",
-              width: "58%",
+              label: "Resilience",
+              value: "0.72",
+              width: "72%",
               bar: "#14b8a6",
             },
           ],
@@ -519,37 +520,37 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
       }),
     },
   },
-  internal: {
-    id: "internal",
-    title: "Keep it internal until the investigation is complete",
-    previewTitle: "Preview: keep scope internal",
-    projectedHealth: "55",
-    projectedDelta: "-17",
+  launch: {
+    id: "launch",
+    title: "Launch with the current fallback plan",
+    previewTitle: "Preview: launch with current fallbacks",
+    projectedHealth: "50",
+    projectedDelta: "-22",
     projectedDeltaClass: "text-red-400",
     projectedOutcome:
-      "Silence buys a few hours but quickly converts uncertainty into a credibility crisis once the likely scope leaks elsewhere.",
+      "The migration may complete, but access failures route into support before ownership and rollback are ready.",
     rippleEffects: [
-      "Government pressure rises faster than in the disclosure path.",
-      "Customers assume leadership knows more than it is admitting.",
+      "Support overload becomes the second-order failure path.",
+      "Regulatory exposure rises because customer impact outpaces evidence.",
     ],
     previewNodes: [
       {
         id: "left",
-        label: "Scope held back",
+        label: "Weekend launch",
         x: 14,
         y: 55,
         color: "#f59e0b",
       },
       {
         id: "center",
-        label: "Leak narrative forms",
+        label: "Access failures",
         x: 38,
         y: 50,
         color: "#f59e0b",
       },
       {
         id: "top",
-        label: "Minister criticises response",
+        label: "Rollback gap",
         x: 58,
         y: 28,
         color: "#475569",
@@ -557,7 +558,7 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
       },
       {
         id: "bottom",
-        label: "Customer anger compounds",
+        label: "Support overload",
         x: 58,
         y: 72,
         color: "#475569",
@@ -565,7 +566,7 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
       },
       {
         id: "right",
-        label: "Cover-up narrative hardens",
+        label: "Escalation hardens",
         x: 80,
         y: 50,
         color: "#ec4899",
@@ -580,45 +581,45 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
     ],
     state: {
       decisionNote:
-        "Current path: keep scope internal until more facts are confirmed.",
+        "Current path: launch with the current fallback plan.",
       events: [
         {
-          type: "Forum",
-          text: "Why are we hearing about this from leaks? If documents are exposed, say it now.",
+          type: "Customers",
+          text: "Customers cannot authenticate after cutover and move to phone support.",
           colorClass: "text-emerald-400",
         },
         {
-          type: "Forum",
-          text: "'Be vigilant' is not a plan. What are customers supposed to do tonight if their IDs are exposed?",
+          type: "Support",
+          text: "Call volume exceeds the staffing model before incident ownership is clear.",
           colorClass: "text-emerald-400",
         },
         {
-          type: "Breaking",
-          text: "Leaks push the story from breach response to a leadership credibility failure.",
+          type: "Risk",
+          text: "Rollback is documented, but no rehearsal evidence is available.",
           colorClass: "text-red-400",
         },
         {
-          type: "Official",
-          text: "Government services say the company still has not provided enough detail to protect the most exposed accounts.",
+          type: "Compliance",
+          text: "Customer impact triggers executive and regulatory exposure.",
           colorClass: "text-sky-400",
         },
         {
-          type: "Forum",
-          text: "If leadership knew the likely scope and stayed quiet, that becomes the real scandal.",
+          type: "Ops",
+          text: "Manual branch fallback depends on a team that is not staffed for weekend volume.",
           colorClass: "text-emerald-400",
         },
       ],
       metrics: [
         {
-          label: "Overall health",
-          value: "55",
-          delta: "-17",
-          width: "55%",
+          label: "Launch confidence",
+          value: "50",
+          delta: "-22",
+          width: "50%",
           bar: "#facc15",
           deltaClass: "text-red-400",
         },
         {
-          label: "Public awareness",
+          label: "Access failure risk",
           value: "74",
           delta: "+10",
           width: "74%",
@@ -626,7 +627,7 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
           deltaClass: "text-red-400",
         },
         {
-          label: "Regulatory pressure",
+          label: "Regulatory exposure",
           value: "71",
           delta: "+14",
           width: "71%",
@@ -634,7 +635,7 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
           deltaClass: "text-red-400",
         },
         {
-          label: "Internal stability",
+          label: "Support readiness",
           value: "49",
           delta: "-11",
           width: "49%",
@@ -646,22 +647,22 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
         gov: {
           size: 136,
           narrative:
-            "Regulators move faster when silence starts to look deliberate and customer-level detail is still missing.",
+            "Risk and compliance lose leverage when customer impact appears before rollback evidence is ready.",
           stats: [
             {
-              label: "Sentiment",
-              value: "-0.26",
+              label: "Evidence",
+              value: "0.30",
               width: "30%",
               bar: "#3b82f6",
             },
             {
-              label: "Activation",
+              label: "Pressure",
               value: "0.82",
               width: "82%",
               bar: "#f59e0b",
             },
             {
-              label: "Trust in company",
+              label: "Resilience",
               value: "0.18",
               width: "18%",
               bar: "#14b8a6",
@@ -671,22 +672,22 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
         pub: {
           size: 180,
           narrative:
-            "Customers interpret the delay as concealment and demand immediate answers, support, and replacement guidance.",
+            "Customers become the visible failure path when authentication issues route straight into overloaded support.",
           stats: [
             {
-              label: "Sentiment",
-              value: "-0.22",
+              label: "Evidence",
+              value: "0.32",
               width: "32%",
               bar: "#3b82f6",
             },
             {
-              label: "Activation",
+              label: "Pressure",
               value: "0.92",
               width: "92%",
               bar: "#f59e0b",
             },
             {
-              label: "Trust in company",
+              label: "Resilience",
               value: "0.20",
               width: "20%",
               bar: "#14b8a6",
@@ -696,22 +697,22 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
         co: {
           size: 78,
           narrative:
-            "Leadership loses credibility as the gap between known facts and public statements becomes the story.",
+            "The platform path stays brittle because rollback depends on untested authentication and mobile access assumptions.",
           stats: [
             {
-              label: "Sentiment",
-              value: "-0.08",
+              label: "Evidence",
+              value: "0.42",
               width: "42%",
               bar: "#3b82f6",
             },
             {
-              label: "Activation",
+              label: "Pressure",
               value: "0.71",
               width: "71%",
               bar: "#f59e0b",
             },
             {
-              label: "Trust in company",
+              label: "Resilience",
               value: "0.29",
               width: "29%",
               bar: "#14b8a6",
@@ -721,22 +722,22 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
         emp: {
           size: 90,
           narrative:
-            "Employees become less confident when internal guidance lags the external story and the situation keeps widening.",
+            "Support operations lose stability when call volume, branch fallback, and escalation ownership are unresolved.",
           stats: [
             {
-              label: "Sentiment",
-              value: "-0.05",
+              label: "Evidence",
+              value: "0.45",
               width: "45%",
               bar: "#3b82f6",
             },
             {
-              label: "Activation",
+              label: "Pressure",
               value: "0.66",
               width: "66%",
               bar: "#f59e0b",
             },
             {
-              label: "Trust in company",
+              label: "Resilience",
               value: "0.37",
               width: "37%",
               bar: "#14b8a6",
@@ -749,12 +750,12 @@ const decisionOptions: Record<DecisionId, DecisionOption> = {
 };
 
 const decisionOptionList = [
-  decisionOptions.disclose,
-  decisionOptions.internal,
+  decisionOptions.mitigate,
+  decisionOptions.launch,
 ];
 
 const decisionPrompt =
-  "Do we disclose the likely scope publicly tonight or keep this internal until more facts are confirmed?";
+  "Before the weekend platform migration, do we launch with current fallbacks or rehearse rollback and add support surge first?";
 
 type ProofNodeProps = ProofNodeData & {
   active: boolean;
@@ -935,7 +936,7 @@ function CohortDetailCard({ node, onClose }: CohortDetailCardProps) {
 
       <div className="mt-4 border-t border-white/8 pt-4">
         <p className="text-[10px] font-medium uppercase tracking-[0.32em] text-white/35">
-          Narrative
+          Evidence
         </p>
         <p className="mt-3 text-sm leading-6 text-white/74">
           {node.narrative}
@@ -962,7 +963,7 @@ function DecisionBriefModal({
           <div className="flex items-center justify-between gap-4 border-b border-white/10 bg-[linear-gradient(180deg,rgba(127,29,29,0.22),rgba(2,6,23,0))] px-5 py-4 sm:px-8">
             <div>
               <p className="text-[12px] font-medium uppercase tracking-[0.26em] text-rose-300">
-                End of Day 1 Brief
+                Pre-Launch Brief
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -1203,7 +1204,7 @@ function DecisionPreviewModal({
           <div className="flex items-start justify-between gap-4 border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(127,29,29,0.28),rgba(2,6,23,0.04)_55%)] px-4 py-3 sm:px-6 xl:px-5 xl:py-2.5">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-rose-300/90">
-                Decision Preview
+                Mitigation Preview
               </p>
               <p className="mt-1.5 text-lg font-medium tracking-[-0.04em] text-white sm:text-[24px] sm:leading-[1.08] xl:text-[22px]">
                 {option.previewTitle}
@@ -1227,7 +1228,7 @@ function DecisionPreviewModal({
               <div className="space-y-2 xl:flex xl:min-h-0 xl:flex-col">
                 <div className="rounded-[18px] border border-white/10 bg-[#071229] p-3 xl:p-2.5">
                   <p className="text-[10px] font-medium uppercase tracking-[0.32em] text-white/35">
-                    Projected Overall Health
+                    Projected Run Health
                   </p>
                   <div className="mt-2 flex items-end gap-2">
                     <span className="text-[32px] font-black tracking-[-0.06em] text-yellow-300 xl:text-[30px]">
@@ -1403,7 +1404,7 @@ export function ProofPanel() {
           <div className="hidden min-h-0 border-r border-white/10 bg-[#020202] xl:flex xl:flex-col">
             <div className="border-b border-white/10 px-6 py-5">
               <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/38">
-                Live Events
+                Simulation Events
               </p>
             </div>
             <div className="flex-1 overflow-y-auto bg-white/10">
@@ -1429,7 +1430,7 @@ export function ProofPanel() {
             <div className="proof-panel-grid" />
             <div className="proof-panel-glow" />
             <p className="pointer-events-none absolute left-5 top-5 z-10 text-[11px] font-medium uppercase tracking-[0.32em] text-white/32">
-              Click a cohort to inspect sentiment
+              Click a path to inspect evidence
             </p>
 
             <ProofEdge
@@ -1458,7 +1459,7 @@ export function ProofPanel() {
               <>
                 <button
                   type="button"
-                  aria-label="Close cohort details"
+                  aria-label="Close path details"
                   onClick={() => setSelectedNodeId(null)}
                   className="absolute inset-0 z-20 bg-[#020202]/72 backdrop-blur-[2px] lg:hidden"
                 />
@@ -1483,7 +1484,7 @@ export function ProofPanel() {
           <div className="bg-[#020202] xl:flex xl:min-h-0 xl:flex-col">
             <div className="border-b border-white/10 px-6 py-5">
               <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/38">
-                System State
+                Run State
               </p>
             </div>
 
@@ -1521,7 +1522,7 @@ export function ProofPanel() {
 
               <div className="border-t border-white/10 pt-4">
                 <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/38">
-                  Decision Preview
+                  Mitigation Preview
                 </p>
                 <p className="mt-2 text-sm leading-6 text-white/58">
                   {activeState.decisionNote}

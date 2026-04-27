@@ -49,7 +49,7 @@ const stepContent: Record<
   },
   note: {
     description: "",
-    prompt: "Anything else you'd like to add?",
+    prompt: "What decision do you want to dry-run?",
   },
 };
 

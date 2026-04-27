@@ -40,7 +40,7 @@ body {
 
 .hero-decision-rotator-item {
   opacity: 0;
-  animation: hero-decision-cycle 16.8s cubic-bezier(0.22, 1, 0.36, 1)
+  animation: hero-decision-cycle 14s cubic-bezier(0.22, 1, 0.36, 1)
     infinite;
 }
 

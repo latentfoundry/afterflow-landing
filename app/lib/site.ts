@@ -46,6 +46,6 @@ export const logoUrl = new URL(
 
 export const siteName = "Afterflow";
 export const siteTitle =
-  "Afterflow | AI Decision Simulation for Enterprise Teams";
+  "Afterflow | Dry-run operational decisions before launch";
 export const siteDescription =
-  "Run your next decision before you make it. Afterflow helps enterprise teams compare reactions, pressure points, and second-order effects before they commit.";
+  "Afterflow helps risk and ops teams simulate second-order effects, rank likely failure paths, and see what to fix before launch.";
