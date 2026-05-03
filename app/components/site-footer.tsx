@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  companyLegalName,
   howItWorksPath,
   privacyPath,
   siteRootPath,
@@ -20,7 +21,7 @@ export function SiteFooter() {
           >
             <AfterflowMark className="h-4 w-auto" />
           </Link>
-          <p>&copy; 2026 Latent Foundry</p>
+          <p>&copy; 2026 {companyLegalName}</p>
         </div>
         <nav className="flex flex-wrap items-center gap-4">
           <Link

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import {
+  companyLegalName,
   ogImagePath,
   siteName,
   termsPath,
@@ -9,17 +10,25 @@ import { SiteHeader } from "../components/site-header";
 
 const pageTitle = "Terms of Service | Afterflow";
 const pageDescription =
-  "Terms of Service for Afterflow, including the website and related products and services.";
+  `Terms of Service for ${companyLegalName} and Afterflow, including the website and related products and services.`;
 
-const lastUpdated = "March 15, 2026";
+const lastUpdated = "May 4, 2026";
 
 const sections = [
   {
     title: "Scope",
     body: [
-      'These Terms of Service ("Terms") govern your access to and use of Afterflow, including our website, demos, waitlists, pilots, communications, and related products and services (collectively, the "Services").',
+      `These Terms of Service ("Terms") govern your access to and use of Afterflow, including our website, demos, waitlists, pilots, communications, and related products and services (collectively, the "Services"). The Services are owned and operated by ${companyLegalName}, doing business as Afterflow.`,
       "If you access or use the Services on behalf of an organization, you represent that you have authority to bind that organization to these Terms.",
       "If a separate order form, pilot agreement, enterprise agreement, or other written contract applies to your use of the Services, that agreement will control to the extent of any conflict.",
+    ],
+  },
+  {
+    title: "Service Description",
+    body: [
+      "Afterflow is an enterprise B2B SaaS product that helps organizations simulate downstream operational effects before executing major internal decisions such as migrations, rollouts, policy changes, incident response decisions, and other high-stakes operational changes.",
+      "The Services may ingest customer-approved operational context, including documents, system maps, policies, ownership records, controls, dependency information, and other connected or uploaded materials, then use software and AI-assisted systems to build dependency and constraint models, run probabilistic or multi-agent simulations, compare scenarios, and generate reports or mitigations.",
+      "Specific features, integrations, deployment models, processing locations, and security controls may vary by pilot, plan, configuration, and any separate written agreement.",
     ],
   },
   {
@@ -41,23 +50,32 @@ const sections = [
   {
     title: "Customer Content",
     body: [
-      'You may provide content, data, documents, prompts, links, scenario materials, connected-system data, uploads, and other information through the Services ("Customer Content"). You retain any rights you hold in Customer Content.',
-      "You grant Afterflow a limited, non-exclusive right to host, store, use, process, transmit, and display Customer Content as reasonably necessary to provide, secure, maintain, and improve the Services, and to generate requested outputs.",
+      'You may provide content, data, documents, prompts, links, scenario materials, connected-system data, uploads, and other information through the Services ("Customer Content"). Customer Content may be made available through manual inputs, uploads, imports, exports, links, scoped connectors, read-only integrations, or other authorized sources. You retain any rights you hold in Customer Content.',
+      `You grant ${companyLegalName} a limited, non-exclusive right to host, store, use, process, transmit, and display Customer Content as reasonably necessary to provide, secure, maintain, troubleshoot, and support the Services, and to generate requested outputs.`,
       "You are responsible for ensuring that you have all rights, permissions, notices, and consents needed for Customer Content and for your use of the Services.",
+    ],
+  },
+  {
+    title: "Customer Responsibilities",
+    body: [
+      "You are responsible for the accuracy, completeness, legality, and currency of Customer Content, including any internal documents, policies, system records, or connected-system data you make available through the Services.",
+      "You are responsible for configuring access permissions, connector scopes, authorized users, organization administrators, and any read-only or other integration settings in a way that is appropriate for your organization.",
+      "You must not submit, connect, or expose Customer Content unless you are authorized to do so and your use complies with applicable confidentiality, privacy, security, intellectual property, employment, and contractual obligations.",
     ],
   },
   {
     title: "Outputs and AI-Assisted Features",
     body: [
-      "The Services may generate simulations, analyses, recommendations, reports, summaries, or other outputs. These outputs are generated using software and AI-assisted systems and may be incomplete, probabilistic, inaccurate, or unsuitable for a particular use case.",
-      "You are responsible for reviewing outputs and exercising independent judgment before acting on them. The Services are not a substitute for legal, regulatory, financial, security, or other professional advice, and outputs should not be treated as guarantees, forecasts, or statements of fact.",
-      "Except as stated in a separate written agreement, Afterflow does not promise that outputs will be error-free, exhaustive, or fit for a particular purpose.",
+      "The Services may generate simulations, analyses, recommendations, reports, summaries, likely failure paths, operational or regulatory triggers, mitigations, comparisons, or other outputs. These outputs are generated using software and AI-assisted systems and may be incomplete, probabilistic, inaccurate, outdated, or unsuitable for a particular use case.",
+      "Outputs depend on Customer Content, assumptions, connected sources, configuration, model behavior, and other inputs. If Customer Content is incomplete, outdated, contradictory, or inaccurate, outputs may reflect those limitations.",
+      "You are responsible for reviewing outputs and exercising independent judgment before acting on them. The Services are not a substitute for legal, regulatory, financial, security, compliance, operational, or other professional advice, and outputs should not be treated as guarantees, forecasts, statements of fact, or assurances that a rollout, migration, policy change, incident response decision, or other operational change will succeed or comply with law.",
+      `Except as stated in a separate written agreement, ${companyLegalName} does not promise that outputs will be error-free, exhaustive, or fit for a particular purpose.`,
     ],
   },
   {
     title: "Afterflow Property",
     body: [
-      "Afterflow and its licensors retain all rights, title, and interest in the Services, including software, models, systems, workflows, interfaces, branding, documentation, and all related intellectual property.",
+      `${companyLegalName} and its licensors retain all rights, title, and interest in the Services, including software, models, systems, workflows, interfaces, branding, documentation, and all related intellectual property.`,
       "Subject to these Terms and any applicable commercial agreement, we grant you a limited, non-exclusive, non-transferable, revocable right to access and use the Services for your internal business purposes.",
       "You may not copy, modify, resell, reverse engineer, decompile, or attempt to discover the underlying source code, models, or systems of the Services except to the extent that restriction is prohibited by law.",
     ],
@@ -71,7 +89,7 @@ const sections = [
   {
     title: "Third-Party Services",
     body: [
-      "The Services may interoperate with third-party products, APIs, websites, hosting providers, or data sources. Afterflow is not responsible for third-party services or content, and your use of them may be subject to separate terms and privacy policies.",
+      `The Services may interoperate with third-party products, APIs, websites, hosting providers, model or AI service providers, enterprise systems, repositories, or data sources. ${companyLegalName} is not responsible for third-party services or content, and your use of them may be subject to separate terms and privacy policies.`,
     ],
   },
   {
@@ -97,15 +115,15 @@ const sections = [
   {
     title: "Disclaimers",
     body: [
-      'To the maximum extent permitted by law, the Services are provided "as is" and "as available." Afterflow disclaims all implied warranties, representations, and guarantees, including warranties of merchantability, fitness for a particular purpose, non-infringement, and uninterrupted availability.',
+      `To the maximum extent permitted by law, the Services are provided "as is" and "as available." ${companyLegalName} disclaims all implied warranties, representations, and guarantees, including warranties of merchantability, fitness for a particular purpose, non-infringement, and uninterrupted availability.`,
       "Nothing in these Terms excludes, restricts, or modifies rights or remedies that cannot be excluded under applicable law, including non-excludable rights under consumer protection law.",
     ],
   },
   {
     title: "Limitation of Liability",
     body: [
-      "To the maximum extent permitted by law, Afterflow will not be liable for any indirect, incidental, special, consequential, exemplary, or punitive damages, or for any loss of profits, revenue, goodwill, data, business opportunity, or anticipated savings arising out of or related to the Services.",
-      "To the maximum extent permitted by law, Afterflow's total liability for claims arising out of or relating to the Services will not exceed the amount you paid to Afterflow for the Services giving rise to the claim in the 12 months before the event giving rise to liability, or AUD $100 if you have not paid any such amount.",
+      `To the maximum extent permitted by law, ${companyLegalName} will not be liable for any indirect, incidental, special, consequential, exemplary, or punitive damages, or for any loss of profits, revenue, goodwill, data, business opportunity, or anticipated savings arising out of or related to the Services.`,
+      `To the maximum extent permitted by law, ${companyLegalName}'s total liability for claims arising out of or relating to the Services will not exceed the amount you paid to ${companyLegalName} for the Services giving rise to the claim in the 12 months before the event giving rise to liability, or AUD $100 if you have not paid any such amount.`,
       "These limitations apply even if a remedy fails of its essential purpose, but only to the extent permitted by applicable law.",
     ],
   },
@@ -161,9 +179,9 @@ export default function TermsPage() {
               Terms of Service
             </h1>
             <p className="text-lg leading-8 text-black/60 sm:text-2xl sm:leading-10">
-              These Terms govern access to and use of Afterflow, including the
-              website, demos, waitlists, pilots, and related products and
-              services.
+              These Terms govern access to and use of the Afterflow Services
+              operated by {companyLegalName}, including the website, demos,
+              waitlists, pilots, and related products and services.
             </p>
             <p className="text-sm uppercase tracking-[0.24em] text-black/38">
               Last updated {lastUpdated}

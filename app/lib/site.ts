@@ -45,6 +45,7 @@ export const logoUrl = new URL(
 ).toString();
 
 export const siteName = "Afterflow";
+export const companyLegalName = "Afterflow Inc.";
 export const siteTitle =
   "Afterflow | Dry-run operational decisions before launch";
 export const siteDescription =

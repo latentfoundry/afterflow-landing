@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import {
+  companyLegalName,
   ogImagePath,
   privacyPath,
   siteName,
@@ -9,15 +10,16 @@ import { SiteHeader } from "../components/site-header";
 
 const pageTitle = "Privacy Policy | Afterflow";
 const pageDescription =
-  "Privacy Policy for Afterflow, including the website and related products and services.";
+  `Privacy Policy for ${companyLegalName} and Afterflow, including the website and related products and services.`;
 
-const lastUpdated = "March 15, 2026";
+const lastUpdated = "May 4, 2026";
 
 const sections = [
   {
     title: "Scope",
     body: [
-      'This Privacy Policy explains how Afterflow ("Afterflow", "we", "us", or "our") collects, uses, discloses, and otherwise handles personal information in connection with our website, waitlists, demos, communications, and related products and services (collectively, the "Services").',
+      `This Privacy Policy explains how ${companyLegalName} ("Afterflow", "we", "us", or "our") collects, uses, discloses, and otherwise handles personal information in connection with our website, waitlists, demos, pilots, communications, and related products and services (collectively, the "Services").`,
+      "Afterflow is an enterprise B2B SaaS product that helps organizations simulate the downstream operational effects of major internal decisions, including migrations, rollouts, policy changes, incident response decisions, and other high-stakes operational changes.",
       "This policy does not apply to third-party websites, services, or integrations that are not controlled by Afterflow, even if they are linked from or connected to the Services. Certain enterprise deployments or customer environments may also be subject to separate agreements or notices that supplement this policy.",
     ],
   },
@@ -25,7 +27,9 @@ const sections = [
     title: "Information We Collect",
     body: [
       "The information we collect depends on how you interact with the Services. It may include contact and professional information, account or profile information, company information, communications, support requests, and any other information you choose to provide through forms, demos, waitlists, or correspondence with us.",
-      "If you or your organization use product features, pilots, or integrations, the information processed through the Services may also include scenario inputs, documents, links, records, connected-system data, uploads, notes, prompts, outputs, and other materials made available through the Services.",
+      "If you or your organization use product features, pilots, or integrations, the information processed through the Services may also include scenario inputs, internal documents, links, records, connected-system data, uploads, notes, prompts, outputs, and other materials made available through the Services.",
+      "Customer-provided or customer-authorized materials may include information from enterprise tools and repositories such as Confluence, OneDrive, SharePoint, knowledge bases, document stores, collaboration systems, ticketing systems, system maps, policy libraries, controls, risk materials, migration plans, rollout plans, incident materials, ownership records, and dependency information.",
+      "Where customer documents, uploads, or connected sources contain personal information, that personal information may be processed as part of the Services.",
       "We may also collect technical, device, browser, network, usage, and log information such as IP address, approximate location derived from IP, pages viewed, referring pages, timestamps, and interactions with the Services.",
       "We may receive information from third parties such as organization administrators, connected integrations, service providers, referral sources, or public sources where permitted by law and relevant to the Services.",
     ],
@@ -35,7 +39,7 @@ const sections = [
     body: [
       "We collect information directly from you when you submit forms, request access, book demos, communicate with us, connect systems, or otherwise use the Services.",
       "We collect certain information automatically when you access or use the Services, including through logs, cookies, local storage, and similar technologies used for functionality, security, abuse prevention, and service improvement.",
-      "We may also collect information from third parties or other users of the Services, including when an organization invites you to use the Services or when you choose to connect third-party tools or data sources.",
+      "We may also collect information from third parties or other users of the Services, including when an organization invites you to use the Services or authorizes scoped integrations, read-only connectors, imports, exports, uploads, or links to third-party tools and data sources.",
     ],
   },
   {
@@ -43,7 +47,8 @@ const sections = [
     body: [
       "We use personal information to provide, operate, maintain, secure, and improve the Services; to review and respond to requests, demos, waitlists, and support inquiries; and to communicate with you about the Services.",
       "We may also use personal information to authenticate users, prevent fraud and abuse, monitor usage, troubleshoot issues, comply with legal obligations, enforce our terms, and protect the rights, safety, and integrity of Afterflow, our users, and others.",
-      "Where relevant to the Services, we use submitted content and related information to generate simulations, analyses, reports, and related outputs requested through the Services.",
+      "Where relevant to the Services, we use submitted, uploaded, or customer-authorized content and related information to ingest and structure operational context, build dependency and constraint models, run stochastic, multi-agent, or AI-assisted simulations, compare scenarios, and generate analyses, reports, likely failure paths, operational or regulatory triggers, evidence, and mitigations requested through the Services.",
+      "We may use usage data, feedback, diagnostics, and aggregated or de-identified information to understand, maintain, and improve the Services, subject to applicable law and any separate written agreement.",
     ],
   },
   {
@@ -56,7 +61,7 @@ const sections = [
   {
     title: "How We Share Information",
     body: [
-      "We may share personal information with vendors and service providers that help us host, operate, secure, support, and improve the Services.",
+      "We may share personal information with vendors and service providers that help us host, operate, secure, support, analyze, and improve the Services, including cloud infrastructure, security, communications, analytics, support, and model or AI service providers.",
       "If you use the Services on behalf of an organization, your organization and its authorized administrators may have access to information associated with your workspace or use of the Services.",
       "We may also share information when you direct us to do so, when needed to support requested integrations or transactions, when required by law or legal process, to protect rights and safety, or in connection with a financing, merger, acquisition, reorganization, asset sale, or similar transaction.",
     ],
@@ -79,6 +84,7 @@ const sections = [
     title: "Security",
     body: [
       "We use reasonable technical and organizational measures designed to protect personal information against unauthorized access, loss, misuse, and alteration. No method of transmission or storage is completely secure, and we cannot guarantee absolute security.",
+      "Enterprise deployments, connector scopes, processing locations, and customer-controlled environments may be handled under separate written agreements where applicable.",
     ],
   },
   {
@@ -147,9 +153,9 @@ export default function PrivacyPolicyPage() {
               Privacy Policy
             </h1>
             <p className="text-lg leading-8 text-black/60 sm:text-2xl sm:leading-10">
-              This policy applies across Afterflow, including the website,
-              waitlists, demos, communications, and related products and
-              services.
+              This policy applies to the Afterflow Services operated by{" "}
+              {companyLegalName}, including the website, waitlists, demos,
+              pilots, communications, and related products and services.
             </p>
             <p className="text-sm uppercase tracking-[0.24em] text-black/38">
               Last updated {lastUpdated}
