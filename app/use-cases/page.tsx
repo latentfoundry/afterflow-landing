@@ -11,9 +11,9 @@ import {
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
 
-const pageTitle = "Use Cases | Dry-run Operational Rollouts";
+const pageTitle = "Use Cases | Dry-run Operational Decisions";
 const pageDescription =
-  "Use cases for dry-running major operational changes, from platform migrations and AI rollouts to policy changes and incident response.";
+  "Use cases for dry-running bounded operational decisions, from platform transitions and policy rollouts to supply posture and incident response.";
 
 type UseCaseIconKind =
   | "incident"
@@ -131,40 +131,38 @@ function UseCaseIcon({ kind }: { kind: UseCaseIconKind }) {
 
 const useCases = [
   {
-    icon: "operations" as const,
-    tint: "border-[#5b4217] bg-[#231a10] text-[#f0d8b4]",
-    title: "Platform migrations",
-    body: "Dry-run cutovers before access failures, rollback gaps, and support overload collide.",
-  },
-  {
     icon: "launch" as const,
-    tint: "border-[#27415c] bg-[#111b28] text-[#a7c8f3]",
-    title: "AI rollout risk",
-    body: "Model second-order effects across controls, adoption, ownership, and customer-facing workflows.",
-  },
-  {
-    icon: "policy" as const,
-    tint: "border-[#3c3051] bg-[#17111f] text-[#d6baf0]",
-    title: "Policy rollouts",
-    body: "See where new operating rules create exceptions, bottlenecks, and compliance exposure.",
+    tint: "border-[#5b4217] bg-[#231a10] text-[#f0d8b4]",
+    title: "Change events",
+    body: "Planned changes where hidden dependencies can surface after launch.",
+    examples: [
+      "Platform migrations",
+      "AI rollout risk",
+      "Policy rollouts",
+      "Customer-impacting changes",
+    ],
   },
   {
     icon: "market" as const,
-    tint: "border-[#284232] bg-[#101711] text-[#b9deb9]",
-    title: "Vendor and system migrations",
-    body: "Map handoffs, fallback paths, and ownership gaps before switching critical systems.",
+    tint: "border-[#27415c] bg-[#111b28] text-[#a7c8f3]",
+    title: "Operational posture",
+    body: "Recurring operating choices where capacity, supply, and dependency exposure matter.",
+    examples: [
+      "Vendor and system migrations",
+      "Supply exposure",
+      "Capacity allocation",
+    ],
   },
   {
     icon: "incident" as const,
-    tint: "border-[#6a3524] bg-[#21110d] text-[#f0c0b4]",
-    title: "Incident response decisions",
-    body: "Compare containment, escalation, and communication paths before pressure compounds.",
-  },
-  {
-    icon: "operations" as const,
-    tint: "border-[#4b3a57] bg-[#18111d] text-[#e2c5ff]",
-    title: "Customer-impacting changes",
-    body: "Find what breaks when an internal change reaches real customers and real support teams.",
+    tint: "border-[#4b2630] bg-[#1d1015] text-[#f1b6c5]",
+    title: "Reactive decisions",
+    body: "Time-sensitive choices made when an issue is already creating pressure.",
+    examples: [
+      "Incident response decisions",
+      "Rollback decisions",
+      "Customer communication",
+    ],
   },
 ];
 
@@ -218,18 +216,18 @@ export default function UseCasesPage() {
               Use Cases
             </p>
             <h1 className="text-[clamp(3rem,7vw,6.2rem)] font-black leading-[0.92] tracking-[-0.08em]">
-              Rollouts teams dry-run with Afterflow.
+              Scenarios teams dry-run with Afterflow.
             </h1>
             <p className="max-w-4xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-              Bring a major operational change. Afterflow shows likely failure
-              paths before launch.
+              Start with a real decision, a clear owner, and a time window.
+              Afterflow helps teams compare plausible paths before they commit.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
                 href={requestAccessPath}
                 className="inline-flex min-h-14 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
               >
-                Request Enterprise Access
+                Request Access
               </Link>
               <Link
                 href={howItWorksPath}
@@ -242,7 +240,7 @@ export default function UseCasesPage() {
         </section>
 
         <section className="border-b border-black/10 py-16 lg:py-20">
-          <div className="grid gap-px overflow-hidden border border-black/10 bg-black/10 lg:grid-cols-2">
+          <div className="grid gap-px overflow-hidden border border-black/10 bg-black/10 lg:grid-cols-3">
             {useCases.map((item) => (
               <div
                 key={item.title}
@@ -254,15 +252,22 @@ export default function UseCasesPage() {
                   <div className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${item.tint}`}>
                     <UseCaseIcon kind={item.icon} />
                   </div>
-                  <p className="mt-5 text-[11px] font-medium uppercase tracking-[0.32em] text-white/35">
-                  Use Case
-                  </p>
-                  <h2 className="mt-4 text-3xl font-medium leading-tight tracking-[-0.04em] text-white">
+                  <h2 className="mt-5 text-3xl font-medium leading-tight tracking-[-0.04em] text-white">
                     {item.title}
                   </h2>
                   <p className="mt-5 max-w-2xl text-base leading-7 text-white/56">
                     {item.body}
                   </p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {item.examples.map((example) => (
+                      <span
+                        key={example}
+                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/58"
+                      >
+                        {example}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
@@ -275,11 +280,12 @@ export default function UseCasesPage() {
           </p>
           <div className="space-y-6">
             <h2 className="max-w-4xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-              Teams do not just get a warning.
+              Teams see more than a risk list.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-              They get ranked failure paths, evidence, missing context, and
-              mitigations to compare before the rollout goes live.
+              They get ranked failure paths, stakeholder maps, evidence,
+              missing context, leading indicators, branch comparisons, and
+              actions to consider.
             </p>
           </div>
         </section>
@@ -287,14 +293,14 @@ export default function UseCasesPage() {
         <section className="grid gap-8 py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end lg:gap-16 lg:py-20">
           <div className="space-y-5">
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
-              Enterprise Access
+              Request Access
             </p>
             <h2 className="max-w-3xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-              Start with a live scenario.
+              Start with one real decision.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/56 sm:text-2xl sm:leading-10">
-              Bring a platform migration, an AI rollout, a policy change, or a
-              customer-impacting operational decision.
+              Choose one decision where context is scattered and the downside
+              of being wrong is material.
             </p>
           </div>
 
@@ -303,7 +309,7 @@ export default function UseCasesPage() {
               href={requestAccessPath}
               className="flex min-h-16 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
             >
-              Request Enterprise Access
+              Request Access
             </Link>
           </div>
         </section>

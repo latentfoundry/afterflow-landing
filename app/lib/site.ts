@@ -47,6 +47,12 @@ export const logoUrl = new URL(
 export const siteName = "Afterflow";
 export const companyLegalName = "Afterflow Inc.";
 export const siteTitle =
-  "Afterflow | Dry-run operational decisions before launch";
+  "Afterflow | Dry-run critical decisions before you make them";
 export const siteDescription =
-  "Afterflow helps risk and ops teams simulate second-order effects, rank likely failure paths, and see what to fix before launch.";
+  "Afterflow structures context into a world model, runs stakeholder agents, and ranks decision paths before execution.";
+
+export const contactEmail =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "mika@afterflow.dev";
+export const contactEmailHref = `mailto:${contactEmail}`;
+export const bookingUrl =
+  process.env.NEXT_PUBLIC_BOOKING_URL?.trim() || "https://cal.com/mika";

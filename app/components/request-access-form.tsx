@@ -1,21 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import { useId, useState, useTransition } from "react";
-import { siteRootPath } from "../lib/site";
 
 const requestAccessEndpoint =
   process.env.NEXT_PUBLIC_REQUEST_ACCESS_ENDPOINT?.trim() ?? "";
 const appsScriptWebAppPattern =
   /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/(?:exec|dev)\/?$/;
-
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const formulaPrefixPattern = /^[=+\-@]/;
 const submitThrottleKey = "afterflow-request-access-last-submit";
 const submitThrottleMs = 60_000;
-const totalSteps = 4;
 
-type StepKey = "email" | "identity" | "team" | "note";
+type StepKey = "email" | "identity" | "note";
 
 type FormState = {
   company: string;
@@ -23,46 +19,24 @@ type FormState = {
   firstName: string;
   honeypot: string;
   note: string;
-  team: string;
 };
 
-const stepOrder: StepKey[] = ["email", "identity", "team", "note"];
+const stepOrder: StepKey[] = ["email", "identity", "note"];
 
-const stepContent: Record<
-  StepKey,
-  {
-    description: string;
-    prompt: string;
-  }
-> = {
+const stepContent: Record<StepKey, { label: string; prompt: string }> = {
   email: {
-    description: "",
-    prompt: "Enter your work email",
+    label: "Contact email",
+    prompt: "Contact email",
   },
   identity: {
-    description: "",
-    prompt: "What is your name?",
-  },
-  team: {
-    description: "",
-    prompt: "Which industry or sector are you in?",
+    label: "Name and company",
+    prompt: "Name and company",
   },
   note: {
-    description: "",
-    prompt: "What decision do you want to dry-run?",
+    label: "Additional information",
+    prompt: "Additional information",
   },
 };
-
-function getEmptyState(): FormState {
-  return {
-    company: "",
-    email: "",
-    firstName: "",
-    honeypot: "",
-    note: "",
-    team: "",
-  };
-}
 
 function sanitizeSingleLine(value: string) {
   const normalized = value.replace(/\u0000/g, "").replace(/\s+/g, " ").trim();
@@ -89,9 +63,7 @@ function getLastSubmitAt() {
   }
 
   try {
-    const storedValue = window.localStorage.getItem(submitThrottleKey);
-    const parsedValue = Number(storedValue || "0");
-    return Number.isFinite(parsedValue) ? parsedValue : 0;
+    return Number(window.localStorage.getItem(submitThrottleKey) || "0") || 0;
   } catch {
     return 0;
   }
@@ -99,7 +71,13 @@ function getLastSubmitAt() {
 
 export function RequestAccessFormInner({ source }: { source: string }) {
   const honeypotId = useId();
-  const [formState, setFormState] = useState<FormState>(getEmptyState);
+  const [formState, setFormState] = useState<FormState>({
+    company: "",
+    email: "",
+    firstName: "",
+    honeypot: "",
+    note: "",
+  });
   const [stepIndex, setStepIndex] = useState(0);
   const [showEmailError, setShowEmailError] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -108,9 +86,9 @@ export function RequestAccessFormInner({ source }: { source: string }) {
   const [isPending, startTransition] = useTransition();
 
   const currentStep = stepOrder[stepIndex];
+  const currentContent = stepContent[currentStep];
   const isEmailValid = emailPattern.test(formState.email.trim());
-  const isLastStep = stepIndex === totalSteps - 1;
-  const canAdvance = currentStep !== "email" || isEmailValid;
+  const isLastStep = stepIndex === stepOrder.length - 1;
   const hasEndpoint = requestAccessEndpoint.length > 0;
   const hasValidEndpoint = appsScriptWebAppPattern.test(requestAccessEndpoint);
 
@@ -127,14 +105,14 @@ export function RequestAccessFormInner({ source }: { source: string }) {
   };
 
   const goForward = () => {
-    if (!canAdvance) {
+    if (currentStep === "email" && !isEmailValid) {
       setShowEmailError(true);
       return;
     }
 
     setShowEmailError(false);
     setSubmitError("");
-    setStepIndex((current) => Math.min(current + 1, totalSteps - 1));
+    setStepIndex((current) => Math.min(current + 1, stepOrder.length - 1));
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -145,23 +123,14 @@ export function RequestAccessFormInner({ source }: { source: string }) {
       return;
     }
 
-    if (!hasEndpoint) {
-      setSubmitError(
-        "This form is not configured yet. Add NEXT_PUBLIC_REQUEST_ACCESS_ENDPOINT before deploying.",
-      );
-      return;
-    }
-
-    if (!hasValidEndpoint) {
-      setSubmitError(
-        "The request endpoint is not a deployed Apps Script web app URL. Use the /macros/s/.../exec URL, not a library URL.",
-      );
+    if (!hasEndpoint || !hasValidEndpoint) {
+      setSubmitError("This form is not configured yet.");
       return;
     }
 
     const lastSubmitAt = getLastSubmitAt();
     if (Date.now() - lastSubmitAt < submitThrottleMs) {
-      setSubmitError("Please wait a minute before sending another request.");
+      setSubmitError("Please wait a minute before sending another message.");
       return;
     }
 
@@ -182,7 +151,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
           source,
           startedAt: new Date(startedAt).toISOString(),
           submittedAt: new Date(submittedAt).toISOString(),
-          team: sanitizeSingleLine(formState.team),
+          team: "",
         };
 
         await fetch(requestAccessEndpoint, {
@@ -194,13 +163,12 @@ export function RequestAccessFormInner({ source }: { source: string }) {
           body: JSON.stringify(payload),
         });
 
-        if (typeof window !== "undefined") {
-          try {
-            window.localStorage.setItem(submitThrottleKey, String(submittedAt));
-          } catch {
-            // Ignore storage failures so the submission flow still completes.
-          }
+        try {
+          window.localStorage.setItem(submitThrottleKey, String(submittedAt));
+        } catch {
+          // The message can still submit if localStorage is unavailable.
         }
+
         setSubmitted(true);
       } catch {
         setSubmitError("We could not send that just now. Please try again.");
@@ -208,238 +176,171 @@ export function RequestAccessFormInner({ source }: { source: string }) {
     });
   };
 
-  const progress = ((stepIndex + 1) / totalSteps) * 100;
-  const currentContent = stepContent[currentStep];
-  const stepLabel =
-    currentStep === "email"
-      ? "Step 1 of 4"
-      : currentStep === "identity"
-        ? "Step 2 of 4"
-        : currentStep === "team"
-          ? "Step 3 of 4"
-          : "Step 4 of 4";
-
   if (submitted) {
     return (
-      <div className="w-full border border-black/10 bg-[#ece8e1] shadow-[0_18px_45px_rgba(0,0,0,0.05)]">
-        <div className="px-6 py-8 sm:px-8 sm:py-10">
-          <div className="flex items-center justify-between gap-4 text-[11px] font-medium uppercase tracking-[0.32em] text-black/35">
-            <p>Enterprise Access</p>
-            <p>Submitted</p>
-          </div>
-          <div className="mt-4 h-px bg-black/10" />
-          <div className="space-y-8 py-10 sm:py-14">
-            <div className="space-y-5">
-              <p className="max-w-5xl text-[clamp(2.5rem,6vw,4.75rem)] font-black leading-[0.92] tracking-[-0.08em] text-black">
-                Thank you.
-              </p>
-              <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-                We will reach out shortly.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-3 border-t border-black/10 pt-8">
-              <Link
-                href={siteRootPath}
-                className="inline-flex min-h-14 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
-              >
-                Back
-              </Link>
-            </div>
-          </div>
-        </div>
+      <div className="min-h-[18rem] bg-[#ece8e1] p-8 sm:p-10 lg:p-12">
+        <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/38">
+          Sent
+        </p>
+        <p className="mt-20 text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-4xl">
+          Thank you.
+        </p>
+        <p className="mt-4 max-w-md text-base leading-7 text-black/56">
+          We will reach out shortly.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="w-full border border-black/10 bg-[#ece8e1] shadow-[0_18px_45px_rgba(0,0,0,0.05)]">
-      <div className="px-6 py-8 sm:px-8 sm:py-10">
-        <div className="flex items-center justify-between gap-4 text-[11px] font-medium uppercase tracking-[0.32em] text-black/35">
-          <p>Enterprise Access</p>
-          <p>{stepLabel}</p>
-        </div>
-        <div className="mt-4 h-1 overflow-hidden bg-black/10">
-          <div
-            className="h-full bg-black transition-[width] duration-300 ease-out"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-10 pb-2 pt-10 sm:pb-4 sm:pt-14 lg:pt-12">
-            <div className="max-w-5xl space-y-5">
-              <p className="text-[clamp(2.5rem,6vw,4.75rem)] font-black leading-[0.92] tracking-[-0.08em] text-black">
-                {currentContent.prompt}
+    <form
+      onSubmit={handleSubmit}
+      className="min-h-[18rem] bg-[#ece8e1] p-8 sm:p-10 lg:p-12"
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/38">
+          Send a note
+        </p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-black/32">
+          Step {stepIndex + 1} of {stepOrder.length}
+        </p>
+      </div>
+
+      <p className="mt-10 text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-4xl">
+        {currentContent.prompt}
+      </p>
+
+      <div className="mt-8">
+        {currentStep === "email" ? (
+          <div className="space-y-3">
+            <label
+              htmlFor="contact-email"
+              className="text-[11px] font-medium uppercase tracking-[0.28em] text-black/34"
+            >
+              {currentContent.label}
+            </label>
+            <input
+              id="contact-email"
+              autoFocus
+              type="email"
+              inputMode="email"
+              maxLength={254}
+              autoComplete="email"
+              value={formState.email}
+              name="email"
+              onChange={(event) => updateField("email", event.target.value)}
+              placeholder="jane@acme.com"
+              aria-invalid={showEmailError && !isEmailValid}
+              className="min-h-14 w-full border border-black/18 bg-[#f8f5ee] px-4 text-lg tracking-[-0.03em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+            />
+            {showEmailError && !isEmailValid ? (
+              <p className="text-sm leading-6 text-rose-700">
+                Enter a valid email so we know where to reply.
               </p>
-              {currentContent.description ? (
-                <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-                  {currentContent.description}
-                </p>
-              ) : null}
-            </div>
-
-            {currentStep === "email" ? (
-              <div className="max-w-[760px] space-y-3">
-                <label
-                  htmlFor="request-access-email"
-                  className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/35"
-                >
-                  Work Email *
-                </label>
-                <input
-                  id="request-access-email"
-                  autoFocus
-                  type="email"
-                  inputMode="email"
-                  maxLength={254}
-                  autoComplete="email"
-                  value={formState.email}
-                  name="email"
-                  onChange={(event) => updateField("email", event.target.value)}
-                  placeholder="jane@acme.com"
-                  aria-invalid={showEmailError && !isEmailValid}
-                  aria-describedby={
-                    showEmailError && !isEmailValid
-                      ? "request-access-email-error"
-                      : undefined
-                  }
-                  className="min-h-20 w-full border border-black/18 bg-[#f4f0ea] px-5 text-[clamp(1.5rem,3vw,2.15rem)] tracking-[-0.04em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
-                />
-                {showEmailError && !isEmailValid ? (
-                  <p
-                    id="request-access-email-error"
-                    className="text-sm leading-6 text-rose-700"
-                  >
-                    Enter a valid email so we know where to reply.
-                  </p>
-                ) : null}
-              </div>
             ) : null}
+          </div>
+        ) : null}
 
-            {currentStep === "identity" ? (
-              <div className="grid max-w-[960px] gap-5 sm:grid-cols-2">
-                <div className="space-y-3">
-                  <label
-                    htmlFor="request-access-name"
-                    className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/35"
-                  >
-                    Name
-                  </label>
-                  <input
-                    id="request-access-name"
-                    autoFocus
-                    type="text"
-                    maxLength={80}
-                    autoComplete="name"
-                    value={formState.firstName}
-                    name="name"
-                    onChange={(event) => updateField("firstName", event.target.value)}
-                    placeholder="Jane Doe"
-                    className="min-h-20 w-full border border-black/18 bg-[#f4f0ea] px-5 text-[clamp(1.5rem,3vw,2.15rem)] tracking-[-0.04em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label
-                    htmlFor="request-access-company"
-                    className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/35"
-                  >
-                    Company
-                  </label>
-                  <input
-                    id="request-access-company"
-                    type="text"
-                    maxLength={120}
-                    autoComplete="organization"
-                    value={formState.company}
-                    name="company"
-                    onChange={(event) => updateField("company", event.target.value)}
-                    placeholder="ACME Corporation"
-                    className="min-h-20 w-full border border-black/18 bg-[#f4f0ea] px-5 text-[clamp(1.5rem,3vw,2.15rem)] tracking-[-0.04em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
-                  />
-                </div>
-              </div>
-            ) : null}
-
-            {currentStep === "team" ? (
-              <div className="max-w-[760px] space-y-3">
-                <label
-                  htmlFor="request-access-sector"
-                  className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/35"
-                >
-                  Industry / Sector
-                </label>
-                <input
-                  id="request-access-sector"
-                  autoFocus
-                  type="text"
-                  maxLength={80}
-                  autoComplete="organization-title"
-                  value={formState.team}
-                  name="industry"
-                  onChange={(event) => updateField("team", event.target.value)}
-                  placeholder="Financial services"
-                  className="min-h-20 w-full border border-black/18 bg-[#f4f0ea] px-5 text-[clamp(1.5rem,3vw,2.15rem)] tracking-[-0.04em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
-                />
-              </div>
-            ) : null}
-
-            {currentStep === "note" ? (
-              <div className="max-w-[920px] space-y-3">
-                <label
-                  htmlFor="request-access-note"
-                  className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/35"
-                >
-                  Additional Information
-                </label>
-                <textarea
-                  id="request-access-note"
-                  autoFocus
-                  rows={5}
-                  maxLength={280}
-                  value={formState.note}
-                  name="note"
-                  onChange={(event) => updateField("note", event.target.value)}
-                  placeholder="Share anything else you would like us to know about your company, timing, or how you might use Afterflow."
-                  className="w-full resize-none border border-black/18 bg-[#f4f0ea] px-5 py-5 text-[clamp(1.1rem,2vw,1.45rem)] leading-8 tracking-[-0.03em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
-                />
-              </div>
-            ) : null}
-
-            <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">
-              <label htmlFor={honeypotId}>Website</label>
+        {currentStep === "identity" ? (
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-3">
+              <label
+                htmlFor="contact-name"
+                className="text-[11px] font-medium uppercase tracking-[0.28em] text-black/34"
+              >
+                Name
+              </label>
               <input
-                id={honeypotId}
+                id="contact-name"
+                autoFocus
                 type="text"
-                tabIndex={-1}
-                autoComplete="off"
-                value={formState.honeypot}
-                onChange={(event) => updateField("honeypot", event.target.value)}
+                maxLength={80}
+                autoComplete="name"
+                value={formState.firstName}
+                name="name"
+                onChange={(event) => updateField("firstName", event.target.value)}
+                placeholder="Jane Doe"
+                className="min-h-14 w-full border border-black/18 bg-[#f8f5ee] px-4 text-lg tracking-[-0.03em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
               />
             </div>
-
-            <div className="flex flex-wrap items-center gap-4 border-t border-black/10 pt-8">
-              {stepIndex > 0 ? (
-                <button
-                  type="button"
-                  onClick={goBack}
-                  className="inline-flex min-h-14 items-center justify-center border border-black/12 px-6 text-sm font-medium uppercase tracking-[0.18em] text-black/72 transition-colors hover:border-black/24 hover:text-black"
-                >
-                  Back
-                </button>
-              ) : null}
-              <button
-                type="submit"
-                disabled={isPending}
-                className="inline-flex min-h-14 min-w-40 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88 disabled:cursor-wait disabled:bg-black/72"
+            <div className="space-y-3">
+              <label
+                htmlFor="contact-company"
+                className="text-[11px] font-medium uppercase tracking-[0.28em] text-black/34"
               >
-                {isPending ? "Submitting" : isLastStep ? "Submit" : "Continue"}
-              </button>
-              {submitError ? (
-                <p className="text-sm leading-6 text-rose-700">{submitError}</p>
-              ) : null}
+                Company
+              </label>
+              <input
+                id="contact-company"
+                type="text"
+                maxLength={120}
+                autoComplete="organization"
+                value={formState.company}
+                name="company"
+                onChange={(event) => updateField("company", event.target.value)}
+                placeholder="ACME Corporation"
+                className="min-h-14 w-full border border-black/18 bg-[#f8f5ee] px-4 text-lg tracking-[-0.03em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+              />
             </div>
           </div>
-        </form>
+        ) : null}
+
+        {currentStep === "note" ? (
+          <div className="space-y-3">
+            <label
+              htmlFor="contact-note"
+              className="text-[11px] font-medium uppercase tracking-[0.28em] text-black/34"
+            >
+              Additional information
+            </label>
+            <textarea
+              id="contact-note"
+              autoFocus
+              rows={5}
+              maxLength={500}
+              value={formState.note}
+              name="note"
+              onChange={(event) => updateField("note", event.target.value)}
+              placeholder="Share the decision, context, or timing."
+              className="w-full resize-none border border-black/18 bg-[#f8f5ee] px-4 py-4 text-base leading-7 tracking-[-0.02em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+            />
+          </div>
+        ) : null}
       </div>
-    </div>
+
+      <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden">
+        <label htmlFor={honeypotId}>Website</label>
+        <input
+          id={honeypotId}
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={formState.honeypot}
+          onChange={(event) => updateField("honeypot", event.target.value)}
+        />
+      </div>
+
+      <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-black/10 pt-6">
+        {stepIndex > 0 ? (
+          <button
+            type="button"
+            onClick={goBack}
+            className="inline-flex min-h-12 items-center justify-center border border-black/12 px-5 text-xs font-medium uppercase tracking-[0.18em] text-black/70 transition-colors hover:border-black/24 hover:text-black"
+          >
+            Back
+          </button>
+        ) : null}
+        <button
+          type="submit"
+          disabled={isPending}
+          className="inline-flex min-h-12 min-w-32 items-center justify-center bg-black px-5 text-xs font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88 disabled:cursor-wait disabled:bg-black/72"
+        >
+          {isPending ? "Sending" : isLastStep ? "Send" : "Continue"}
+        </button>
+        {submitError ? (
+          <p className="text-sm leading-6 text-rose-700">{submitError}</p>
+        ) : null}
+      </div>
+    </form>
   );
 }

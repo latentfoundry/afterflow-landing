@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { InsightCarousel } from "./components/insight-carousel";
-import { ProofPanelShell } from "./components/proof-panel-shell";
+import { ProductFlowMock } from "./components/product-flow-mock";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
 import {
@@ -10,49 +9,12 @@ import {
   useCasesPath,
 } from "./lib/site";
 
-const steps = [
-  {
-    number: "01",
-    title: "Connect context",
-    body: "Plans, systems, owners, and constraints.",
-  },
-  {
-    number: "02",
-    title: "Model the rollout",
-    body: "A working map of dependencies and fallback paths.",
-  },
-  {
-    number: "03",
-    title: "Rank the paths",
-    body: "See failure paths, evidence, and mitigations.",
-  },
-];
-
 const exampleDecisions = [
-  "Platform migration",
-  "AI rollout",
+  "Platform transition",
+  "Product launch",
   "Policy rollout",
-  "Vendor migration",
+  "Supply posture",
   "Incident response",
-];
-
-const decisionScenarios = [
-  {
-    title: "Platform migrations",
-    body: "Find access failures, rollback gaps, and overloaded fallback teams before cutover.",
-  },
-  {
-    title: "AI rollout risk",
-    body: "Pressure-test governance, controls, adoption paths, and operational ownership before deployment.",
-  },
-  {
-    title: "Policy rollouts",
-    body: "See where a new process creates second-order effects across teams, customers, and controls.",
-  },
-  {
-    title: "Vendor migrations",
-    body: "Map handoffs, ownership gaps, fallback paths, and service risk before switching systems.",
-  },
 ];
 
 export default function Home() {
@@ -63,9 +25,6 @@ export default function Home() {
 
         <section className="flex min-h-[68vh] flex-col items-center justify-center border-b border-black/10 py-20 text-center lg:min-h-[76vh]">
           <div className="space-y-8">
-            <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
-              Operational Decision Simulation
-            </p>
             <p
               aria-hidden="true"
               className="text-[clamp(4.5rem,17vw,11rem)] font-black leading-none tracking-[-0.09em]"
@@ -73,17 +32,18 @@ export default function Home() {
               Afterflow
             </p>
             <h1 className="mx-auto max-w-4xl text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-5xl">
-              Dry-run critical rollouts before they go live.
+              Dry-run critical decisions before you make them.
             </h1>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-black/58 sm:text-xl">
-              Afterflow shows the second-order effects of critical rollouts
-              before production does.
+              Build the world model, rank likely paths, and see what to
+              change.
             </p>
             <div className="mx-auto w-full max-w-[30rem]">
               <div className="hero-decision-pill rounded-full border px-5 py-3 text-black/60 shadow-[0_16px_34px_rgba(0,0,0,0.06)]">
                 <p className="sr-only">
-                  Example rollouts include platform migrations, AI rollouts,
-                  policy rollouts, vendor migrations, and incident response.
+                  Example scenarios include platform transitions, product
+                  launches, policy rollouts, supply posture, and incident
+                  response.
                 </p>
                 <div
                   aria-hidden="true"
@@ -106,37 +66,7 @@ export default function Home() {
                 href={requestAccessPath}
                 className="inline-flex min-w-60 items-center justify-center bg-black px-6 py-4 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
               >
-                Request Enterprise Access
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section className="grid gap-8 border-b border-black/10 py-16 lg:grid-cols-[170px_minmax(0,1fr)] lg:gap-16 lg:py-20">
-          <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
-            Use Cases
-          </p>
-          <div className="space-y-8">
-            <div className="space-y-5">
-              <h2 className="max-w-4xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-                Critical changes teams dry-run with Afterflow.
-              </h2>
-              <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-                Pressure-test major operational changes before they become
-                production, customer, or regulatory reality.
-              </p>
-            </div>
-
-            <div className="w-full max-w-[44rem]">
-              <InsightCarousel label="Example Range" items={decisionScenarios} />
-            </div>
-
-            <div>
-              <Link
-                href={useCasesPath}
-                className="inline-flex min-h-12 items-center justify-center bg-black px-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white transition-colors hover:bg-black/88"
-              >
-                See all use cases
+                Request Access
               </Link>
             </div>
           </div>
@@ -166,48 +96,32 @@ export default function Home() {
               How It Works
             </p>
             <h2 className="mx-auto max-w-5xl text-4xl font-black leading-none tracking-[-0.06em] sm:text-6xl lg:text-7xl">
-              Give us the context.
+              Connect the context.
               <span className="block text-white/42">
-                See what breaks next.
+                Run the decision.
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-white/52 sm:text-2xl sm:leading-10">
-              Afterflow turns operating context into ranked failure paths,
-              evidence, and mitigations.
+              Afterflow structures messy context into a world model, then runs
+              stakeholder agents against it.
             </p>
-            <div className="flex justify-center">
+            <div className="flex flex-col justify-center gap-3 sm:flex-row">
               <Link
                 href={howItWorksPath}
                 className="inline-flex min-h-12 items-center justify-center bg-white px-5 text-[11px] font-medium uppercase tracking-[0.24em] text-black transition-opacity hover:opacity-80"
               >
                 See how Afterflow works
               </Link>
+              <Link
+                href={useCasesPath}
+                className="inline-flex min-h-12 items-center justify-center border border-white/16 px-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white/70 transition-colors hover:border-white/28 hover:text-white"
+              >
+                See all use cases
+              </Link>
             </div>
-            <p className="mx-auto max-w-3xl text-sm leading-7 text-white/40 sm:text-base">
-              Outputs include dependency graphs, launch checkpoints, evidence
-              strength, and path comparison.
-            </p>
           </div>
 
-          <div data-nosnippet>
-            <ProofPanelShell />
-          </div>
-
-          <div className="mt-12 grid gap-px overflow-hidden border border-white/10 bg-white/10 lg:grid-cols-3">
-            {steps.map((step) => (
-              <div key={step.number} className="bg-black p-8 lg:p-10">
-                <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/35">
-                  Step {step.number}
-                </p>
-                <h3 className="mt-6 max-w-xs text-3xl font-medium leading-tight tracking-[-0.04em] text-white">
-                  {step.title}
-                </h3>
-                <p className="mt-5 max-w-sm text-base leading-7 text-white/50">
-                  {step.body}
-                </p>
-              </div>
-            ))}
-          </div>
+          <ProductFlowMock />
         </section>
 
         <section
@@ -216,14 +130,14 @@ export default function Home() {
         >
           <div className="space-y-5">
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
-              Enterprise Access
+              Request Access
             </p>
             <h2 className="max-w-3xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
               Start with one real decision.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/56 sm:text-2xl sm:leading-10">
-              Founding partners get early access, secure deployment, and
-              direct input on the product.
+              Bring a decision owner, an outcome to understand, and the context
+              you already trust.
             </p>
           </div>
 
@@ -232,7 +146,7 @@ export default function Home() {
               href={requestAccessPath}
               className="flex min-h-16 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
             >
-              Request Enterprise Access
+              Request Access
             </Link>
           </div>
         </section>

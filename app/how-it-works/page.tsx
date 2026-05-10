@@ -13,7 +13,7 @@ import { SiteHeader } from "../components/site-header";
 
 const pageTitle = "How Afterflow Works | Operational Decision Simulation";
 const pageDescription =
-  "How Afterflow works: connect context, build the world model, dry-run the rollout, and compare failure paths before launch.";
+  "How Afterflow works: structure context, run stakeholder agents, and compare evidence-backed decision paths.";
 
 type IconKind =
   | "ingest"
@@ -440,7 +440,7 @@ const reportOutputs = [
     tint: "border-[#5b4217] bg-[#231a10] text-[#f0d8b4]",
   },
   {
-    label: "Narratives",
+    label: "Evidence",
     kind: "narrative" as const,
     tint: "border-[#27415c] bg-[#111b28] text-[#a7c8f3]",
   },
@@ -458,7 +458,7 @@ const reportOutputs = [
 
 const runtimeCapabilities = [
   {
-    label: "Role-based runs",
+    label: "Stakeholder agents",
     icon: "cohort" as const,
     tint: "border-[#5b4217] bg-[#231a10] text-[#f0d8b4]",
   },
@@ -468,7 +468,7 @@ const runtimeCapabilities = [
     tint: "border-[#27415c] bg-[#111b28] text-[#a7c8f3]",
   },
   {
-    label: "Stochastic runs",
+    label: "Branching runs",
     icon: "stochastic" as const,
     tint: "border-[#3c3051] bg-[#17111f] text-[#d6baf0]",
   },
@@ -482,23 +482,23 @@ const runtimeCapabilities = [
 const pipeline = [
   {
     icon: "ingest" as const,
-    title: "Ingest the context",
-    body: "Pull in the documents, systems, stakeholders, and constraints that define the decision.",
+    title: "Structure the context",
+    body: "Parse, chunk, and embed messy docs, systems, and web context, then extract stakeholders, systems, constraints, and signals.",
   },
   {
     icon: "world" as const,
-    title: "Build the environment",
-    body: "Afterflow turns that context into a working model of your company, its stakeholders, and the pressures around it.",
+    title: "Build the world model",
+    body: "The world model organizes the graph, resolves dependencies, and keeps the scenario state for the run.",
   },
   {
     icon: "swarm" as const,
-    title: "Dry-run the rollout",
-    body: "The simulation advances time and shows how failure paths move through the operating environment.",
+    title: "Create stakeholder agents",
+    body: "Each stakeholder or cohort becomes an agent with a role, context, incentives, and constraints from the world model.",
   },
   {
     icon: "orchestrate" as const,
-    title: "Compare the paths",
-    body: "Test options side by side and see where outcomes diverge before you commit.",
+    title: "Run and compare paths",
+    body: "The world model orchestrates branches, then attaches evidence, assumptions, predicted actions, and mitigations to each ranked path.",
   },
 ];
 
@@ -507,19 +507,19 @@ const deployment = [
     icon: "private" as const,
     tint: "border-[#2a3c33] bg-[#121916] text-[#9ed3ae]",
     title: "Private instance",
-    body: "For teams that need stronger isolation, the system can be scoped into a customer-controlled environment instead of a shared deployment.",
-  },
-  {
-    icon: "region" as const,
-    tint: "border-[#253545] bg-[#101821] text-[#8fb9ea]",
-    title: "In-region processing",
-    body: "Model processing and storage can be constrained to the regions an enterprise requires for residency or regulatory reasons.",
+    body: "Afterflow can run in a dedicated customer-controlled environment, aligned to the customer's cloud, network, and access controls.",
   },
   {
     icon: "boundary" as const,
+    tint: "border-[#253545] bg-[#101821] text-[#8fb9ea]",
+    title: "Approved data boundary",
+    body: "Only approved sources are in scope. Connectors are read-only, and access is limited to the scenario being analysed.",
+  },
+  {
+    icon: "region" as const,
     tint: "border-[#3a2d1e] bg-[#18120d] text-[#e5c483]",
-    title: "Customer-owned context",
-    body: "Connected systems, embeddings, and simulation state can remain inside the enterprise boundary when the environment calls for it.",
+    title: "Regional and audit controls",
+    body: "Model providers, regions, source queries, runs, users, and configuration changes can be constrained and logged.",
   },
 ];
 
@@ -581,15 +581,15 @@ export default function HowItWorksPage() {
               </h1>
               <p className="max-w-[36.5rem] text-lg leading-8 text-black/60 sm:text-2xl sm:leading-10">
                 Most teams still make high-stakes decisions with docs,
-                meetings, and instinct. Afterflow lets them dry-run the rollout
-                first.
+                meetings, and instinct. Afterflow lets them dry-run the decision
+                first, with evidence and assumptions attached.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
                   href={requestAccessPath}
                   className="inline-flex min-h-14 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
                 >
-                  Request Enterprise Access
+                  Request Access
                 </Link>
                 <Link
                   href={useCasesPath}
@@ -641,8 +641,8 @@ export default function HowItWorksPage() {
                       World model
                     </h3>
                     <p className="mt-3 text-sm leading-6 text-white/56">
-                      Individual actors, constraints, state, and timelines
-                      grounded in company context.
+                      Messy context becomes embeddings, relationships, state,
+                      and stakeholder agents grounded in connected evidence.
                     </p>
 
                     <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
@@ -701,13 +701,13 @@ export default function HowItWorksPage() {
           </p>
           <div className="space-y-6">
             <h2 className="max-w-5xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-              Not one agent.
-              <span className="block text-black/56">A whole environment.</span>
+              Structured context.
+              <span className="block text-black/56">Stakeholder agents.</span>
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-              Afterflow does not model one responder. It models the surrounding
-              environment at the level of roles, dependencies, state, and
-              second-order effects.
+              Afterflow first turns messy context into structured state. The
+              world model then coordinates stakeholder agents so the decision
+              plays out across roles, dependencies, and second-order effects.
             </p>
           </div>
         </section>
@@ -736,12 +736,12 @@ export default function HowItWorksPage() {
               Deployment Options
             </p>
             <h2 className="max-w-5xl text-4xl font-black leading-none tracking-[-0.06em] sm:text-6xl">
-              Private deployments
+              Private by design
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-white/56 sm:text-2xl sm:leading-10">
-              For teams with tighter security or residency requirements,
-              Afterflow can be structured around a customer-controlled setup
-              rather than a shared environment.
+              Start read-only. Afterflow can run inside a customer-controlled
+              environment, use only approved data sources, and keep processing
+              inside agreed network and regional boundaries.
             </p>
           </div>
 
@@ -767,15 +767,14 @@ export default function HowItWorksPage() {
         <section className="grid gap-8 py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end lg:gap-16 lg:py-20">
           <div className="space-y-5">
             <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
-              Enterprise Access
+              Request Access
             </p>
             <h2 className="max-w-3xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
               Start with one real decision.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/56 sm:text-2xl sm:leading-10">
-              Founding partners help shape simulation models, stakeholder
-              agents, real-world scenarios, and integrations. They get early
-              access, secure deployment options, and direct product influence.
+              Bring a decision owner, a time window, and the context needed to
+              judge whether the output is useful.
             </p>
           </div>
 
@@ -784,7 +783,7 @@ export default function HowItWorksPage() {
               href={requestAccessPath}
               className="flex min-h-16 items-center justify-center bg-black px-6 text-sm font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88"
             >
-              Request Enterprise Access
+              Request Access
             </Link>
           </div>
         </section>

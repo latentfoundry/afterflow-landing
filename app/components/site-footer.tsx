@@ -3,6 +3,7 @@ import {
   companyLegalName,
   howItWorksPath,
   privacyPath,
+  requestAccessPath,
   siteRootPath,
   termsPath,
   useCasesPath,
@@ -41,6 +42,12 @@ export function SiteFooter() {
             className="text-black/52 transition-colors hover:text-black"
           >
             Use Cases
+          </Link>
+          <Link
+            href={requestAccessPath}
+            className="text-black/52 transition-colors hover:text-black"
+          >
+            Contact
           </Link>
           <Link
             href={privacyPath}

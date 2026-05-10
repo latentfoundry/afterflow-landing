@@ -41,3 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 afterflow_website_context.md
+afterflow_landing_page_context.md
+privacy_plan.md
+scope_scenario.md
