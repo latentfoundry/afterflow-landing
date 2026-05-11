@@ -32,11 +32,11 @@ export default function Home() {
               Afterflow
             </p>
             <h1 className="mx-auto max-w-4xl text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-5xl">
-              Dry-run critical decisions before you make them.
+              Decision simulation software for critical operational changes.
             </h1>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-black/58 sm:text-xl">
-              Build the world model, rank likely paths, and see what to
-              change.
+              Connect context, build a stakeholder graph, and run agent
+              simulations that rank likely paths with evidence.
             </p>
             <div className="mx-auto w-full max-w-[30rem]">
               <div className="hero-decision-pill rounded-full border px-5 py-3 text-black/60 shadow-[0_16px_34px_rgba(0,0,0,0.06)]">
@@ -98,12 +98,12 @@ export default function Home() {
             <h2 className="mx-auto max-w-5xl text-4xl font-black leading-none tracking-[-0.06em] sm:text-6xl lg:text-7xl">
               Connect the context.
               <span className="block text-white/42">
-                Run the decision.
+                Run agent simulations.
               </span>
             </h2>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-white/52 sm:text-2xl sm:leading-10">
               Afterflow structures messy context into a world model, then runs
-              stakeholder agents against it.
+              stakeholder agents against it to rank evidence-backed paths.
             </p>
             <div className="flex flex-col justify-center gap-3 sm:flex-row">
               <Link
@@ -133,11 +133,11 @@ export default function Home() {
               Request Access
             </p>
             <h2 className="max-w-3xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-              Start with one real decision.
+              Start with one scenario.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/56 sm:text-2xl sm:leading-10">
-              Bring a decision owner, an outcome to understand, and the context
-              you already trust.
+              Choose the decision, outcome, owner, and time window. Afterflow
+              structures the context and runs the simulation.
             </p>
           </div>
 

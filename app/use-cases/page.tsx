@@ -11,9 +11,9 @@ import {
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
 
-const pageTitle = "Use Cases | Dry-run Operational Decisions";
+const pageTitle = "Use Cases | Critical Operational Changes";
 const pageDescription =
-  "Use cases for dry-running bounded operational decisions, from platform transitions and policy rollouts to supply posture and incident response.";
+  "Scenario classes for Afterflow decision simulations, from platform transitions and policy rollouts to supply posture and incident response.";
 
 type UseCaseIconKind =
   | "incident"
@@ -216,11 +216,11 @@ export default function UseCasesPage() {
               Use Cases
             </p>
             <h1 className="text-[clamp(3rem,7vw,6.2rem)] font-black leading-[0.92] tracking-[-0.08em]">
-              Scenarios teams dry-run with Afterflow.
+              Scenario classes Afterflow can simulate.
             </h1>
             <p className="max-w-4xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
               Start with a real decision, a clear owner, and a time window.
-              Afterflow helps teams compare plausible paths before they commit.
+              Afterflow compares ranked paths before teams commit.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
@@ -296,7 +296,7 @@ export default function UseCasesPage() {
               Request Access
             </p>
             <h2 className="max-w-3xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-              Start with one real decision.
+              Start with one scenario.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/56 sm:text-2xl sm:leading-10">
               Choose one decision where context is scattered and the downside

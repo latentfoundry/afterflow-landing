@@ -53,8 +53,7 @@ export default function RequestAccessPage() {
                 Reach out.
               </h1>
               <p className="max-w-3xl text-lg leading-8 text-black/58 sm:text-2xl sm:leading-10">
-                Bring one real decision. We will help you decide whether
-                Afterflow fits.
+                Share one scenario and the outcome you want to test.
               </p>
             </div>
 

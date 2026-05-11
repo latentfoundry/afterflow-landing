@@ -13,7 +13,7 @@ import { SiteHeader } from "../components/site-header";
 
 const pageTitle = "How Afterflow Works | Operational Decision Simulation";
 const pageDescription =
-  "How Afterflow works: structure context, run stakeholder agents, and compare evidence-backed decision paths.";
+  "How Afterflow works: structure context, run stakeholder-agent simulations, and compare evidence-backed decision paths.";
 
 type IconKind =
   | "ingest"
@@ -574,15 +574,15 @@ export default function HowItWorksPage() {
                 How Afterflow Works
               </p>
               <h1 className="max-w-5xl text-[clamp(3rem,6.6vw,6.35rem)] font-black leading-[0.92] tracking-[-0.08em] text-black">
-                Give us the situation.
+                Structure the context.
                 <span className="block text-black/52">
-                  Run the decision.
+                  Run scenario simulations.
                 </span>
               </h1>
               <p className="max-w-[36.5rem] text-lg leading-8 text-black/60 sm:text-2xl sm:leading-10">
                 Most teams still make high-stakes decisions with docs,
-                meetings, and instinct. Afterflow lets them dry-run the decision
-                first, with evidence and assumptions attached.
+                meetings, and instinct. Afterflow turns the same context into
+                ranked simulation paths with evidence attached.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
@@ -770,11 +770,11 @@ export default function HowItWorksPage() {
               Request Access
             </p>
             <h2 className="max-w-3xl text-3xl font-black leading-none tracking-[-0.05em] sm:text-5xl">
-              Start with one real decision.
+              Start with one scenario.
             </h2>
             <p className="max-w-3xl text-lg leading-8 text-black/56 sm:text-2xl sm:leading-10">
-              Bring a decision owner, a time window, and the context needed to
-              judge whether the output is useful.
+              Choose the decision, outcome, owner, and time window. Afterflow
+              structures the context and runs the simulation.
             </p>
           </div>
 

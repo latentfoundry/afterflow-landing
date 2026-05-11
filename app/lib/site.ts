@@ -47,9 +47,9 @@ export const logoUrl = new URL(
 export const siteName = "Afterflow";
 export const companyLegalName = "Afterflow Inc.";
 export const siteTitle =
-  "Afterflow | Dry-run critical decisions before you make them";
+  "Afterflow | Decision simulation software for critical operational changes";
 export const siteDescription =
-  "Afterflow structures context into a world model, runs stakeholder agents, and ranks decision paths before execution.";
+  "Afterflow turns company context into a world model, runs stakeholder-agent simulations, and ranks likely paths with evidence.";
 
 export const contactEmail =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "mika@afterflow.dev";
