@@ -178,11 +178,11 @@ export function RequestAccessFormInner({ source }: { source: string }) {
 
   if (submitted) {
     return (
-      <div className="min-h-[18rem] bg-[#ece8e1] p-8 sm:p-10 lg:p-12">
-        <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/38">
+      <div className="min-h-[22rem] bg-white p-8 sm:p-10 lg:p-12">
+        <p className="text-xs font-medium uppercase text-black/38">
           Sent
         </p>
-        <p className="mt-20 text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-4xl">
+        <p className="mt-24 text-4xl font-light leading-tight text-black sm:text-5xl">
           Thank you.
         </p>
         <p className="mt-4 max-w-md text-base leading-7 text-black/56">
@@ -195,18 +195,18 @@ export function RequestAccessFormInner({ source }: { source: string }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="min-h-[18rem] bg-[#ece8e1] p-8 sm:p-10 lg:p-12"
+      className="min-h-[22rem] bg-[#f7f6f2] p-8 sm:p-10 lg:p-12"
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/38">
+        <p className="text-xs font-medium uppercase text-black/38">
           Send a note
         </p>
-        <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-black/32">
+        <p className="text-xs font-medium uppercase text-black/32">
           Step {stepIndex + 1} of {stepOrder.length}
         </p>
       </div>
 
-      <p className="mt-10 text-3xl font-medium leading-tight tracking-[-0.05em] text-black sm:text-4xl">
+      <p className="mt-12 text-4xl font-light leading-tight text-black sm:text-5xl">
         {currentContent.prompt}
       </p>
 
@@ -215,7 +215,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
           <div className="space-y-3">
             <label
               htmlFor="contact-email"
-              className="text-[11px] font-medium uppercase tracking-[0.28em] text-black/34"
+              className="text-xs font-medium uppercase text-black/34"
             >
               {currentContent.label}
             </label>
@@ -231,7 +231,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
               onChange={(event) => updateField("email", event.target.value)}
               placeholder="jane@acme.com"
               aria-invalid={showEmailError && !isEmailValid}
-              className="min-h-14 w-full border border-black/18 bg-[#f8f5ee] px-4 text-lg tracking-[-0.03em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+              className="min-h-14 w-full rounded-[1rem] border border-black/12 bg-white px-4 text-lg text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
             />
             {showEmailError && !isEmailValid ? (
               <p className="text-sm leading-6 text-rose-700">
@@ -246,7 +246,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
             <div className="space-y-3">
               <label
                 htmlFor="contact-name"
-                className="text-[11px] font-medium uppercase tracking-[0.28em] text-black/34"
+                className="text-xs font-medium uppercase text-black/34"
               >
                 Name
               </label>
@@ -260,13 +260,13 @@ export function RequestAccessFormInner({ source }: { source: string }) {
                 name="name"
                 onChange={(event) => updateField("firstName", event.target.value)}
                 placeholder="Jane Doe"
-                className="min-h-14 w-full border border-black/18 bg-[#f8f5ee] px-4 text-lg tracking-[-0.03em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+                className="min-h-14 w-full rounded-[1rem] border border-black/12 bg-white px-4 text-lg text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
               />
             </div>
             <div className="space-y-3">
               <label
                 htmlFor="contact-company"
-                className="text-[11px] font-medium uppercase tracking-[0.28em] text-black/34"
+                className="text-xs font-medium uppercase text-black/34"
               >
                 Company
               </label>
@@ -279,7 +279,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
                 name="company"
                 onChange={(event) => updateField("company", event.target.value)}
                 placeholder="ACME Corporation"
-                className="min-h-14 w-full border border-black/18 bg-[#f8f5ee] px-4 text-lg tracking-[-0.03em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+                className="min-h-14 w-full rounded-[1rem] border border-black/12 bg-white px-4 text-lg text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
               />
             </div>
           </div>
@@ -289,7 +289,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
           <div className="space-y-3">
             <label
               htmlFor="contact-note"
-              className="text-[11px] font-medium uppercase tracking-[0.28em] text-black/34"
+              className="text-xs font-medium uppercase text-black/34"
             >
               Additional information
             </label>
@@ -302,7 +302,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
               name="note"
               onChange={(event) => updateField("note", event.target.value)}
               placeholder="Share the decision, context, or timing."
-              className="w-full resize-none border border-black/18 bg-[#f8f5ee] px-4 py-4 text-base leading-7 tracking-[-0.02em] text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
+              className="w-full resize-none rounded-[1rem] border border-black/12 bg-white px-4 py-4 text-base leading-7 text-black outline-none transition-colors placeholder:text-black/24 focus:border-black"
             />
           </div>
         ) : null}
@@ -325,7 +325,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
           <button
             type="button"
             onClick={goBack}
-            className="inline-flex min-h-12 items-center justify-center border border-black/12 px-5 text-xs font-medium uppercase tracking-[0.18em] text-black/70 transition-colors hover:border-black/24 hover:text-black"
+            className="inline-flex min-h-12 items-center justify-center rounded-full border border-black/12 px-5 text-sm font-medium text-black/70 transition-colors hover:border-black/24 hover:text-black"
           >
             Back
           </button>
@@ -333,7 +333,7 @@ export function RequestAccessFormInner({ source }: { source: string }) {
         <button
           type="submit"
           disabled={isPending}
-          className="inline-flex min-h-12 min-w-32 items-center justify-center bg-black px-5 text-xs font-medium uppercase tracking-[0.18em] text-white transition-colors hover:bg-black/88 disabled:cursor-wait disabled:bg-black/72"
+          className="inline-flex min-h-12 min-w-32 items-center justify-center rounded-full bg-black px-5 text-sm font-medium text-white transition-colors hover:bg-black/88 disabled:cursor-wait disabled:bg-black/72"
         >
           {isPending ? "Sending" : isLastStep ? "Send" : "Continue"}
         </button>

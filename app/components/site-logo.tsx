@@ -21,9 +21,10 @@ export function SiteLogo() {
     <Link
       href={siteRootPath}
       aria-label="Go to Afterflow home"
-      className="inline-flex items-center text-black transition-opacity hover:opacity-78"
+      className="inline-flex items-center gap-2.5 text-black transition-opacity hover:opacity-78"
     >
-      <AfterflowMark className="h-11 w-auto" />
+      <AfterflowMark className="h-7 w-auto" />
+      <span className="text-2xl font-medium leading-none">Afterflow</span>
     </Link>
   );
 }

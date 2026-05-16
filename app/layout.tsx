@@ -7,7 +7,6 @@ import {
   siteDescription,
   siteName,
   siteOrigin,
-  siteRootPath,
   siteRootUrl,
   siteTitle,
 } from "./lib/site";
@@ -17,16 +16,6 @@ const strawford = localFont({
   variable: "--font-strawford",
   display: "swap",
   src: [
-    {
-      path: "../public/fonts/strawford-thin-webfont.woff2",
-      weight: "100",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/strawford-extralight-webfont.woff2",
-      weight: "200",
-      style: "normal",
-    },
     {
       path: "../public/fonts/strawford-light-webfont.ttf",
       weight: "300",
@@ -57,17 +46,19 @@ const strawford = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
+  applicationName: siteName,
   title: siteTitle,
   description: siteDescription,
-  alternates: {
-    canonical: siteRootPath,
-  },
+  category: "technology",
+  creator: siteName,
+  publisher: siteName,
   openGraph: {
     title: siteTitle,
     description: siteDescription,
     type: "website",
     siteName,
-    url: siteRootPath,
+    locale: "en_US",
+    url: siteRootUrl,
     images: [
       {
         url: ogImagePath,
@@ -87,10 +78,6 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: `${basePath}/favicon/favicon.ico`,
-        sizes: "any",
-      },
-      {
         url: `${basePath}/favicon/favicon-96x96.png`,
         type: "image/png",
         sizes: "96x96",
@@ -104,6 +91,10 @@ export const metadata: Metadata = {
         url: `${basePath}/favicon/favicon-16x16.png`,
         type: "image/png",
         sizes: "16x16",
+      },
+      {
+        url: `${basePath}/favicon/favicon.ico`,
+        sizes: "any",
       },
     ],
     shortcut: `${basePath}/favicon/favicon.ico`,
@@ -130,31 +121,41 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const structuredData = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: siteName,
-      url: siteRootUrl,
-      logo: logoUrl,
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      name: siteName,
-      url: siteRootUrl,
-      description: siteDescription,
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      name: siteName,
-      url: siteRootUrl,
-      applicationCategory: "BusinessApplication",
-      operatingSystem: "Web",
-      description: siteDescription,
-    },
-  ];
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@id": `${siteRootUrl}#organization`,
+        "@type": "Organization",
+        name: siteName,
+        url: siteRootUrl,
+        logo: logoUrl,
+      },
+      {
+        "@id": `${siteRootUrl}#website`,
+        "@type": "WebSite",
+        name: siteName,
+        url: siteRootUrl,
+        description: siteDescription,
+        inLanguage: "en",
+        publisher: {
+          "@id": `${siteRootUrl}#organization`,
+        },
+      },
+      {
+        "@id": `${siteRootUrl}#software`,
+        "@type": "SoftwareApplication",
+        name: siteName,
+        url: siteRootUrl,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web",
+        description: siteDescription,
+        publisher: {
+          "@id": `${siteRootUrl}#organization`,
+        },
+      },
+    ],
+  };
 
   return (
     <html lang="en">

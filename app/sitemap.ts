@@ -1,27 +1,23 @@
 import type { MetadataRoute } from "next";
-import { howItWorksUrl, siteRootUrl, useCasesUrl } from "./lib/site";
+import { requestAccessUrl, siteRootUrl } from "./lib/site";
 
 export const dynamic = "force-static";
+
+const lastModified = new Date("2026-05-17T00:00:00.000Z");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: siteRootUrl,
-      lastModified: new Date(),
+      lastModified,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: howItWorksUrl,
-      lastModified: new Date(),
+      url: requestAccessUrl,
+      lastModified,
       changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: useCasesUrl,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
+      priority: 0.7,
     },
   ];
 }

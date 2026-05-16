@@ -6,62 +6,73 @@ import {
   requestAccessPath,
   siteRootPath,
   termsPath,
-  useCasesPath,
 } from "../lib/site";
 import { AfterflowMark } from "./site-logo";
 
+const primaryLinks = [
+  { href: siteRootPath, label: "Home" },
+  { href: howItWorksPath, label: "How It Works" },
+  { href: requestAccessPath, label: "Contact" },
+];
+
+const legalLinks = [
+  { href: termsPath, label: "Terms" },
+  { href: privacyPath, label: "Privacy" },
+];
+
 export function SiteFooter() {
   return (
-    <footer className="border-t border-black/10 py-6">
-      <div className="flex flex-col gap-4 text-[11px] font-medium uppercase tracking-[0.24em] text-black/38 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-3">
-          <Link
-            href={siteRootPath}
-            aria-label="Go to Afterflow home"
-            className="inline-flex items-center text-black/52 transition-opacity hover:opacity-78"
-          >
-            <AfterflowMark className="h-4 w-auto" />
-          </Link>
-          <p>&copy; 2026 {companyLegalName}</p>
+    <footer className="bg-black px-5 py-20 text-white sm:px-8 lg:px-12 lg:py-28">
+      <div className="mx-auto max-w-[94rem]">
+        <div className="grid gap-16 lg:grid-cols-[minmax(0,1fr)_34rem]">
+          <div>
+            <Link
+              href={siteRootPath}
+              aria-label="Go to Afterflow home"
+              className="inline-flex items-center gap-3 text-white transition-opacity hover:opacity-78"
+            >
+              <AfterflowMark className="h-10 w-auto" />
+              <span className="text-4xl font-medium leading-none">
+                Afterflow
+              </span>
+            </Link>
+
+            <p className="mt-12 max-w-lg text-3xl font-light leading-tight text-white">
+              Dry-run critical decisions before you make them.
+            </p>
+          </div>
+
+          <nav aria-label="Footer navigation">
+            <div className="flex flex-col gap-5 text-xl sm:flex-row sm:items-center sm:gap-10 lg:justify-end">
+              {primaryLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="block text-white/82 transition-colors hover:text-white"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </nav>
         </div>
-        <nav className="flex flex-wrap items-center gap-4">
-          <Link
-            href={siteRootPath}
-            className="text-black/52 transition-colors hover:text-black"
-          >
-            Home
-          </Link>
-          <Link
-            href={howItWorksPath}
-            className="text-black/52 transition-colors hover:text-black"
-          >
-            How It Works
-          </Link>
-          <Link
-            href={useCasesPath}
-            className="text-black/52 transition-colors hover:text-black"
-          >
-            Use Cases
-          </Link>
-          <Link
-            href={requestAccessPath}
-            className="text-black/52 transition-colors hover:text-black"
-          >
-            Contact
-          </Link>
-          <Link
-            href={privacyPath}
-            className="text-black/52 transition-colors hover:text-black"
-          >
-            Privacy
-          </Link>
-          <Link
-            href={termsPath}
-            className="text-black/52 transition-colors hover:text-black"
-          >
-            Terms
-          </Link>
-        </nav>
+
+        <div className="mt-24 border-t border-white/18 pt-8">
+          <div className="flex flex-col gap-6 text-sm text-white/48 lg:flex-row lg:items-center lg:justify-between">
+            <p>&copy; 2026 {companyLegalName}. All rights reserved.</p>
+            <div className="flex gap-6">
+              {legalLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="transition-colors hover:text-white"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   );

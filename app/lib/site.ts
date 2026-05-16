@@ -1,35 +1,20 @@
-const repository = process.env.GITHUB_REPOSITORY ?? "";
-const [repositoryOwner = "", repositoryName = ""] = repository.split("/");
-const isUserOrOrgSite = repositoryName.endsWith(".github.io");
-
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const configuredSiteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.trim() || process.env.SITE_URL?.trim() || "";
 
-const defaultSiteOrigin =
-  repositoryOwner && repositoryName
-    ? isUserOrOrgSite
-      ? `https://${repositoryName}`
-      : `https://${repositoryOwner}.github.io`
-    : "http://localhost:3000";
+const productionSiteOrigin = "https://afterflow.dev";
 
 export const siteOrigin = configuredSiteUrl
   ? new URL(configuredSiteUrl).origin
-  : defaultSiteOrigin;
+  : productionSiteOrigin;
 
 export const siteRootPath = basePath ? `${basePath}/` : "/";
 export const siteRootUrl = new URL(siteRootPath, siteOrigin).toString();
-export const howItWorksPath = basePath
-  ? `${basePath}/how-it-works/`
-  : "/how-it-works/";
-export const howItWorksUrl = new URL(howItWorksPath, siteOrigin).toString();
-export const useCasesPath = basePath ? `${basePath}/use-cases/` : "/use-cases/";
-export const useCasesUrl = new URL(useCasesPath, siteOrigin).toString();
+export const howItWorksPath = `${siteRootPath}#workflow`;
+export const useCasesPath = `${siteRootPath}#use-cases`;
 export const privacyPath = basePath ? `${basePath}/privacy/` : "/privacy/";
-export const privacyUrl = new URL(privacyPath, siteOrigin).toString();
 export const termsPath = basePath ? `${basePath}/terms/` : "/terms/";
-export const termsUrl = new URL(termsPath, siteOrigin).toString();
 export const requestAccessPath = basePath
   ? `${basePath}/request-access/`
   : "/request-access/";
@@ -38,7 +23,6 @@ export const requestAccessUrl = new URL(
   siteOrigin,
 ).toString();
 export const ogImagePath = basePath ? `${basePath}/og.png` : "/og.png";
-export const ogImageUrl = new URL(ogImagePath, siteOrigin).toString();
 export const logoUrl = new URL(
   basePath ? `${basePath}/logo.png` : "/logo.png",
   siteOrigin,
@@ -47,12 +31,11 @@ export const logoUrl = new URL(
 export const siteName = "Afterflow";
 export const companyLegalName = "Afterflow Inc.";
 export const siteTitle =
-  "Afterflow | Decision simulation software for critical operational changes";
+  "Afterflow | Simulate critical enterprise decisions";
 export const siteDescription =
-  "Afterflow turns company context into a world model, runs stakeholder-agent simulations, and ranks likely paths with evidence.";
+  "Afterflow helps teams pressure-test critical enterprise decisions with approved context, stakeholder simulations, and evidence-backed paths.";
 
 export const contactEmail =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "mika@afterflow.dev";
-export const contactEmailHref = `mailto:${contactEmail}`;
 export const bookingUrl =
   process.env.NEXT_PUBLIC_BOOKING_URL?.trim() || "https://cal.com/mika";

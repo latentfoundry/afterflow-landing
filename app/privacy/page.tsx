@@ -4,7 +4,6 @@ import {
   contactEmail,
   ogImagePath,
   privacyPath,
-  siteName,
 } from "../lib/site";
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
@@ -155,41 +154,43 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-[#e7e3dd] text-black">
-      <main className="mx-auto max-w-7xl px-6 pb-16 pt-6 sm:px-10 lg:px-14">
-        <SiteHeader currentPath={privacyPath} />
+    <div className="min-h-screen bg-white text-black">
+      <main>
+        <div className="px-5 pt-5 sm:px-8 lg:px-12">
+          <SiteHeader currentPath={privacyPath} />
+        </div>
 
-        <section className="border-b border-black/10 py-16 lg:py-20">
-          <div className="max-w-4xl space-y-6">
-            <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
-              {siteName}
+        <section className="px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+          <div className="mx-auto max-w-[94rem] border-b border-black/10 pb-16">
+            <p className="text-xs font-medium uppercase text-black/44">
+              Legal
             </p>
-            <h1 className="text-4xl font-black leading-none tracking-[-0.06em] sm:text-6xl">
+            <h1 className="mt-5 max-w-5xl text-[clamp(3.5rem,7.8vw,8rem)] font-light leading-[0.96]">
               Privacy Policy
             </h1>
-            <p className="text-lg leading-8 text-black/60 sm:text-2xl sm:leading-10">
+            <p className="mt-6 max-w-4xl text-xl leading-8 text-black/58">
               This policy applies to the Afterflow Services operated by{" "}
               {companyLegalName}, including the website, request forms, demos,
               evaluations, communications, and related products and services.
             </p>
-            <p className="text-sm uppercase tracking-[0.24em] text-black/38">
+            <p className="mt-8 text-sm text-black/38">
               Last updated {lastUpdated}
             </p>
           </div>
         </section>
 
-        <section className="py-16 lg:py-20">
-          <div className="grid gap-10 lg:grid-cols-[190px_minmax(0,1fr)] lg:gap-16">
-            <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black/45">
+        <section className="px-5 pb-20 sm:px-8 lg:px-12 lg:pb-28">
+          <div className="mx-auto grid max-w-[94rem] gap-10 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-20">
+            <p className="text-xs font-medium uppercase text-black/44">
               Details
             </p>
             <div className="space-y-12">
               {sections.map((section) => (
                 <section key={section.title} className="space-y-4">
-                  <h2 className="text-2xl font-black leading-none tracking-[-0.04em] sm:text-4xl">
+                  <h2 className="text-3xl font-light leading-tight sm:text-4xl">
                     {section.title}
                   </h2>
-                  <div className="space-y-4 text-base leading-8 text-black/62 sm:text-lg">
+                  <div className="max-w-5xl space-y-4 text-base leading-8 text-black/62 sm:text-lg">
                     {section.body.map((paragraph) => (
                       <p key={paragraph}>{paragraph}</p>
                     ))}
@@ -200,9 +201,9 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
         </section>
-
-        <SiteFooter />
       </main>
+
+      <SiteFooter />
     </div>
   );
 }
