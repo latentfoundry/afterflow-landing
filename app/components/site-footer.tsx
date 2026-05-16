@@ -59,7 +59,7 @@ export function SiteFooter() {
 
         <div className="mt-24 border-t border-white/18 pt-8">
           <div className="flex flex-col gap-6 text-sm text-white/48 lg:flex-row lg:items-center lg:justify-between">
-            <p>&copy; 2026 {companyLegalName}. All rights reserved.</p>
+            <p>&copy; 2026 {companyLegalName} All rights reserved.</p>
             <div className="flex gap-6">
               {legalLinks.map((item) => (
                 <Link
