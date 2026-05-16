@@ -40,19 +40,21 @@ body {
 }
 
 .hero-reveal-frame {
-  top: clamp(5rem, 8svh, 6.1rem);
-  right: clamp(0.85rem, 2.2vw, 2rem);
-  bottom: clamp(0.85rem, 2.2vw, 2rem);
-  left: clamp(0.85rem, 2.2vw, 2rem);
-  border-radius: 1.9rem;
-  animation: hero-auto-reveal 3200ms cubic-bezier(0.58, 0, 0.24, 1) 1100ms
-    both;
+  inset: 0;
+  border-radius: 0;
+}
+
+.hero-intro--started .hero-reveal-frame {
+  animation: hero-auto-reveal 3200ms cubic-bezier(0.58, 0, 0.24, 1) 520ms both;
 }
 
 .hero-reveal-copy {
   opacity: 0;
   transform: translateY(0.8rem);
-  animation: hero-copy-in 850ms ease 3900ms both;
+}
+
+.hero-intro--started .hero-reveal-copy {
+  animation: hero-copy-in 850ms ease 3650ms both;
 }
 
 .hero-video-overlay {
@@ -63,16 +65,24 @@ body {
     rgba(0, 0, 0, 0.18) 48%,
     rgba(0, 0, 0, 0.46)
   );
-  animation: hero-overlay-in 1200ms ease 3900ms both;
+}
+
+.hero-intro--started .hero-video-overlay {
+  animation: hero-overlay-in 1200ms ease 3650ms both;
 }
 
 .hero-video-media {
-  opacity: 1;
+  opacity: 0;
   filter: blur(0) saturate(1);
   transform: scale(1);
   transition:
+    opacity 180ms ease,
     filter 1400ms ease,
     transform 1400ms ease;
+}
+
+.hero-video-media--visible {
+  opacity: 1;
 }
 
 .hero-video-media--blurred {
@@ -242,11 +252,19 @@ body {
     animation: none !important;
   }
 
-  .hero-video-overlay {
+  .hero-intro--started .hero-reveal-frame {
+    top: clamp(5rem, 8svh, 6.1rem);
+    right: clamp(0.85rem, 2.2vw, 2rem);
+    bottom: clamp(0.85rem, 2.2vw, 2rem);
+    left: clamp(0.85rem, 2.2vw, 2rem);
+    border-radius: 1.9rem;
+  }
+
+  .hero-intro--started .hero-video-overlay {
     opacity: 1;
   }
 
-  .hero-reveal-copy {
+  .hero-intro--started .hero-reveal-copy {
     opacity: 1;
     transform: translateY(-0.9rem);
   }

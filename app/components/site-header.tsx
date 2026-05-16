@@ -78,11 +78,37 @@ export function SiteHeader({
       return () => cancelAnimationFrame(frame);
     }
 
-    const timer = window.setTimeout(() => {
-      setIntroComplete(true);
-    }, 3950);
+    let revealTimer: number | undefined;
 
-    return () => window.clearTimeout(timer);
+    const showAfterHeroReveal = () => {
+      if (revealTimer) {
+        window.clearTimeout(revealTimer);
+      }
+
+      revealTimer = window.setTimeout(() => {
+        setIntroComplete(true);
+      }, 3950);
+    };
+
+    window.addEventListener(
+      "afterflow:hero-intro-started",
+      showAfterHeroReveal,
+      { once: true },
+    );
+
+    const fallbackTimer = window.setTimeout(showAfterHeroReveal, 2600);
+
+    return () => {
+      window.removeEventListener(
+        "afterflow:hero-intro-started",
+        showAfterHeroReveal,
+      );
+      window.clearTimeout(fallbackTimer);
+
+      if (revealTimer) {
+        window.clearTimeout(revealTimer);
+      }
+    };
   }, [fixed]);
 
   useEffect(() => {
