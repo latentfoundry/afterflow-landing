@@ -5,6 +5,11 @@ export const heroVideo = {
   poster: "",
 };
 
+// Set enabled to true to restore the full-screen hero intro reveal.
+export const heroIntroReveal = {
+  enabled: false,
+};
+
 export const workflowSteps = [
   {
     eyebrow: "01",

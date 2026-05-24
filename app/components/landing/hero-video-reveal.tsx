@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AfterflowMark } from "../site-logo";
-import { heroVideo } from "../../lib/landing-content";
+import { heroIntroReveal, heroVideo } from "../../lib/landing-content";
 import { requestAccessPath } from "../../lib/site";
 
 const heroVideoBlurDelayMs = 3000;
@@ -27,10 +27,12 @@ function getMediaClassName({
 
 function HeroVideoSlot({
   blurred,
+  deferPlaybackUntilReady,
   visible,
   onReady,
 }: {
   blurred: boolean;
+  deferPlaybackUntilReady: boolean;
   visible: boolean;
   onReady: () => void;
 }) {
@@ -41,7 +43,7 @@ function HeroVideoSlot({
   useEffect(() => {
     const video = videoRef.current;
 
-    if (!video || !heroVideo.src) {
+    if (!video || !heroVideo.src || !deferPlaybackUntilReady) {
       return;
     }
 
@@ -103,7 +105,7 @@ function HeroVideoSlot({
       video.removeEventListener("canplaythrough", revealFromStart);
       video.removeEventListener("error", handleError);
     };
-  }, [onReady]);
+  }, [deferPlaybackUntilReady, onReady]);
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-black">
@@ -114,6 +116,7 @@ function HeroVideoSlot({
           className={`h-full w-full object-cover ${mediaClassName}`}
           src={heroVideo.src}
           poster={heroVideo.poster || undefined}
+          autoPlay={!deferPlaybackUntilReady}
           muted
           loop
           playsInline
@@ -131,15 +134,20 @@ function HeroVideoSlot({
 }
 
 export function HeroVideoReveal() {
-  const [videoReady, setVideoReady] = useState(!heroVideo.src);
-  const [introStarted, setIntroStarted] = useState(!heroVideo.src);
-  const [videoBlurred, setVideoBlurred] = useState(false);
+  const revealEnabled = heroIntroReveal.enabled;
+  const [videoReady, setVideoReady] = useState(
+    !revealEnabled || !heroVideo.src,
+  );
+  const [introStarted, setIntroStarted] = useState(
+    !revealEnabled || !heroVideo.src,
+  );
+  const [videoBlurred, setVideoBlurred] = useState(!revealEnabled);
   const handleVideoReady = useCallback(() => {
     setVideoReady(true);
   }, []);
 
   useEffect(() => {
-    if (!videoReady) {
+    if (!revealEnabled || !videoReady) {
       return;
     }
 
@@ -148,10 +156,10 @@ export function HeroVideoReveal() {
     }, heroRevealStartDelayMs);
 
     return () => window.clearTimeout(startTimer);
-  }, [videoReady]);
+  }, [revealEnabled, videoReady]);
 
   useEffect(() => {
-    if (!introStarted) {
+    if (!revealEnabled || !introStarted) {
       return;
     }
 
@@ -162,18 +170,23 @@ export function HeroVideoReveal() {
     }, heroVideoBlurDelayMs);
 
     return () => window.clearTimeout(blurTimer);
-  }, [introStarted]);
+  }, [introStarted, revealEnabled]);
+
+  const heroIntroClassName = [
+    "hero-intro relative min-h-svh bg-white text-white",
+    revealEnabled && introStarted ? "hero-intro--started" : "",
+    !revealEnabled ? "hero-intro--static" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <section
-      className={`hero-intro relative min-h-svh bg-white text-white ${
-        introStarted ? "hero-intro--started" : ""
-      }`}
-    >
+    <section className={heroIntroClassName}>
       <div className="sticky top-0 h-svh overflow-hidden bg-[#f7f6f2]">
         <div className="hero-reveal-frame absolute overflow-hidden bg-black shadow-[0_30px_90px_rgba(0,0,0,0.22)]">
           <HeroVideoSlot
             blurred={videoBlurred}
+            deferPlaybackUntilReady={revealEnabled}
             visible={videoReady}
             onReady={handleVideoReady}
           />

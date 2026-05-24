@@ -8,6 +8,7 @@ import {
   siteRootPath,
   useCasesPath,
 } from "../lib/site";
+import { heroIntroReveal } from "../lib/landing-content";
 import { SiteLogo } from "./site-logo";
 
 function MenuIcon({ open }: { open: boolean }) {
@@ -62,10 +63,12 @@ export function SiteHeader({
   fixed?: boolean;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [introComplete, setIntroComplete] = useState(!fixed);
+  const [introComplete, setIntroComplete] = useState(
+    !fixed || !heroIntroReveal.enabled,
+  );
 
   useEffect(() => {
-    if (!fixed) {
+    if (!fixed || !heroIntroReveal.enabled) {
       return;
     }
 
