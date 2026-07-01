@@ -38,4 +38,5 @@ export const siteDescription =
 export const contactEmail =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "mika@afterflow.dev";
 export const bookingUrl =
-  process.env.NEXT_PUBLIC_BOOKING_URL?.trim() || "https://cal.com/mika";
+  process.env.NEXT_PUBLIC_BOOKING_URL?.trim() ||
+  "https://calendly.com/mika-afterflow/afterflow-intro";
