@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { ContextGraphIllustration } from "./context-graph-illustration";
 import { PathComparisonIllustration } from "./path-comparison-illustration";
 import { WorldModelGraphIllustration } from "./world-model-graph-illustration";
 import { workflowSteps } from "../../lib/landing-content";
-import { requestAccessPath } from "../../lib/site";
+import { requestAccessHref } from "../../lib/site";
 
 type WorkflowStep = (typeof workflowSteps)[number];
 
@@ -79,12 +78,14 @@ export function WorkflowShowcase() {
             stakeholder agents against it to rank evidence-backed paths.
           </p>
           <div className="mt-8 flex justify-center">
-            <Link
-              href={requestAccessPath}
+            <a
+              href={requestAccessHref}
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex min-h-14 items-center justify-center rounded-full bg-black px-7 text-sm font-medium text-white transition hover:bg-black/82"
             >
               Request access
-            </Link>
+            </a>
           </div>
         </div>
 

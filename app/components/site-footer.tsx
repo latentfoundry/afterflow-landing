@@ -3,7 +3,7 @@ import {
   companyLegalName,
   howItWorksPath,
   privacyPath,
-  requestAccessPath,
+  requestAccessHref,
   siteRootPath,
   termsPath,
 } from "../lib/site";
@@ -12,7 +12,7 @@ import { AfterflowMark } from "./site-logo";
 const primaryLinks = [
   { href: siteRootPath, label: "Home" },
   { href: howItWorksPath, label: "How It Works" },
-  { href: requestAccessPath, label: "Contact" },
+  { external: true, href: requestAccessHref, label: "Contact" },
 ];
 
 const legalLinks = [
@@ -45,13 +45,25 @@ export function SiteFooter() {
           <nav aria-label="Footer navigation">
             <div className="flex flex-col gap-5 text-xl sm:flex-row sm:items-center sm:gap-10 lg:justify-end">
               {primaryLinks.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="block text-white/82 transition-colors hover:text-white"
-                >
-                  {item.label}
-                </Link>
+                "external" in item ? (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block text-white/82 transition-colors hover:text-white"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="block text-white/82 transition-colors hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                )
               ))}
             </div>
           </nav>

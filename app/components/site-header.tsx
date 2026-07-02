@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   howItWorksPath,
-  requestAccessPath,
+  requestAccessHref,
   siteRootPath,
   useCasesPath,
 } from "../lib/site";
@@ -42,6 +42,12 @@ const menuItems = [
   { href: howItWorksPath, label: "How it works" },
   { href: useCasesPath, label: "Use cases" },
 ];
+
+const requestAccessItem = {
+  external: true,
+  href: requestAccessHref,
+  label: "Request Access",
+} as const;
 
 function isCurrentPath(currentPath: string | undefined, href: string) {
   if (!currentPath) {
@@ -175,16 +181,14 @@ export function SiteHeader({
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link
-              href={requestAccessPath}
-              className={`hidden min-h-12 items-center rounded-full px-6 text-base font-medium transition-colors sm:inline-flex ${
-                isCurrentPath(currentPath, requestAccessPath)
-                  ? "bg-black text-white"
-                  : "bg-black text-white hover:bg-black/82"
-              }`}
+            <a
+              href={requestAccessHref}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden min-h-12 items-center rounded-full bg-black px-6 text-base font-medium text-white transition-colors hover:bg-black/82 sm:inline-flex"
             >
               Request Access
-            </Link>
+            </a>
 
             <button
               type="button"
@@ -236,20 +240,38 @@ export function SiteHeader({
             </div>
 
             <nav aria-label="Site menu" className="mt-4 space-y-2">
-              {[...menuItems, { href: requestAccessPath, label: "Request Access" }].map(
+              {[...menuItems, requestAccessItem].map(
                 (item) => {
-                  const active = isCurrentPath(currentPath, item.href);
+                  const active =
+                    !("external" in item) &&
+                    isCurrentPath(currentPath, item.href);
+                  const className = `flex min-h-16 items-center rounded-[1.1rem] px-5 py-4 text-lg transition-colors ${
+                    active
+                      ? "bg-black text-white"
+                      : "bg-[#f7f6f2] text-black/72 hover:bg-black/5 hover:text-black"
+                  }`;
+
+                  if ("external" in item) {
+                    return (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={() => setIsMenuOpen(false)}
+                        className={className}
+                      >
+                        {item.label}
+                      </a>
+                    );
+                  }
 
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`flex min-h-16 items-center rounded-[1.1rem] px-5 py-4 text-lg transition-colors ${
-                        active
-                          ? "bg-black text-white"
-                          : "bg-[#f7f6f2] text-black/72 hover:bg-black/5 hover:text-black"
-                      }`}
+                      className={className}
                     >
                       {item.label}
                     </Link>

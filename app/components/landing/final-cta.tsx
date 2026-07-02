@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { requestAccessPath } from "../../lib/site";
+import { requestAccessHref } from "../../lib/site";
 
 export function FinalCta() {
   return (
@@ -14,12 +13,14 @@ export function FinalCta() {
             structures the context and runs the simulation.
           </p>
           <div className="mt-9 flex justify-center">
-            <Link
-              href={requestAccessPath}
+            <a
+              href={requestAccessHref}
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex min-h-14 items-center justify-center rounded-full bg-black px-8 text-sm font-medium text-white transition hover:bg-black/82"
             >
               Request Access
-            </Link>
+            </a>
           </div>
         </div>
       </div>

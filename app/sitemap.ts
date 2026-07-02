@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { requestAccessUrl, siteRootUrl } from "./lib/site";
+import { siteRootUrl } from "./lib/site";
 
 export const dynamic = "force-static";
 
@@ -12,12 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "weekly",
       priority: 1,
-    },
-    {
-      url: requestAccessUrl,
-      lastModified,
-      changeFrequency: "monthly",
-      priority: 0.7,
     },
   ];
 }

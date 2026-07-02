@@ -1,10 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { AfterflowMark } from "../site-logo";
 import { heroIntroReveal, heroVideo } from "../../lib/landing-content";
-import { requestAccessPath } from "../../lib/site";
+import { requestAccessHref } from "../../lib/site";
 
 const heroVideoBlurDelayMs = 3000;
 const heroRevealStartDelayMs = 320;
@@ -206,12 +205,14 @@ export function HeroVideoReveal() {
               simulations that rank likely paths with evidence.
             </p>
             <div className="mt-8 flex w-full max-w-xl flex-col justify-center gap-3 sm:flex-row">
-              <Link
-                href={requestAccessPath}
+              <a
+                href={requestAccessHref}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex min-h-14 items-center justify-center rounded-full bg-white px-7 text-sm font-medium text-black transition hover:bg-white/88"
               >
                 Request Access
-              </Link>
+              </a>
               <a
                 href="#workflow"
                 className="inline-flex min-h-14 items-center justify-center rounded-full border border-white/20 bg-white/10 px-7 text-sm font-medium text-white backdrop-blur-md transition hover:bg-white/16"

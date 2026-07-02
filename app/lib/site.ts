@@ -15,13 +15,6 @@ export const howItWorksPath = `${siteRootPath}#workflow`;
 export const useCasesPath = `${siteRootPath}#use-cases`;
 export const privacyPath = basePath ? `${basePath}/privacy/` : "/privacy/";
 export const termsPath = basePath ? `${basePath}/terms/` : "/terms/";
-export const requestAccessPath = basePath
-  ? `${basePath}/request-access/`
-  : "/request-access/";
-export const requestAccessUrl = new URL(
-  requestAccessPath,
-  siteOrigin,
-).toString();
 export const ogImagePath = basePath ? `${basePath}/og.png` : "/og.png";
 export const logoUrl = new URL(
   basePath ? `${basePath}/logo.png` : "/logo.png",
@@ -40,3 +33,4 @@ export const contactEmail =
 export const bookingUrl =
   process.env.NEXT_PUBLIC_BOOKING_URL?.trim() ||
   "https://calendly.com/mika-afterflow/afterflow-intro";
+export const requestAccessHref = bookingUrl;
