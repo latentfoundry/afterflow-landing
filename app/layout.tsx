@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import {
   basePath,
+  companyLegalName,
+  contactEmail,
   logoUrl,
   ogImagePath,
   siteDescription,
@@ -10,6 +12,10 @@ import {
   siteRootUrl,
   siteTitle,
 } from "./lib/site";
+import {
+  bingSiteVerification,
+  googleSiteVerification,
+} from "./lib/seo";
 import "./globals.css";
 
 const strawford = localFont({
@@ -31,18 +37,23 @@ const strawford = localFont({
       weight: "500",
       style: "normal",
     },
-    {
-      path: "../public/fonts/strawford-bold-webfont.woff2",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/strawford-black-webfont.woff2",
-      weight: "900",
-      style: "normal",
-    },
   ],
 });
+
+const socialImageAlt =
+  "Afterflow simulates how enterprise AI rollouts affect an organisation before launch.";
+
+const verification =
+  googleSiteVerification || bingSiteVerification
+    ? {
+        ...(googleSiteVerification
+          ? { google: googleSiteVerification }
+          : {}),
+        ...(bingSiteVerification
+          ? { other: { "msvalidate.01": bingSiteVerification } }
+          : {}),
+      }
+    : undefined;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
@@ -52,6 +63,8 @@ export const metadata: Metadata = {
   category: "technology",
   creator: siteName,
   publisher: siteName,
+  authors: [{ name: siteName, url: siteRootUrl }],
+  verification,
   openGraph: {
     title: siteTitle,
     description: siteDescription,
@@ -65,7 +78,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         type: "image/png",
-        alt: "Afterflow",
+        alt: socialImageAlt,
       },
     ],
   },
@@ -73,7 +86,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: [ogImagePath],
+    images: [{ url: ogImagePath, alt: socialImageAlt }],
   },
   icons: {
     icon: [
@@ -121,37 +134,81 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationId = `${siteRootUrl}#organization`;
+  const websiteId = `${siteRootUrl}#website`;
+  const webpageId = `${siteRootUrl}#webpage`;
+  const serviceId = `${siteRootUrl}#service`;
+  const logoId = `${siteRootUrl}#logo`;
+  const socialImageUrl = new URL(ogImagePath, siteOrigin).toString();
+
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@id": `${siteRootUrl}#organization`,
-        "@type": "Organization",
-        name: siteName,
-        url: siteRootUrl,
-        logo: logoUrl,
+        "@id": logoId,
+        "@type": "ImageObject",
+        url: logoUrl,
+        contentUrl: logoUrl,
+        width: 500,
+        height: 500,
+        caption: siteName,
       },
       {
-        "@id": `${siteRootUrl}#website`,
+        "@id": organizationId,
+        "@type": "Organization",
+        name: siteName,
+        legalName: companyLegalName,
+        url: siteRootUrl,
+        description: siteDescription,
+        email: contactEmail,
+        logo: {
+          "@id": logoId,
+        },
+      },
+      {
+        "@id": websiteId,
         "@type": "WebSite",
         name: siteName,
         url: siteRootUrl,
         description: siteDescription,
         inLanguage: "en",
         publisher: {
-          "@id": `${siteRootUrl}#organization`,
+          "@id": organizationId,
         },
       },
       {
-        "@id": `${siteRootUrl}#software`,
-        "@type": "SoftwareApplication",
-        name: siteName,
+        "@id": serviceId,
+        "@type": "Service",
+        name: "Afterflow enterprise AI rollout simulation",
+        serviceType: "Enterprise AI rollout simulation",
         url: siteRootUrl,
-        applicationCategory: "BusinessApplication",
-        operatingSystem: "Web",
         description: siteDescription,
-        publisher: {
-          "@id": `${siteRootUrl}#organization`,
+        provider: {
+          "@id": organizationId,
+        },
+      },
+      {
+        "@id": webpageId,
+        "@type": "WebPage",
+        name: siteTitle,
+        url: siteRootUrl,
+        description: siteDescription,
+        inLanguage: "en",
+        isPartOf: {
+          "@id": websiteId,
+        },
+        about: {
+          "@id": serviceId,
+        },
+        mainEntity: {
+          "@id": serviceId,
+        },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: socialImageUrl,
+          width: 1200,
+          height: 630,
+          caption: socialImageAlt,
         },
       },
     ],
@@ -163,7 +220,9 @@ export default function RootLayout({
         {children}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+          }}
         />
       </body>
     </html>

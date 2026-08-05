@@ -22,7 +22,7 @@ const loopSteps = [
   {
     number: "05",
     title: "Learn",
-    body: "Observed outcomes sharpen what Afterflow surfaces next.",
+    body: "Observed outcomes update the model of how your operation works.",
   },
 ];
 
@@ -90,8 +90,8 @@ export function ProductLoop() {
             />
           </svg>
           <p className="metric mt-5 flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.12em] text-[#5146b8] md:absolute md:top-full md:right-[64%] md:mt-14 md:translate-x-1/2">
-            <span className="md:hidden">↳</span> Outcomes sharpen the next
-            surface pass
+            <span className="md:hidden">↳</span> Each rollout sharpens the brain
+            and surfaces the next improvement
           </p>
         </div>
       </div>

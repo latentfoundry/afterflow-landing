@@ -489,6 +489,8 @@ function HeroProduct() {
                 key={stage.label}
                 type="button"
                 role="tab"
+                id={`hero-stage-tab-${index}`}
+                aria-controls="hero-stage-panel"
                 aria-selected={activeStage === index}
                 onClick={() => setActiveStage(index)}
                 className={`hero-stage-tab relative min-w-0 border-t px-1 py-3 text-left sm:px-2 ${
@@ -504,7 +506,13 @@ function HeroProduct() {
             ))}
           </div>
         </div>
-        <div key={activeStage} role="tabpanel" className="hero-stage-panel">
+        <div
+          key={activeStage}
+          id="hero-stage-panel"
+          role="tabpanel"
+          aria-labelledby={`hero-stage-tab-${activeStage}`}
+          className="hero-stage-panel"
+        >
           <ActiveScreen />
         </div>
       </div>
@@ -526,8 +534,9 @@ export function Hero() {
           </h1>
           <p className="mt-7 max-w-[39rem] text-lg leading-7 text-black/58 sm:text-xl sm:leading-8">
             Afterflow finds high-value AI opportunities in your operation and
-            simulates how each change affects your teams, systems, and customers.
-            Before you commit. Then it learns from what actually happens.
+            uses a digital twin to simulate how each change affects your teams,
+            systems, and customers. Before you commit. Then it learns from what
+            actually happens.
           </p>
           <div className="mt-8">
             <a href={bookingUrl} target="_blank" rel="noreferrer" className="primary-button group">

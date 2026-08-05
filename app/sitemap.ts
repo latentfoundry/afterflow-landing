@@ -1,15 +1,14 @@
 import type { MetadataRoute } from "next";
 import { siteRootUrl } from "./lib/site";
+import { siteLastModified } from "./lib/seo";
 
 export const dynamic = "force-static";
-
-const lastModified = new Date("2026-08-05T00:00:00.000Z");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: siteRootUrl,
-      lastModified,
+      lastModified: new Date(siteLastModified),
       changeFrequency: "weekly",
       priority: 1,
     },

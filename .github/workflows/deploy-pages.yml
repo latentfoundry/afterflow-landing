@@ -25,9 +25,14 @@ jobs:
       NEXT_TELEMETRY_DISABLED: "1"
       NEXT_PUBLIC_SITE_URL: "https://afterflow.dev"
       SITE_URL: "https://afterflow.dev"
+      GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+      BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set content revision date
+        run: echo "SITE_LAST_MODIFIED=$(git log -1 --format=%cI)" >> "$GITHUB_ENV"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4

@@ -23,9 +23,10 @@ export const logoUrl = new URL(
 
 export const siteName = "Afterflow";
 export const companyLegalName = "Afterflow Inc.";
-export const siteTitle = "Afterflow | Your organisation, simulated";
+export const siteTitle =
+  "Afterflow | Simulate Enterprise AI Rollouts Before Launch";
 export const siteDescription =
-  "Afterflow finds high-value AI opportunities and simulates how each change affects teams, systems, and customers before launch.";
+  "Afterflow uses a digital twin of your organisation to surface AI opportunities, simulate rollout effects before launch, and learn from production outcomes.";
 
 export const contactEmail =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "mika@afterflow.dev";

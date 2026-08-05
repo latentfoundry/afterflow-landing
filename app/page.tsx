@@ -31,9 +31,15 @@ export default function Home() {
   return (
     <div id="top" className="min-h-screen bg-[#f4f0e8] text-[#11110f]">
       <LandingMotion />
+      <a
+        href="#main-content"
+        className="sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:not-sr-only focus:rounded-full focus:bg-white focus:px-4 focus:py-3 focus:text-sm focus:font-medium focus:text-black"
+      >
+        Skip to main content
+      </a>
       <SiteHeader currentPath={siteRootPath} fixed />
 
-      <main>
+      <main id="main-content">
         <Hero />
         <ProblemSection />
         <ProductLoop />

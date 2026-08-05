@@ -1,7 +1,7 @@
 {
   "name": "Afterflow",
   "short_name": "Afterflow",
-  "description": "Build a digital twin of your operation and simulate an AI rollout before launch.",
+  "description": "Surface high-value AI opportunities and simulate enterprise rollouts before launch.",
   "start_url": "../",
   "scope": "../",
   "display": "standalone",
