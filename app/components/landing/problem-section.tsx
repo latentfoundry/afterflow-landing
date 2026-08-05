@@ -20,14 +20,20 @@ export function ProblemSection() {
           className="border-t border-white/18 pt-7 lg:border-t-0 lg:border-l lg:pl-12 lg:pt-0"
         >
           <p className="metric text-[clamp(5rem,10vw,9rem)] font-medium leading-none tracking-[-0.06em] text-[#8f82ff]">
-            39%
+            7%
           </p>
           <p className="mt-5 max-w-sm text-lg leading-7 text-white/72">
-            of organisations report enterprise-level EBIT impact from AI.
+            of surveyed organisations report scaling AI across the enterprise,
+            despite almost 90% experimenting.
           </p>
-          <p className="metric mt-4 text-[0.64rem] uppercase tracking-[0.12em] text-white/36">
-            McKinsey · State of AI 2025
-          </p>
+          <a
+            href="https://www.mckinsey.com/capabilities/operations/our-insights/putting-ai-to-work-the-operational-excellence-imperative"
+            target="_blank"
+            rel="noreferrer"
+            className="metric mt-4 inline-block text-[0.64rem] uppercase tracking-[0.12em] text-white/36 transition-colors hover:text-white/64"
+          >
+            McKinsey · Operational Excellence Survey 2026
+          </a>
         </div>
       </div>
     </section>
