@@ -44,7 +44,7 @@ const sections = [
     title: "How We Use Information",
     body: [
       "We use information to provide, operate, maintain, secure, troubleshoot, and improve the Services; respond to requests; communicate with you; authenticate users; prevent fraud or abuse; and comply with legal obligations.",
-      "We use Customer Content to ingest and structure operational context, build world models and stakeholder maps, run decision simulations, compare branches, and generate evidence-backed outputs such as ranked paths, assumptions, leading indicators, predicted actions, and mitigations.",
+      "We use Customer Content to ingest and structure operational context, build world models and stakeholder maps, run decision simulations, compare branches, and generate evidence-backed outputs such as ranked paths, assumptions, leading indicators, simulated actions, and mitigations.",
       "We may use usage data, diagnostics, feedback, aggregated information, or de-identified information to understand and improve the Services, subject to applicable law and any written agreement with a customer.",
     ],
   },

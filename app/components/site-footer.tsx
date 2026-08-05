@@ -1,88 +1,69 @@
 import Link from "next/link";
 import {
+  bookingUrl,
   companyLegalName,
   howItWorksPath,
   privacyPath,
-  requestAccessHref,
+  proofPath,
   siteRootPath,
   termsPath,
 } from "../lib/site";
 import { AfterflowMark } from "./site-logo";
 
 const primaryLinks = [
-  { href: siteRootPath, label: "Home" },
-  { href: howItWorksPath, label: "How It Works" },
-  { external: true, href: requestAccessHref, label: "Contact" },
-];
-
-const legalLinks = [
-  { href: termsPath, label: "Terms" },
-  { href: privacyPath, label: "Privacy" },
+  { href: howItWorksPath, label: "How it works" },
+  { href: proofPath, label: "Proof" },
 ];
 
 export function SiteFooter() {
   return (
-    <footer className="bg-black px-5 py-20 text-white sm:px-8 lg:px-12 lg:py-28">
+    <footer className="border-t border-white/12 bg-[#11110f] px-5 py-14 text-white sm:px-8 lg:px-12 lg:py-16">
       <div className="mx-auto max-w-[94rem]">
-        <div className="grid gap-16 lg:grid-cols-[minmax(0,1fr)_34rem]">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <Link
               href={siteRootPath}
               aria-label="Go to Afterflow home"
-              className="inline-flex items-center gap-3 text-white transition-opacity hover:opacity-78"
+              className="inline-flex items-center gap-2.5 text-white transition-opacity hover:opacity-78"
             >
-              <AfterflowMark className="h-10 w-auto" />
-              <span className="text-4xl font-medium leading-none">
-                Afterflow
-              </span>
+              <AfterflowMark className="h-7 w-auto" />
+              <span className="text-2xl font-medium leading-none">Afterflow</span>
             </Link>
-
-            <p className="mt-12 max-w-lg text-3xl font-light leading-tight text-white">
-              Dry-run critical decisions before you make them.
+            <p className="mt-5 max-w-[32rem] text-lg font-light leading-7 text-white/54">
+              Afterflow. Your organisation, simulated.
             </p>
           </div>
 
-          <nav aria-label="Footer navigation">
-            <div className="flex flex-col gap-5 text-xl sm:flex-row sm:items-center sm:gap-10 lg:justify-end">
-              {primaryLinks.map((item) => (
-                "external" in item ? (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block text-white/82 transition-colors hover:text-white"
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className="block text-white/82 transition-colors hover:text-white"
-                  >
-                    {item.label}
-                  </Link>
-                )
-              ))}
-            </div>
-          </nav>
+          <div className="flex flex-wrap gap-x-7 gap-y-4 text-sm text-white/56 lg:justify-end">
+            {primaryLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="transition-colors hover:text-white"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-white"
+            >
+              Book a working session
+            </a>
+          </div>
         </div>
 
-        <div className="mt-24 border-t border-white/18 pt-8">
-          <div className="flex flex-col gap-6 text-sm text-white/48 lg:flex-row lg:items-center lg:justify-between">
-            <p>&copy; 2026 {companyLegalName} All rights reserved.</p>
-            <div className="flex gap-6">
-              {legalLinks.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="transition-colors hover:text-white"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
+        <div className="mt-14 flex flex-col gap-5 border-t border-white/12 pt-6 text-xs text-white/32 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; 2026 {companyLegalName} All rights reserved.</p>
+          <div className="flex gap-6">
+            <Link href={privacyPath} className="transition-colors hover:text-white">
+              Privacy
+            </Link>
+            <Link href={termsPath} className="transition-colors hover:text-white">
+              Terms
+            </Link>
           </div>
         </div>
       </div>

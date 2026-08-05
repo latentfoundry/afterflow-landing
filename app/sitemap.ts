@@ -3,7 +3,7 @@ import { siteRootUrl } from "./lib/site";
 
 export const dynamic = "force-static";
 
-const lastModified = new Date("2026-05-17T00:00:00.000Z");
+const lastModified = new Date("2026-08-05T00:00:00.000Z");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

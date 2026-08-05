@@ -26,7 +26,7 @@ const sections = [
   {
     title: "Service Description",
     body: [
-      "Afterflow helps organizations dry-run high-stakes operational decisions before execution. The Services may help structure approved context, build world models and stakeholder maps, run decision simulations, compare branches, and surface evidence-backed paths, assumptions, leading indicators, predicted actions, and mitigations.",
+      "Afterflow helps organizations dry-run high-stakes operational decisions before execution. The Services may help structure approved context, build world models and stakeholder maps, run decision simulations, compare branches, and surface evidence-backed paths, assumptions, leading indicators, simulated actions, and mitigations.",
       "The Services are intended for bounded scenarios with a real decision, a decision owner, an approved data boundary, and a defined time window. They are not intended for generic research tasks or decisions with no meaningful operational consequence.",
       "Specific features, integrations, deployment models, processing locations, and security controls may vary by plan, configuration, customer environment, and any separate written agreement.",
     ],
@@ -66,7 +66,7 @@ const sections = [
   {
     title: "Outputs and AI-Assisted Features",
     body: [
-      "The Services may generate simulations, analyses, reports, summaries, ranked paths, evidence, assumptions, leading indicators, predicted actions, mitigations, comparisons, or other outputs. These outputs may be incomplete, probabilistic, inaccurate, outdated, or unsuitable for a particular use case.",
+      "The Services may generate simulations, analyses, reports, summaries, ranked paths, evidence, assumptions, leading indicators, simulated actions, mitigations, comparisons, or other outputs. These outputs may be incomplete, probabilistic, inaccurate, outdated, or unsuitable for a particular use case.",
       "Outputs depend on Customer Content, scenario scope, assumptions, connected sources, configuration, model behavior, and other inputs. If Customer Content is incomplete, outdated, contradictory, or inaccurate, outputs may reflect those limitations.",
       "The Services do not predict the exact future and do not guarantee that a decision, rollout, migration, policy change, incident response, or other operational action will succeed or comply with law.",
       "You are responsible for reviewing outputs and exercising independent judgment before acting on them. The Services are not a substitute for legal, regulatory, financial, security, compliance, operational, or other professional advice.",

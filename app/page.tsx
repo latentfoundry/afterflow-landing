@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { DecisionQuestions } from "./components/landing/decision-questions";
 import { FinalCta } from "./components/landing/final-cta";
-import { HeroVideoReveal } from "./components/landing/hero-video-reveal";
-import { UseCaseStudy } from "./components/landing/use-case-study";
-import { WorkflowShowcase } from "./components/landing/workflow-showcase";
-import { SmoothScroll } from "./components/smooth-scroll";
+import { Hero } from "./components/landing/hero";
+import { LandingMotion } from "./components/landing/landing-motion";
+import { ProblemSection } from "./components/landing/problem-section";
+import { ProductLoop } from "./components/landing/product-loop";
+import { ProofSection } from "./components/landing/proof-section";
+import { PropagationSection } from "./components/landing/propagation-section";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
 import { siteRootPath } from "./lib/site";
@@ -28,15 +29,16 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div id="top" className="min-h-screen bg-white text-black">
-      <SmoothScroll />
+    <div id="top" className="min-h-screen bg-[#f4f0e8] text-[#11110f]">
+      <LandingMotion />
       <SiteHeader currentPath={siteRootPath} fixed />
 
       <main>
-        <HeroVideoReveal />
-        <DecisionQuestions />
-        <WorkflowShowcase />
-        <UseCaseStudy />
+        <Hero />
+        <ProblemSection />
+        <ProductLoop />
+        <PropagationSection />
+        <ProofSection />
         <FinalCta />
       </main>
 
