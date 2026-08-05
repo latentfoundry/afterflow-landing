@@ -26,4 +26,6 @@ The static output is generated in `out/`.
 
 Push to `main` to trigger the GitHub Pages deployment workflow in `.github/workflows/deploy-pages.yml`.
 
-The site is configured to publish to GitHub Pages under the repository path when deployed from Actions.
+The workflow builds the static export and publishes it to the custom domain at [afterflow.dev](https://afterflow.dev).
+
+Optional Google and Bing verification tokens can be added as repository variables named `GOOGLE_SITE_VERIFICATION` and `BING_SITE_VERIFICATION`.
