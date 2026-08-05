@@ -1,12 +1,12 @@
 {
   "name": "Afterflow",
   "short_name": "Afterflow",
-  "description": "Pressure-test critical enterprise decisions with approved context, stakeholder simulations, and evidence-backed paths.",
+  "description": "Build a digital twin of your operation and simulate an AI rollout before launch.",
   "start_url": "../",
   "scope": "../",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#f4f0e8",
+  "theme_color": "#f4f0e8",
   "icons": [
     {
       "src": "./android-icon-192x192.png",

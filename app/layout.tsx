@@ -112,7 +112,7 @@ export const metadata: Metadata = {
   manifest: `${basePath}/favicon/manifest.json`,
   other: {
     "msapplication-config": `${basePath}/favicon/browserconfig.xml`,
-    "msapplication-TileColor": "#ffffff",
+    "msapplication-TileColor": "#f4f0e8",
   },
 };
 
