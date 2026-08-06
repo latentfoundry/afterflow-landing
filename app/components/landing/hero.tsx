@@ -46,18 +46,21 @@ const opportunities = [
     value: "$0.5m–$0.9m",
     effort: "Ready to review",
     evidence: "Strong evidence",
+    source: "Afterflow",
   },
   {
     title: "Payment exception routing",
     value: "$760k",
     effort: "Low effort",
     evidence: "High evidence",
+    source: "Your team",
   },
   {
     title: "Merchant onboarding review",
     value: "$420k",
     effort: "Medium effort",
     evidence: "Medium evidence",
+    source: "Afterflow",
   },
 ];
 
@@ -166,7 +169,7 @@ function OpportunityScreen() {
   return (
     <div className="grid min-h-[25rem] md:grid-cols-[minmax(0,1fr)_14rem]">
       <div className="bg-[#fafafa] p-4 sm:p-6">
-        <div className="flex items-end justify-between gap-4 border-b border-black/8 pb-4">
+        <div className="flex items-end justify-between gap-4 border-b border-black/8 pb-3">
           <div>
             <p className="metric text-[0.5rem] uppercase tracking-[0.1em] text-black/34">
               Opportunity queue
@@ -174,14 +177,22 @@ function OpportunityScreen() {
             <h3 className="mt-2 text-lg font-medium text-black/76">Where to focus next</h3>
           </div>
           <p className="metric text-[0.5rem] uppercase tracking-[0.1em] text-black/30">
-            12 surfaced
+            12 ranked
           </p>
+        </div>
+        <div className="mt-3 flex items-center justify-between gap-3 rounded-lg border border-black/8 bg-white px-3 py-2.5">
+          <p className="truncate text-xs text-black/38">
+            Initiative already on your roadmap?
+          </p>
+          <span className="metric shrink-0 rounded-md bg-[#11110f] px-2.5 py-1.5 text-[0.48rem] uppercase tracking-[0.07em] text-white/82">
+            + Add initiative
+          </span>
         </div>
         <ol className="divide-y divide-black/8">
           {opportunities.map((opportunity, index) => (
             <li
               key={opportunity.title}
-              className={`hero-opportunity-row grid grid-cols-[1fr_auto] gap-4 px-2 py-5 sm:grid-cols-[2rem_1fr_auto] sm:px-3 ${
+              className={`hero-opportunity-row grid grid-cols-[1fr_auto] gap-3 px-2 py-3.5 sm:grid-cols-[2rem_1fr_auto] sm:px-3 ${
                 index === 0 ? "is-selected" : ""
               }`}
             >
@@ -192,9 +203,20 @@ function OpportunityScreen() {
                 <p className="text-sm font-medium text-black/72 sm:text-base">
                   {opportunity.title}
                 </p>
-                <p className="metric mt-2 text-[0.48rem] uppercase tracking-[0.08em] text-black/34">
-                  {opportunity.effort} · {opportunity.evidence}
-                </p>
+                <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                  <span
+                    className={`metric rounded-full px-2 py-1 text-[0.43rem] uppercase tracking-[0.07em] ${
+                      opportunity.source === "Your team"
+                        ? "bg-[#e8e4ff] text-[#5146b8]"
+                        : "bg-black/[0.045] text-black/38"
+                    }`}
+                  >
+                    {opportunity.source}
+                  </span>
+                  <span className="metric text-[0.44rem] uppercase tracking-[0.07em] text-black/30">
+                    {opportunity.effort} · {opportunity.evidence}
+                  </span>
+                </div>
               </div>
               <p className="metric text-right text-sm text-black/68 sm:text-base">
                 {opportunity.value}
@@ -527,16 +549,19 @@ export function Hero() {
   return (
     <section className="hero-canvas relative flex min-h-svh items-center overflow-hidden px-5 pb-12 pt-28 sm:px-8 sm:pb-16 sm:pt-32 lg:px-12 lg:pb-10 lg:pt-28">
       <div className="hero-grid" aria-hidden="true" />
-      <div className="relative mx-auto grid w-full min-w-0 max-w-[100rem] grid-cols-[minmax(0,1fr)] items-center gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-10 xl:gap-16">
-        <div className="hero-copy w-full min-w-0 max-w-[40rem]">
-          <h1 className="max-w-[10ch] text-[clamp(3.25rem,5.8vw,7rem)] font-light leading-[0.93] tracking-[-0.045em] text-[#11110f]">
+      <div className="relative mx-auto grid w-full min-w-0 max-w-[100rem] grid-cols-[minmax(0,1fr)] items-center gap-12 lg:grid-cols-[0.84fr_1.16fr] lg:gap-10 xl:gap-16">
+        <div className="hero-copy w-full min-w-0 max-w-[42rem]">
+          <p className="metric text-[0.65rem] uppercase tracking-[0.14em] text-black/42">
             Your organisation, simulated.
+          </p>
+          <h1 className="mt-5 max-w-[42rem] text-[clamp(2.85rem,3.7vw,4.25rem)] font-light leading-[0.96] tracking-[-0.04em] text-[#11110f]">
+            Back the right AI initiatives. Simulate their operational impact
+            before rollout.
           </h1>
-          <p className="mt-7 max-w-[39rem] text-lg leading-7 text-black/58 sm:text-xl sm:leading-8">
-            Afterflow finds high-value AI opportunities in your operation and
-            uses a digital twin to simulate how each change affects your teams,
-            systems, and customers. Before you commit. Then it learns from what
-            actually happens.
+          <p className="mt-6 max-w-[37rem] text-lg leading-7 text-black/58 sm:text-xl sm:leading-8">
+            Find high-value opportunities or bring an initiative already on your
+            roadmap. Simulate its effects across teams, systems and customers,
+            then improve the next decision with every rollout.
           </p>
           <div className="mt-8">
             <a href={bookingUrl} target="_blank" rel="noreferrer" className="primary-button group">

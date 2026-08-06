@@ -7,7 +7,7 @@ const loopSteps = [
   {
     number: "02",
     title: "Surface",
-    body: "Find opportunities and rank them by value, risk, and effort.",
+    body: "Rank opportunities Afterflow surfaces and initiatives already on your roadmap.",
   },
   {
     number: "03",
@@ -42,8 +42,8 @@ export function ProductLoop() {
               A code reviewer for your company.
             </h2>
             <p className="mt-7 max-w-[48rem] text-lg leading-8 text-black/56 sm:text-xl">
-              If your company were code, Afterflow would find the bloat,
-              propose the fix, and simulate the change before merging it.
+              It finds where the operation can improve, simulates the downstream
+              effects, and learns from what happens.
             </p>
           </div>
         </div>
