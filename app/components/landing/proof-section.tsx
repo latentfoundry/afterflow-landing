@@ -59,7 +59,8 @@ export function ProofSection() {
               Simulations you can check.
             </h2>
             <p className="mt-7 max-w-[44rem] text-lg leading-8 text-black/54 sm:text-xl">
-              Each run is fixed before launch, then compared with what happens.
+              Every simulation is grounded in approved company evidence, sealed
+              before launch, and compared with what happens.
             </p>
           </div>
         </div>
