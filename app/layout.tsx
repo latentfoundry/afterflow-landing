@@ -11,6 +11,8 @@ import {
   siteOrigin,
   siteRootUrl,
   siteTitle,
+  socialDescription,
+  socialTitle,
 } from "./lib/site";
 import {
   bingSiteVerification,
@@ -40,8 +42,7 @@ const strawford = localFont({
   ],
 });
 
-const socialImageAlt =
-  "Afterflow simulates how enterprise AI rollouts affect an organisation before launch.";
+const socialImageAlt = `${socialTitle} ${socialDescription}`;
 
 const verification =
   googleSiteVerification || bingSiteVerification
@@ -66,8 +67,8 @@ export const metadata: Metadata = {
   authors: [{ name: siteName, url: siteRootUrl }],
   verification,
   openGraph: {
-    title: siteTitle,
-    description: siteDescription,
+    title: socialTitle,
+    description: socialDescription,
     type: "website",
     siteName,
     locale: "en_US",
@@ -84,8 +85,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteTitle,
-    description: siteDescription,
+    title: socialTitle,
+    description: socialDescription,
     images: [{ url: ogImagePath, alt: socialImageAlt }],
   },
   icons: {
@@ -179,8 +180,8 @@ export default function RootLayout({
       {
         "@id": serviceId,
         "@type": "Service",
-        name: "Afterflow enterprise AI rollout simulation",
-        serviceType: "Enterprise AI rollout simulation",
+        name: "Afterflow operational impact simulation for AI initiatives",
+        serviceType: "AI operational impact simulation",
         url: siteRootUrl,
         description: siteDescription,
         provider: {
