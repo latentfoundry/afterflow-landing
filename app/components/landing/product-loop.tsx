@@ -89,9 +89,12 @@ export function ProductLoop() {
               vectorEffect="non-scaling-stroke"
             />
           </svg>
-          <p className="metric mt-5 flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.12em] text-[#5146b8] md:absolute md:top-full md:right-[64%] md:mt-14 md:translate-x-1/2">
-            <span className="md:hidden">↳</span> Each rollout sharpens the brain
-            and surfaces the next improvement
+          <p className="mt-6 flex w-full max-w-[32rem] items-start gap-3 text-lg leading-7 text-[#5146b8] sm:text-xl sm:leading-8 md:absolute md:top-full md:right-[64%] md:mt-14 md:translate-x-1/2">
+            <span className="mt-0.5 md:hidden">↳</span>
+            <span>
+              Every rollout sharpens the company brain and surfaces the next
+              improvement.
+            </span>
           </p>
         </div>
       </div>
