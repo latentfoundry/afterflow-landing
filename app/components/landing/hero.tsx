@@ -551,17 +551,13 @@ export function Hero() {
       <div className="hero-grid" aria-hidden="true" />
       <div className="relative mx-auto grid w-full min-w-0 max-w-[100rem] grid-cols-[minmax(0,1fr)] items-center gap-12 lg:grid-cols-[0.84fr_1.16fr] lg:gap-10 xl:gap-16">
         <div className="hero-copy w-full min-w-0 max-w-[42rem]">
-          <p className="metric text-[0.65rem] uppercase tracking-[0.14em] text-black/42">
-            Your organisation, simulated.
-          </p>
-          <h1 className="mt-5 max-w-[42rem] text-[clamp(2.85rem,3.7vw,4.25rem)] font-light leading-[0.96] tracking-[-0.04em] text-[#11110f]">
-            Back the right AI initiatives. Simulate their operational impact
-            before rollout.
+          <h1 className="max-w-[42rem] text-[clamp(2.85rem,3.7vw,4.25rem)] font-light leading-[0.96] tracking-[-0.04em] text-[#11110f]">
+            Simulate operational change before you commit.
           </h1>
           <p className="mt-6 max-w-[37rem] text-lg leading-7 text-black/58 sm:text-xl sm:leading-8">
-            Find high-value opportunities or bring an initiative already on your
-            roadmap. Simulate its effects across teams, systems and customers,
-            then improve the next decision with every rollout.
+            Find high-value AI opportunities or bring one already on your
+            roadmap. See how each change affects teams, systems and customers,
+            then learn from every outcome.
           </p>
           <div className="mt-8">
             <a href={bookingUrl} target="_blank" rel="noreferrer" className="primary-button group">

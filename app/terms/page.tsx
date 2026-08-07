@@ -26,7 +26,7 @@ const sections = [
   {
     title: "Service Description",
     body: [
-      "Afterflow helps organizations dry-run high-stakes operational decisions before execution. The Services may help structure approved context, build world models and stakeholder maps, run decision simulations, compare branches, and surface evidence-backed paths, assumptions, leading indicators, simulated actions, and mitigations.",
+      "Afterflow helps organizations evaluate operational change before execution. The Services may help structure approved context, build operational models and stakeholder maps, run decision simulations, compare branches, and surface evidence-backed paths, assumptions, leading indicators, simulated actions, and mitigations.",
       "The Services are intended for bounded scenarios with a real decision, a decision owner, an approved data boundary, and a defined time window. They are not intended for generic research tasks or decisions with no meaningful operational consequence.",
       "Specific features, integrations, deployment models, processing locations, and security controls may vary by plan, configuration, customer environment, and any separate written agreement.",
     ],

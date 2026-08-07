@@ -30,7 +30,7 @@ export function SiteFooter() {
               <span className="text-2xl font-medium leading-none">Afterflow</span>
             </Link>
             <p className="mt-5 max-w-[32rem] text-lg font-light leading-7 text-white/54">
-              Afterflow. Your organisation, simulated.
+              Simulate operational change before you commit.
             </p>
           </div>
 

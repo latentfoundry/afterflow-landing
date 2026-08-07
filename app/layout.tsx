@@ -180,8 +180,8 @@ export default function RootLayout({
       {
         "@id": serviceId,
         "@type": "Service",
-        name: "Afterflow operational impact simulation for AI initiatives",
-        serviceType: "AI operational impact simulation",
+        name: "Afterflow operational change simulation",
+        serviceType: "Operational change simulation for AI initiatives",
         url: siteRootUrl,
         description: siteDescription,
         provider: {

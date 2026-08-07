@@ -19,7 +19,7 @@ const sections = [
     title: "Scope",
     body: [
       `This Privacy Policy explains how ${companyLegalName} ("Afterflow", "we", "us", or "our") collects, uses, discloses, and otherwise handles personal information in connection with our website, request forms, demos, evaluations, communications, and related products and services (collectively, the "Services").`,
-      "Afterflow helps organizations dry-run high-stakes operational decisions by structuring approved context into a world model, running decision simulations, and surfacing evidence-backed paths, assumptions, stakeholders, and mitigations.",
+      "Afterflow helps organizations evaluate operational change before execution by structuring approved context into an operational model, running decision simulations, and surfacing evidence-backed paths, assumptions, stakeholders, and mitigations.",
       "This policy does not apply to third-party websites, services, or integrations that we do not control. Customer deployments, private environments, order forms, or enterprise agreements may include additional privacy, security, or data-processing terms.",
     ],
   },
@@ -44,7 +44,7 @@ const sections = [
     title: "How We Use Information",
     body: [
       "We use information to provide, operate, maintain, secure, troubleshoot, and improve the Services; respond to requests; communicate with you; authenticate users; prevent fraud or abuse; and comply with legal obligations.",
-      "We use Customer Content to ingest and structure operational context, build world models and stakeholder maps, run decision simulations, compare branches, and generate evidence-backed outputs such as ranked paths, assumptions, leading indicators, simulated actions, and mitigations.",
+      "We use Customer Content to ingest and structure operational context, build operational models and stakeholder maps, run decision simulations, compare branches, and generate evidence-backed outputs such as ranked paths, assumptions, leading indicators, simulated actions, and mitigations.",
       "We may use usage data, diagnostics, feedback, aggregated information, or de-identified information to understand and improve the Services, subject to applicable law and any written agreement with a customer.",
     ],
   },

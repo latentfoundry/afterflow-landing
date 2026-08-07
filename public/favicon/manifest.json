@@ -1,7 +1,7 @@
 {
   "name": "Afterflow",
   "short_name": "Afterflow",
-  "description": "Surface high-value AI opportunities and simulate enterprise rollouts before launch.",
+  "description": "Find high-value AI opportunities and simulate operational change before committing.",
   "start_url": "../",
   "scope": "../",
   "display": "standalone",
