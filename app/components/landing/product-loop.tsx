@@ -1,28 +1,28 @@
 const loopSteps = [
   {
     number: "01",
-    title: "Connect",
+    title: "Map",
     body: "Approved sources become an evidence-linked model of the operation.",
   },
   {
     number: "02",
-    title: "Surface",
-    body: "Rank opportunities Afterflow surfaces and initiatives already on your roadmap.",
+    title: "Rank",
+    body: "Prioritise changes by expected value, evidence and downstream risk.",
   },
   {
     number: "03",
     title: "Simulate",
-    body: "See how each change moves through teams, systems, and customers.",
+    body: "Compare rollout paths and interventions before committing.",
   },
   {
     number: "04",
-    title: "Measure",
-    body: "Seal the run before launch, then compare it with the outcome.",
+    title: "Compare",
+    body: "Seal the expected result, then measure it against production.",
   },
   {
     number: "05",
     title: "Learn",
-    body: "Observed outcomes update the model of how your operation works.",
+    body: "Use observed outcomes to improve the next recommendation.",
   },
 ];
 
@@ -42,8 +42,8 @@ export function ProductLoop() {
               A code reviewer for your company.
             </h2>
             <p className="mt-7 max-w-[48rem] text-lg leading-8 text-black/56 sm:text-xl">
-              It finds where the operation can improve, simulates the downstream
-              effects, and learns from what happens.
+              It ranks what to improve next, simulates the downstream effects,
+              and learns from what happens.
             </p>
           </div>
         </div>

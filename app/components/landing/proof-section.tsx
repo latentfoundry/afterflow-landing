@@ -107,7 +107,10 @@ export function ProofSection() {
               Afterflow reconstructed a real, documented enterprise failure
               blind against a sealed answer key. It returned the same ranked
               causal path on every run, with each step tied to source evidence,
-              and scored 27% higher than the best-performing alternative.
+              and scored{" "}
+              <strong className="font-medium text-black/86">
+                27% higher than the best-performing alternative.
+              </strong>
             </p>
           </div>
         </div>

@@ -20,6 +20,8 @@ const stageStatuses = [
   "Production day 28",
 ] as const;
 
+const heroStageDurationMs = 5040;
+
 const modelNodes = [
   { label: "Support", x: 105, y: 80, r: 27, fill: "#f0e9ee" },
   { label: "Customers", x: 82, y: 215, r: 30, fill: "#e5eff1" },
@@ -44,22 +46,25 @@ const opportunities = [
   {
     title: "Release Support AI beyond UAT",
     value: "$0.5m–$0.9m",
-    effort: "Ready to review",
-    evidence: "Strong evidence",
+    evidence: "High evidence",
+    payback: "32-day payback",
+    risk: "Moderate rollout risk",
     source: "Afterflow",
   },
   {
     title: "Payment exception routing",
     value: "$760k",
-    effort: "Low effort",
     evidence: "High evidence",
+    payback: "18-day payback",
+    risk: "Low rollout risk",
     source: "Your team",
   },
   {
     title: "Merchant onboarding review",
     value: "$420k",
-    effort: "Medium effort",
     evidence: "Medium evidence",
+    payback: "41-day payback",
+    risk: "Moderate rollout risk",
     source: "Afterflow",
   },
 ];
@@ -166,6 +171,8 @@ function ModelScreen() {
 }
 
 function OpportunityScreen() {
+  const [showWhy, setShowWhy] = useState(false);
+
   return (
     <div className="grid min-h-[25rem] md:grid-cols-[minmax(0,1fr)_14rem]">
       <div className="bg-[#fafafa] p-4 sm:p-6">
@@ -197,7 +204,7 @@ function OpportunityScreen() {
               }`}
             >
               <span className="metric hidden text-[0.56rem] text-black/28 sm:block">
-                0{index + 1}
+                #{index + 1}
               </span>
               <div>
                 <p className="text-sm font-medium text-black/72 sm:text-base">
@@ -213,39 +220,56 @@ function OpportunityScreen() {
                   >
                     {opportunity.source}
                   </span>
-                  <span className="metric text-[0.44rem] uppercase tracking-[0.07em] text-black/30">
-                    {opportunity.effort} · {opportunity.evidence}
+                  <span className="text-[0.62rem] leading-4 text-black/38">
+                    {opportunity.evidence} · {opportunity.payback} · {opportunity.risk}
                   </span>
                 </div>
+                {index === 0 ? (
+                  <button
+                    type="button"
+                    aria-expanded={showWhy}
+                    onClick={() => setShowWhy((current) => !current)}
+                    className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-[#5146b8] transition-colors hover:text-[#332a8f]"
+                  >
+                    Why #1
+                    <span aria-hidden="true">{showWhy ? "↓" : "→"}</span>
+                  </button>
+                ) : null}
               </div>
               <p className="metric text-right text-sm text-black/68 sm:text-base">
                 {opportunity.value}
                 <span className="mt-1 block text-[0.46rem] uppercase tracking-[0.08em] text-black/28">
-                  modelled value
+                  value
                 </span>
               </p>
+              {index === 0 && showWhy ? (
+                <p className="col-span-full border-t border-black/8 pt-3 text-xs leading-5 text-black/48 sm:ml-8">
+                  Highest expected operational value after adjusting for
+                  implementation effort, confidence and downstream risk.
+                </p>
+              ) : null}
             </li>
           ))}
         </ol>
       </div>
       <aside className="border-t border-black/8 bg-white p-5 md:border-t-0 md:border-l">
         <p className="metric text-[0.52rem] uppercase tracking-[0.11em] text-black/34">
-          Selected
+          Why it ranks first
         </p>
         <h3 className="mt-3 text-base font-medium text-black/74">
-          Release Support AI beyond UAT
+          Best balance of value and confidence.
         </h3>
         <p className="mt-2 text-xs leading-5 text-black/42">
-          Strong evidence. The rollout can pause.
+          High expected value with a staged, reversible rollout.
         </p>
         <div className="mt-6 border-t border-black/8 pt-5">
           <p className="metric text-[0.49rem] uppercase tracking-[0.1em] text-black/30">
-            Review signal
+            Ranking inputs
           </p>
           <ul className="mt-3 space-y-3 text-xs text-black/52">
-            <li>32-day payback</li>
-            <li>Routing and policy change</li>
-            <li>7-day staged release</li>
+            <li>$0.5m–$0.9m value · 32-day payback</li>
+            <li>High evidence</li>
+            <li>Moderate rollout risk</li>
           </ul>
         </div>
       </aside>
@@ -255,7 +279,7 @@ function OpportunityScreen() {
 
 function ProveScreen() {
   return (
-    <div className="grid min-h-[25rem] bg-[#090c14] text-white md:grid-cols-[minmax(0,1fr)_14rem]">
+    <div className="grid min-h-[25rem] bg-[#090c14] text-white md:grid-cols-[minmax(0,1fr)_17rem]">
       <div>
         <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4 sm:px-7">
           <p className="flex items-center gap-2 text-sm font-medium text-white/76">
@@ -290,9 +314,9 @@ function ProveScreen() {
             ["Resolved after 7d", "86–94%"],
             ["Protected routed", "95–100%"],
           ].map(([label, value]) => (
-            <div key={label} className="flex items-baseline justify-between gap-3">
-              <dt className="text-xs text-white/36">{label}</dt>
-              <dd className="metric text-sm text-white/68">{value}</dd>
+            <div key={label} className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-4">
+              <dt className="whitespace-nowrap text-xs text-white/36">{label}</dt>
+              <dd className="metric whitespace-nowrap text-sm text-white/68">{value}</dd>
             </div>
           ))}
         </dl>
@@ -478,7 +502,7 @@ function HeroProduct() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setTimeout(
       () => setActiveStage((activeStage + 1) % stages.length),
-      3600,
+      heroStageDurationMs,
     );
     return () => window.clearTimeout(timer);
   }, [activeStage]);
@@ -538,9 +562,6 @@ function HeroProduct() {
           <ActiveScreen />
         </div>
       </div>
-      <p className="metric mt-3 text-right text-[0.58rem] uppercase tracking-[0.12em] text-black/34">
-        Illustrative data
-      </p>
     </div>
   );
 }
@@ -555,9 +576,8 @@ export function Hero() {
             Simulate operational change before you commit.
           </h1>
           <p className="mt-6 max-w-[37rem] text-lg leading-7 text-black/58 sm:text-xl sm:leading-8">
-            Find high-value AI opportunities or bring one already on your
-            roadmap. See how each change affects teams, systems and customers,
-            then learn from every outcome.
+            Find the right AI opportunity. Predict what happens. Compare with
+            reality.
           </p>
           <div className="mt-8">
             <a href={bookingUrl} target="_blank" rel="noreferrer" className="primary-button group">
@@ -565,6 +585,9 @@ export function Hero() {
               <ArrowIcon />
             </a>
           </div>
+          <p className="mt-4 text-sm leading-6 text-black/42">
+            For teams responsible for getting enterprise AI into production.
+          </p>
         </div>
 
         <HeroProduct />
