@@ -187,7 +187,7 @@ iframe:focus-visible {
   width: 100%;
   transform-origin: left;
   background: var(--signal);
-  animation: hero-stage-progress 3600ms linear both;
+  animation: hero-stage-progress 5040ms linear both;
 }
 
 .hero-stage-panel {

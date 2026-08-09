@@ -68,11 +68,11 @@ export function PropagationSection() {
                       Scenario
                     </p>
                     <p className="mt-1 text-xs text-white/70">
-                      Gradual release⌄
+                      Full release⌄
                     </p>
                   </div>
                   <div className="flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2 text-xs font-medium text-[#070a12]">
-                    <span aria-hidden="true">▶</span> Play replay
+                    <span aria-hidden="true">↔</span> Compare intervention
                   </div>
                 </div>
               </div>
@@ -249,21 +249,19 @@ export function PropagationSection() {
 
                 <div className="mt-6 border-t border-white/10 pt-6">
                   <p className="text-xs font-medium uppercase tracking-wide text-white/38">
-                    Available intervention
+                    Intervention tested
                   </p>
                   <p className="mt-3 text-sm leading-6 text-[#c0b8ff]">
                     Phase the release by enquiry type.
                   </p>
+                  <p className="mt-3 text-xs leading-5 text-white/42">
+                    Peak wait-time risk returns inside the service limit.
+                  </p>
                 </div>
               </aside>
             </div>
-
           </div>
-          <p className="metric mt-4 text-right text-[0.59rem] uppercase tracking-[0.12em] text-black/34">
-            Illustrative data
-          </p>
         </div>
-
       </div>
     </section>
   );
