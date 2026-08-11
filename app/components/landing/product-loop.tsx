@@ -7,7 +7,7 @@ const loopSteps = [
   {
     number: "02",
     title: "Rank",
-    body: "Prioritise changes by expected value, evidence and downstream risk.",
+    body: "Rank opportunities Afterflow finds or initiatives your team brings by expected value and risk.",
   },
   {
     number: "03",

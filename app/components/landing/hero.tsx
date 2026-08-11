@@ -45,25 +45,25 @@ const modelLinks = [
 const opportunities = [
   {
     title: "Release Support AI beyond UAT",
-    value: "$0.5m–$0.9m",
+    value: "High",
     evidence: "High evidence",
-    payback: "32-day payback",
+    basis: "Current support volume",
     risk: "Moderate rollout risk",
     source: "Afterflow",
   },
   {
     title: "Payment exception routing",
-    value: "$760k",
+    value: "High",
     evidence: "High evidence",
-    payback: "18-day payback",
+    basis: "Current exception volume",
     risk: "Low rollout risk",
     source: "Your team",
   },
   {
     title: "Merchant onboarding review",
-    value: "$420k",
+    value: "Medium",
     evidence: "Medium evidence",
-    payback: "41-day payback",
+    basis: "Current review volume",
     risk: "Moderate rollout risk",
     source: "Afterflow",
   },
@@ -188,9 +188,14 @@ function OpportunityScreen() {
           </p>
         </div>
         <div className="mt-3 flex items-center justify-between gap-3 rounded-lg border border-black/8 bg-white px-3 py-2.5">
-          <p className="truncate text-xs text-black/38">
-            Initiative already on your roadmap?
-          </p>
+          <div className="min-w-0">
+            <p className="truncate text-xs font-medium text-black/58">
+              Start with your own initiative
+            </p>
+            <p className="mt-0.5 hidden truncate text-[0.6rem] text-black/32 sm:block">
+              Rank it alongside opportunities Afterflow finds.
+            </p>
+          </div>
           <span className="metric shrink-0 rounded-md bg-[#11110f] px-2.5 py-1.5 text-[0.48rem] uppercase tracking-[0.07em] text-white/82">
             + Add initiative
           </span>
@@ -221,7 +226,7 @@ function OpportunityScreen() {
                     {opportunity.source}
                   </span>
                   <span className="text-[0.62rem] leading-4 text-black/38">
-                    {opportunity.evidence} · {opportunity.payback} · {opportunity.risk}
+                    {opportunity.evidence} · {opportunity.basis} · {opportunity.risk}
                   </span>
                 </div>
                 {index === 0 ? (
@@ -239,12 +244,12 @@ function OpportunityScreen() {
               <p className="metric text-right text-sm text-black/68 sm:text-base">
                 {opportunity.value}
                 <span className="mt-1 block text-[0.46rem] uppercase tracking-[0.08em] text-black/28">
-                  value
+                  potential
                 </span>
               </p>
               {index === 0 && showWhy ? (
                 <p className="col-span-full border-t border-black/8 pt-3 text-xs leading-5 text-black/48 sm:ml-8">
-                  Highest expected operational value after adjusting for
+                  Highest expected operational impact after adjusting for
                   implementation effort, confidence and downstream risk.
                 </p>
               ) : null}
@@ -257,17 +262,17 @@ function OpportunityScreen() {
           Why it ranks first
         </p>
         <h3 className="mt-3 text-base font-medium text-black/74">
-          Best balance of value and confidence.
+          Best balance of impact and confidence.
         </h3>
         <p className="mt-2 text-xs leading-5 text-black/42">
-          High expected value with a staged, reversible rollout.
+          High expected impact with a staged, reversible rollout.
         </p>
         <div className="mt-6 border-t border-black/8 pt-5">
           <p className="metric text-[0.49rem] uppercase tracking-[0.1em] text-black/30">
             Ranking inputs
           </p>
           <ul className="mt-3 space-y-3 text-xs text-black/52">
-            <li>$0.5m–$0.9m value · 32-day payback</li>
+            <li>High potential at current support volume</li>
             <li>High evidence</li>
             <li>Moderate rollout risk</li>
           </ul>
@@ -576,8 +581,8 @@ export function Hero() {
             Simulate operational change before you commit.
           </h1>
           <p className="mt-6 max-w-[37rem] text-lg leading-7 text-black/58 sm:text-xl sm:leading-8">
-            Find the right AI opportunity. Predict what happens. Compare with
-            reality.
+            See where the work lands when an AI initiative scales. Then compare
+            it with what actually happens.
           </p>
           <div className="mt-8">
             <a href={bookingUrl} target="_blank" rel="noreferrer" className="primary-button group">
