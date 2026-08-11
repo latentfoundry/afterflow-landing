@@ -30,7 +30,8 @@ export function FinalCta() {
           See what happens before launch.
         </h2>
         <p className="mx-auto mt-7 max-w-[46rem] text-lg leading-8 text-white/56 sm:text-xl">
-          Bring one initiative. We build the model and run it with you.
+          Bring an initiative from your roadmap or let Afterflow find one. We
+          model and run it with you.
         </p>
         <div className="mt-9 flex justify-center">
           <a

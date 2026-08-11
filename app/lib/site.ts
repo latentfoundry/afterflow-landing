@@ -26,10 +26,10 @@ export const companyLegalName = "Afterflow Inc.";
 export const siteTitle =
   "Afterflow | Simulate the Operational Impact of AI";
 export const siteDescription =
-  "Find high-value AI opportunities or bring one already on your roadmap. See how each change affects teams, systems and customers, then learn from every outcome.";
+  "See where the work lands when an AI initiative scales. Bring one from your roadmap or let Afterflow find one, then compare it with reality.";
 export const socialTitle = "Simulate operational change before you commit.";
 export const socialDescription =
-  "Find high-value AI opportunities or bring one from your roadmap. See how each change affects the operation, then learn from every outcome.";
+  "See where the work lands when an AI initiative scales. Then compare it with what actually happens.";
 
 export const contactEmail =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "mika@afterflow.dev";

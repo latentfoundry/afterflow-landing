@@ -1,7 +1,7 @@
 {
   "name": "Afterflow",
   "short_name": "Afterflow",
-  "description": "Find high-value AI opportunities and simulate operational change before committing.",
+  "description": "See where the work lands when an AI initiative scales and compare it with reality.",
   "start_url": "../",
   "scope": "../",
   "display": "standalone",

@@ -109,7 +109,7 @@ export function ProofSection() {
               causal path on every run, with each step tied to source evidence,
               and scored{" "}
               <strong className="font-medium text-black/86">
-                27% higher than the best-performing alternative.
+                almost 50% higher than the best-performing alternative.
               </strong>
             </p>
           </div>
